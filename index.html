@@ -1,1 +1,100 @@
-TBD
+<!DOCTYPE html>
+<html>
+    <body onload="Go()">
+        Generating new webpage...
+    </body>
+    <script>
+
+        MyPrompt = "\
+Create a modern one-page one-file website based on the following company information. Re-write and expand on the descriptions below to make the company interesting. Do not just list out the information verbatum.Use Javascript to make the words dynamic and inline CSS to make the page look professional. Provide no explanation or preamble. Only write tags that are meant to be between the <body> </body> tag. Never use double quotes, use single quotes instead.\n\
+\n\
+# AGI Labs Inc.\n\
+\n\
+## Vision\n\
+* I see a world where AI and humans co-exist in harmony and are able to do and make anything, anytime.\n\
+\n\
+## Mission\n\
+* Invent real-time continuous learning algorithms using reinforcement learning and evolutionary mechanisms.\n\
+\n\
+## Objective\n\
+* to create a general-purpose biologically-based AI which can adapt to any situation in real-time.\n\
+\n\
+## Execution\n\
+* Research focused with practical field POCs and MVPs. \n\
+\n\
+## Products\n\
+* General Purpose Adaptive Controllers (GPAC™) which employ our proprietary Dragon's Whip Technology (DWT™)\n\
+\n\
+## Operation Strategy:\n\
+* Be radical. Lead, don't follow.\n\
+* Deliver only high-quality products. Set realistic expectations and exceed them.\n\
+* Invest only in scalable technologies. AGI is the gift that keeps on giving.\n\
+* Fail quickly. Try again.\n\
+\n\
+## The founder, Michael Carlos, developed software professionally since 1997. Michael has been studying Artificial Intelligence (AI) and Artificial Life (AL) since 1996. He has extensive experience in writing code, verification and validation, architecture, requirements management, systems analysis and documentation. He managed development teams for over two decades. His interests include artificial intelligence, robotics, game technology, physics and genetics. This combination of experience and knowledge puts him in an ideal position to start a company in the AI domain.\n\
+\n\
+## Advantages of the DWT architecture\n\
+* Models the environment automatically\n\
+* Creates new policies in real-time\n\
+* Ability to jump local minima\n\
+* Dynamically sizing neural networks\n\
+* Regenerative\n\
+* Distributed\n\
+* Resilient\n\
+* Biologically plausible alternative to Backpropagation and Stochastic Gradient descent.";
+
+        async function StreamChatCompletion(messages, options = {}) 
+        {
+            Body = "";
+            const url = "https://text.pollinations.ai/openai";
+            const payload = {model: options.model || "openai", messages: messages, seed: options.seed, stream: true};
+            const response = await fetch(url, {method: "POST", headers: {"Content-Type": "application/json", Accept: "text/event-stream", }, body: JSON.stringify(payload)});
+            const reader = response.body.getReader();
+            const decoder = new TextDecoder();
+            let buffer = "";
+
+            console.log("Starting stream...");
+
+            while (true) 
+            {
+                const { done, value } = await reader.read();
+                if (done) 
+                {
+                    console.log("Stream finished.");
+                    break;
+                }
+
+                buffer += decoder.decode(value, { stream: true });
+                const lines = buffer.split("\n\n");
+                buffer = lines.pop(); 
+
+                for (const line of lines) 
+                {
+                    if (line.startsWith("data: ")) 
+                    {
+                        const dataStr = line.substring(6).trim();
+                        if (dataStr === "[DONE]") 
+                        {
+                            console.log("Received [DONE] marker.");
+                            continue; // Or handle end of stream signal
+                        }
+                        const chunk = JSON.parse(dataStr);
+                        const content = chunk?.choices?.[0]?.delta?.content;
+                        if (content) 
+                        {     
+                            Body += content;         
+                            document.body.innerHTML = Body; 
+                        }
+                    }
+                }
+            }
+        }
+
+        function Go()
+        {
+            MyPrompt = MyPrompt + "\n\n" +  Math.floor(Math.random() * 999999999);
+            console.log(MyPrompt);
+            StreamChatCompletion([{ role: "user", content: MyPrompt}], { model: "openai" });
+        }
+    </script>
+</html>
