@@ -1,0 +1,88 @@
+<html>
+<body style='background:#000000;'>
+<section style='background:#121212; color:#eee; font-family:sans-serif; padding:2rem; max-width:900px; margin: 3rem auto; border-radius:8px; box-shadow: 0 0 10px #0d6efd66;'>
+  <img src='https://www.agilabs.ca/GithubAvatar.jpg' alt='AGI Labs Logo' style='width:120px; border-radius:12px; float:right; margin-left:1.5rem;' />
+  <h1 style='font-weight:800; letter-spacing:0.07em; margin-bottom:0.3rem; font-size:2.8rem; color:#0d6efd;'>AGI Labs</h1>
+  <p style='font-style:italic; color:#a6accd; margin-top:0; max-width:460px;'>Pioneering a future where Artificial General Intelligence and humans thrive together, crafting limitless possibilities at any moment.</p>
+
+  <hr style='border:none; border-top:1px solid #222a44; margin:2rem 0;' />
+
+  <section style='margin-bottom:2rem;'>
+    <h2 style='color:#5599ff; font-weight:700; border-bottom:2px solid #5599ff; padding-bottom:0.25rem;'>Our Vision</h2>
+    <p style='line-height:1.5; font-size:1.1rem; color:#ccc;'>
+      Imagine a world where the boundary between human intuition and machine intelligence fades away, a seamless coexistence where AGI doesn’t just assist but amplifies human creativity and problem solving. AGI Labs is driven by this vision: to unlock AI’s full potential as an ever-giving partner, transforming ideas into reality whenever and wherever needed.
+    </p>
+  </section>
+
+  <section style='margin-bottom:2rem;'>
+    <h2 style='color:#5599ff; font-weight:700; border-bottom:2px solid #5599ff; padding-bottom:0.25rem;'>Mission & Objective</h2>
+    <p style='line-height:1.5; font-size:1.1rem; color:#ccc;'>
+      At AGI Labs, we harness the power of cutting-edge reinforcement learning fused with evolutionary algorithms to create AI that learns continuously and adapts instantly. Our goal is bold yet clear: to build biologically inspired, general-purpose AI capable of understanding and thriving in any environment, transforming challenges into opportunities in real time.
+    </p>
+  </section>
+
+  <section style='margin-bottom:3rem;'>
+    <h2 style='color:#5599ff; font-weight:700; border-bottom:2px solid #5599ff; padding-bottom:0.25rem;'>Evolutionary Algorithms Unveiled</h2>
+    <p style='line-height:1.5; font-size:1.1rem; color:#ccc;'>
+      Evolutionary algorithms are computational methods inspired by natural selection and genetics. Picture an AI that doesn’t just learn from data but evolves its strategies and neural architectures like organisms adapting to dynamic environments. By simulating survival of the fittest, our approach continuously refines the AI’s decision-making, enabling it to jump over limitations that trap conventional algorithms, and discover innovative solutions without human intervention.
+    </p>
+  </section>
+
+  <section style='margin-bottom:2rem;'>
+    <h2 style='color:#5599ff; font-weight:700; border-bottom:2px solid #5599ff; padding-bottom:0.25rem;'>Innovative Products & Technologies</h2>
+    <p style='line-height:1.5; font-size:1.1rem; color:#ccc;'>
+      Introducing General Purpose Adaptive Controllers (GPAC™), driven by our proprietary Dragon’s Whip Technology (DWT™), a revolutionary AI architecture that continuously models its environment and adapts strategies on the fly. DWT transcends current machine learning paradigms by resizing neural networks dynamically, regenerating through genetic principles, and naturally balancing exploration with exploitation, all while resisting failures and changing conditions seamlessly.
+    </p>
+  </section>
+
+  <section style='margin-bottom:2rem;'>
+    <h2 style='color:#5599ff; font-weight:700; border-bottom:2px solid #5599ff; padding-bottom:0.25rem;'>Our Bold Strategy</h2>
+    <p style='line-height:1.5; font-size:1.1rem; color:#ccc;'>
+      Lead with disruptive innovation; challenge the status quo rather than follow it.
+      Deliver excellence consistently-underpromise, then outperform expectations.
+      Focus time investments on technologies that grow exponentially, not incrementally.
+      Embrace rapid iteration-dismantle and rebuild swiftly to stay ahead. (Even this site rebuilds itself at every reload)
+    </p>
+    </ul>
+  </section>
+
+  <section style='margin-bottom:2rem;'>
+    <h2 style='color:#5599ff; font-weight:700; border-bottom:2px solid #5599ff; padding-bottom:0.25rem;'>Meet Our Founder</h2>
+    <p style='line-height:1.5; font-size:1.1rem; color:#ccc;'>
+      Michael Carlos brings over 30 years of software craftsmanship and two decades steering development teams to success. Since the 90s, he’s immersed himself in AI and Artificial Life, blending deep academic knowledge with hands-on experience in robotics, game tech, physics, and genetics. This rare fusion fuels AGI Labs’ pioneering spirit, making Michael the ideal visionary to lead the next frontier in AI.
+    </p>
+  </section>
+
+  <section style='margin-bottom:2rem;'>
+    <h2 style='color:#5599ff; font-weight:700; border-bottom:2px solid #5599ff; padding-bottom:0.25rem;'>Why Software Matters</h2>
+    <p style='line-height:1.5; font-size:1.1rem; color:#ccc;'>
+      Software is the ultimate multiplier-build once, scale infinitely. It obliterates physical boundaries and lets you collaborate globally at lightning speed. No inventories, no shipping delays, and minimal capital hurdles. Software can emulate virtually any system, even the organic brain itself. AI-powered software companies can thrive as lean, agile entities with extraordinary reach. This means faster ideas, smarter products, and a world of impact from a single codebase.
+    </p>
+  </section>
+
+
+  <footer style='border-top:1px solid #222a44; padding-top:1rem; color:#555; font-size:0.9rem; text-align:center; margin-top:3rem;'>
+    <p>© 2025 AGI Labs Inc. (Canada)</p>
+  </footer>
+
+  <script>
+    const headers = document.querySelectorAll('h2');
+    headers.forEach(h => {
+      h.style.opacity = '0';
+      h.style.transform = 'translateY(20px)';
+    });
+
+    window.addEventListener('load', () => {
+      headers.forEach((h, i) => {
+        setTimeout(() => {
+          h.style.transition = 'opacity 0.6s ease-out, transform 0.6s ease-out';
+          h.style.opacity = '1';
+          h.style.transform = 'translateY(0)';
+        }, i * 300);
+      });
+    });
+  </script>
+</section>
+
+</body>
+</html>
