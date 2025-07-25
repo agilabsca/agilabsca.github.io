@@ -75,7 +75,7 @@ body {
 header {
     margin: 0 auto 30px;
     scroll-margin-top: 120px;
-    border-bottom: 1px solid var(--secondary-color);
+    /*border-bottom: 1px solid var(--secondary-color);*/
     padding: 40px;
 }
 
@@ -138,7 +138,7 @@ footer p {
 footer {
     padding: 20px;
     text-align: center;
-    border-top: 1px solid var(--secondary-color);
+    /*border-top: 1px solid var(--secondary-color);*/
     color: var(--text-secondary-color);
     display: flex;
     justify-content: center;
