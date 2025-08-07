@@ -286,6 +286,11 @@ header img {
     .solution-item img {
         width: 25%;
     }
+
+    section {
+        border: none;
+        box-shadow: none;
+    }
 }
 
 .modal {
