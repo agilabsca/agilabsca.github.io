@@ -23,7 +23,7 @@
     </nav>-->
 
     <header>
-        <img src="assets/BrainStorm.jpg" alt="logo for AGI Labs" />
+        <img src="assets/brainstorm.svg" alt="logo for AGI Labs" />
         <div class="header-text">
             <h1>AGI Labs</h1>
             <p class="tagline">Redefining Intelligence</p>
@@ -138,10 +138,10 @@
         var solutionItems = document.querySelectorAll(".solution-item");
         var modalTitle = document.getElementById("modalTitle");
         var modalText = document.getElementById("modalText");
-        var span = document.getElementsByClassName("close")[0];
 
         solutionItems.forEach(function(item) {
-            item.addEventListener("click", function() {
+            item.addEventListener("click", function(event) {
+                event.stopPropagation();
                 var title = item.querySelector("p").textContent;
                 var text = item.getAttribute("data-modal-text");
                 modalTitle.textContent = title;
@@ -150,15 +150,11 @@
             });
         });
 
-        span.onclick = function() {
-            modal.style.display = "none";
-        }
-
-        window.onclick = function(event) {
-            if (event.target == modal) {
-                modal.style.display = "none";
-            }
-        }
+        window.addEventListener('click', function(event){
+        	if (modal.style.display === "block") {
+        		modal.style.display = "none";
+        	}
+        });
     </script>
 </body>
 </html>
