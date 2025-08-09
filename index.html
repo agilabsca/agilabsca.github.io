@@ -179,22 +179,7 @@ header svg {
     margin-bottom: 15px;
 }
 
-.close {
-    color: var(--text-secondary-color);
-    position: absolute;
-    top: 15px;
-    right: 25px;
-    font-size: 35px;
-    font-weight: bold;
-    transition: color 0.3s;
-}
 
-.close:hover,
-.close:focus {
-    color: var(--accent-color);
-    text-decoration: none;
-    cursor: pointer;
-}
 
 @media (min-width: 768px) {
     section {
@@ -326,7 +311,6 @@ header svg {
 
     <div id="myModal" class="modal">
         <div class="modal-content">
-            <span class="close">&times;</span>
             <h3 id="modalTitle"></h3>
             <p id="modalText"></p>
         </div>
@@ -359,11 +343,9 @@ header svg {
             });
         });
 
-        window.addEventListener('click', function(event){
-        	if (modal.style.display === "block") {
-        		modal.style.display = "none";
-        	}
-        });
+        modal.onclick = function() {
+            modal.style.display = "none";
+        }
     </script>
-</body>
+    </body>
 </html>
