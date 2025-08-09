@@ -27,71 +27,14 @@ body {
     font-family: Helvetica, sans-serif, Arial;
 }
 
-/*
-.navbar {
-    align-items: center;
-    position: fixed;
-    top: 0;
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    background-color: var(--primary-color);
-    border-bottom: 1px solid var(--secondary-color);
-    padding: 20px 40px;
-    z-index: 100;
-}
-
-.navbar a {
-    text-align: center;
-    text-decoration: none;
-    font-size: 16px;
-    transition: color 0.3s;
-    color: var(--text-color);
-}
-
-.navbar a:hover {
-    color: var(--accent-color);
-}
-
-.navbar .logo {
-    font-weight: bold;
-    font-size: 20px;
-}
-
-.navbar-links {
-    display: flex;
-    gap: 30px;
-}
-
-.hamburger {
-    display: none;
-    cursor: pointer;
-}
-
-.bar {
-    display: block;
-    width: 25px;
-    height: 3px;
-    margin: 5px auto;
-    -webkit-transition: all 0.3s ease-in-out;
-    transition: all 0.3s ease-in-out;
-    background-color: var(--text-color);
-}
-*/
-
 header {
     margin: 0 auto 30px;
     scroll-margin-top: 120px;
-    /*border-bottom: 1px solid var(--secondary-color);*/
     padding: 40px;
 }
 
 main {
-    padding: /*120px*/ 0 40px 30px;
-    /*margin: 100px 60px 0;
-    border: 1px solid var(--accent-color);
-    border-radius: 10px;
-    box-shadow: 0 0 20px var(--accent-color);*/
+    padding: 0 40px 30px;
 }
 
 section {
@@ -108,11 +51,6 @@ section.visible, header.visible {
     opacity: 1;
     transform: translateY(0);
 }
-
-/*section:first-of-type {
-    border: none;
-    box-shadow: none;
-}*/
 
 header {
     display: flex;
@@ -145,7 +83,6 @@ footer p {
 footer {
     padding: 20px;
     text-align: center;
-    /*border-top: 1px solid var(--secondary-color);*/
     color: var(--text-secondary-color);
     display: flex;
     justify-content: center;
@@ -211,106 +148,6 @@ header svg {
     width: 100%;
 }
 
-@media (min-width: 768px) {
-    section {
-        max-width: 960px;
-    }
-
-    .hero-section h1 {
-        font-size: 72px;
-    }
-
-    .mission-content {
-        column-count: 1;
-        column-gap: 40px;
-    }
-}
-
-@media (max-width: 767px) {
-    .navbar-links {
-        position: fixed;
-        left: -100%;
-        top: 85px;
-        gap: 0;
-        flex-direction: column;
-        width: 100%;
-        text-align: center;
-        transition: all 0.3s;
-        background-color: var(--secondary-color);
-    }
-
-    .navbar-links.active {
-        left: 0;
-    }
-
-    .navbar-links a {
-        padding: 20px;
-        border-bottom: 1px solid var(--primary-color);
-    }
-
-    .hamburger {
-        display: block;
-    }
-
-    .hamburger.active .bar:nth-child(2) {
-        opacity: 0;
-    }
-
-    .hamburger.active .bar:nth-child(1) {
-        transform: translateY(8px) rotate(45deg);
-    }
-
-    .hamburger.active .bar:nth-child(3) {
-        transform: translateY(-8px) rotate(-45deg);
-    }
-
-    header {
-        flex-direction: column;
-        text-align: center;
-    }
-
-    header svg {
-        margin-right: 0;
-        margin-bottom: 20px;
-    }
-
-    main {
-        padding: 0 20px 15px;
-    }
-
-    .hero-section h1 {
-        font-size: 48px;
-    }
-
-    .tagline {
-        font-size: 18px;
-    }
-
-    .solution-item {
-        width: calc(100% - 20px);
-        padding: 10px;
-    }
-
-    .solution-item svg {
-        width: 25%;
-    }
-
-    section {
-        border: none;
-        box-shadow: none;
-    }
-
-    .modal-content {
-        width: 100%;
-        height: 100%;
-        max-width: 100vw;
-        margin: 0;
-        border-radius: 0;
-        overflow-y: auto;
-        padding: 40px 20px;
-    }
-}
-
 .modal {
     display: none; 
     position: fixed; 
@@ -328,7 +165,7 @@ header svg {
     background-color: var(--secondary-color);
     color: var(--text-color);
     margin: 10% auto;
-    padding: 40px;
+    padding: 2%;
     border: 1px solid var(--accent-color);
     border-radius: 10px;
     width: 80%;
@@ -358,23 +195,67 @@ header svg {
     text-decoration: none;
     cursor: pointer;
 }
+
+@media (min-width: 768px) {
+    section {
+        max-width: 960px;
+    }
+
+    .hero-section h1 {
+        font-size: 72px;
+    }
+
+    .mission-content {
+        column-count: 1;
+        column-gap: 40px;
+    }
+}
+
+@media (max-width: 767px) {
+    header {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    header svg {
+        margin-right: 0;
+        margin-bottom: 20px;
+    }
+
+    main {
+        padding: 1%;
+    }
+
+    .hero-section h1 {
+        font-size: 48px;
+    }
+
+    .tagline {
+        font-size: 18px;
+    }
+
+    .solution-item {
+        width: 98%;
+        padding: 1%;
+    }
+
+    .solution-item svg {
+        width: 25%;
+    }
+
+    section {
+        border: none;
+        box-shadow: none;
+    }
+
+    .modal-content {
+        padding: 2%;
+        box-shadow: none;
+    }
+}
 </style>
 </head>
 <body>
-
-    <!--<nav class="navbar">
-        <a href="#" class="logo">AGI Labs</a>
-        <div class="navbar-links">
-            <a href="#mission">Our Mission</a>
-            <a href="#solutions">Solutions</a>
-            <a href="#about">About Us</a>
-        </div>
-        <div class="hamburger">
-            <span class="bar"></span>
-            <span class="bar"></span>
-            <span class="bar"></span>
-        </div>
-    </nav>-->
 
     <header>
         <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3"><path d="M390-120q-51 0-88-35.5T260-241q-60-8-100-53t-40-106q0-21 5.5-41.5T142-480q-11-18-16.5-38t-5.5-42q0-61 40-105.5t99-52.5q3-51 41-86.5t90-35.5q26 0 48.5 10t41.5 27q18-17 41-27t49-10q52 0 89.5 35t40.5 86q59 8 99.5 53T840-560q0 22-5.5 42T818-480q11 18 16.5 38.5T840-400q0 62-40.5 106.5T699-241q-5 50-41.5 85.5T570-120q-25 0-48.5-9.5T480-156q-19 17-42 26.5t-48 9.5Zm130-590v460q0 21 14.5 35.5T570-200q20 0 34.5-16t15.5-36q-21-8-38.5-21.5T550-306q-10-14-7.5-30t16.5-26q14-10 30-7.5t26 16.5q11 16 28 24.5t37 8.5q33 0 56.5-23.5T760-400q0-5-.5-10t-2.5-10q-17 10-36.5 15t-40.5 5q-17 0-28.5-11.5T640-440q0-17 11.5-28.5T680-480q33 0 56.5-23.5T760-560q0-33-23.5-56T680-640q-11 18-28.5 31.5T613-587q-16 6-31-1t-20-23q-5-16 1.5-31t22.5-20q15-5 24.5-18t9.5-30q0-21-14.5-35.5T570-760q-21 0-35.5 14.5T520-710Zm-80 460v-460q0-21-14.5-35.5T390-760q-21 0-35.5 14.5T340-710q0 16 9 29.5t24 18.5q16 5 23 20t2 31q-6 16-21 23t-31 1q-21-8-38.5-21.5T279-640q-32 1-55.5 24.5T200-560q0 33 23.5 56.5T280-480q17 0 28.5 11.5T320-440q0 17-11.5 28.5T280-400q-21 0-40.5-5T203-420q-2 5-2.5 10t-.5 10q0 33 23.5 56.5T280-320q20 0 37-8.5t28-24.5q10-14 26-16.5t30 7.5q14 10 16.5 26t-7.5 30q-14 19-32 33t-39 22q1 20 16 35.5t35 15.5q21 0 35.5-14.5T440-250Zm40-230Z"/></svg>
@@ -385,7 +266,6 @@ header svg {
     </header>
 
     <main>
-
         <section id="mission">
             <h2>The Next Evolution of AI is Here.</h2>
             <div class="mission-content">
@@ -396,23 +276,6 @@ header svg {
         </section>
 
         <section id="solutions">
-            <!--<h2>...</h2>
-            <p>...</p>-->
-            
-            <!--
-                <h2>...y</h2>
-                <ul>
-                    <li>...</li>
-                    <li>...</li>
-                    <li>...</li>
-                    <li>...</li>
-                </ul>
-            -->
-            <!--
-            <h2>...</h2>
-            <p>...</p>
-            <p>...</p>
-            -->
             <div class="solutions-grid">
                 <div class="solution-item" data-modal-text="Imagine a world where you can instantly deploy powerful, intelligent systems for any application, anywhere.  A world where AI isn’t a static program with huge floating-point parameter counts, but a dynamic entity that grows smarter with every experience. This is the future AGI Labs is building.">
                     <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3"><path d="m226-559 78 33q14-28 29-54t33-52l-56-11-84 84Zm142 83 114 113q42-16 90-49t90-75q70-70 109.5-155.5T806-800q-72-5-158 34.5T492-656q-42 42-75 90t-49 90Zm178-65q-23-23-23-56.5t23-56.5q23-23 57-23t57 23q23 23 23 56.5T660-541q-23 23-57 23t-57-23Zm19 321 84-84-11-56q-26 18-52 32.5T532-299l33 79Zm313-653q19 121-23.5 235.5T708-419l20 99q4 20-2 39t-20 33L538-80l-84-197-171-171-197-84 167-168q14-14 33.5-20t39.5-2l99 20q104-104 218-147t235-24ZM157-321q35-35 85.5-35.5T328-322q35 35 34.5 85.5T327-151q-25 25-83.5 43T82-76q14-103 32-161.5t43-83.5Zm57 56q-10 10-20 36.5T180-175q27-4 53.5-13.5T270-208q12-12 13-29t-11-29q-12-12-29-11.5T214-265Z"/></svg>
@@ -454,15 +317,7 @@ header svg {
                     <p>Meet the Team: The Philosophy of Isang Tao</p>
                 </div>
             </div>
-            <!--<h2>...</h2>
-            <p>...</p>-->
         </section>
-
-        <!--<section id="about">
-            <h2>...</h2>
-            <p>...</p>
-        </section>-->
-
     </main>
 
     <footer>
