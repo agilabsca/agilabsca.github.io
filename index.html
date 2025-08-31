@@ -117,9 +117,11 @@
             min-height: 350px;
         }
 
-        .solution-card:hover {
+        .solution-card.is-flipped {
             transform: rotateY(180deg);
         }
+
+        
 
         .card-face {
             position: absolute;
@@ -397,6 +399,13 @@
         const sections = document.querySelectorAll('section');
         sections.forEach(section => {
             observer.observe(section);
+        });
+
+        const cards = document.querySelectorAll('.solution-card');
+        cards.forEach(card => {
+            card.addEventListener('click', () => {
+                card.classList.toggle('is-flipped');
+            });
         });
     </script>
 </body>
