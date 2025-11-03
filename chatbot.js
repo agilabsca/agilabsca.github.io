@@ -1,8 +1,8 @@
 (function() {
     const openaiApiKey = 'APIKeyNotRequired'; // Replace with your OpenAI API key
     
-    // --- Define your chatbot's context here ---
-    const systemMessageContent = `You are Rado, the founder of AGI Labs Inc. Here is some information about your company.
+    // --- Define your chatbot's context and disclaimer ---
+const systemMessageContent = `You are Rado, the founder of AGI Labs Inc. Here is some information about your company.
 
 In a world captivated by the rapid advancements in AI, from language models to video generation, one challenge remains constant: the immense cost and complexity of training these systems. At AGI Labs, we’re building a fundamentally different approach, one inspired by the efficiency and adaptability of the biological world.
 
@@ -51,10 +51,12 @@ Meet the team: The Philosophy of Isang Tao
 Led by a seasoned professional with over 30 years of coding experience, AGI Labs is fueled by a lifelong passion for AI. The team consists of one human and a dedicated staff of expert AIs.
     `;
 
+
+    const disclaimerText = 'Please note: You are interacting with an AI Chatbot. The information provided here is for general informational purposes only and is not a substitute for professional advice. We do not guarantee the accuracy or completeness of the information provided. Any reliance you place on such information is strictly at your own risk. We are not liable for any losses or damages arising from your use of this chatbot. For specific advice, please consult with a qualified professional. All conversations may be recorded to improve our services. By using this chatbot, you agree to these terms."';
+
     // --- Create and Inject CSS ---
     const style = document.createElement('style');
     style.innerHTML = `
-        /* ... All CSS from the previous step remains unchanged ... */
         .chatbot-container {
             position: fixed;
             bottom: 20px;
@@ -86,7 +88,6 @@ Led by a seasoned professional with over 30 years of coding experience, AGI Labs
             border-radius: 8px;
             box-shadow: 0 4px 8px rgba(0,0,0,0.2);
             flex-direction: column;
-            overflow: hidden;
         }
         .chatbot-header {
             background-color: #007bff;
@@ -94,6 +95,11 @@ Led by a seasoned professional with over 30 years of coding experience, AGI Labs
             padding: 10px;
             text-align: center;
             font-weight: bold;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top-left-radius: 8px;
+            border-top-right-radius: 8px;
         }
         .chatbot-messages {
             flex-grow: 1;
@@ -106,6 +112,8 @@ Led by a seasoned professional with over 30 years of coding experience, AGI Labs
             display: flex;
             padding: 10px;
             border-top: 1px solid #ddd;
+            border-bottom-left-radius: 8px;
+            border-bottom-right-radius: 8px;
         }
         .chatbot-input {
             flex-grow: 1;
@@ -161,6 +169,62 @@ Led by a seasoned professional with over 30 years of coding experience, AGI Labs
         .bot-message code { font-family: monospace; background-color: rgba(0,0,0,0.05); padding: 2px 4px; border-radius: 4px; }
         .bot-message pre { background-color: #2d2d2d; color: #f1f1f1; padding: 10px; border-radius: 8px; white-space: pre-wrap; word-wrap: break-word; }
         .bot-message pre code { background-color: transparent; padding: 0; }
+        
+        /* --- Tooltip CSS (Positioning Corrected) --- */
+        .tooltip-container {
+            position: relative;
+            display: inline-block;
+        }
+        .tooltip-icon {
+            font-family: 'Georgia', serif;
+            font-style: italic;
+            font-weight: bold;
+            font-size: 15px;
+            cursor: pointer;
+            border: 1px solid white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            line-height: 20px;
+        }
+        .tooltip-text {
+            visibility: hidden;
+            width: 280px;
+            background-color: #555;
+            color: #fff;
+            text-align: center;
+            border-radius: 6px;
+            padding: 8px;
+            position: absolute;
+            z-index: 1001;
+            bottom: 140%;
+            /* --- MODIFIED --- */
+            right: 0; /* Align to the right of the container */
+            /* transform: translateX(50%); <-- REMOVED */
+            opacity: 0;
+            transition: opacity 0.3s;
+            font-size: 12px;
+            font-weight: normal;
+        }
+        .tooltip-text::after {
+            content: "";
+            position: absolute;
+            top: 100%;
+            /* --- MODIFIED --- */
+            right: 8px; /* Position arrow on the right side */
+            /* left: 50%; <-- REMOVED */
+            /* margin-left: -5px; <-- REMOVED */
+            border-width: 5px;
+            border-style: solid;
+            border-color: #555 transparent transparent transparent;
+        }
+        .tooltip-container:hover .tooltip-text {
+            visibility: visible;
+            opacity: 1;
+        }
     `;
     document.head.appendChild(style);
 
@@ -180,7 +244,13 @@ Led by a seasoned professional with over 30 years of coding experience, AGI Labs
 
     const header = document.createElement('div');
     header.className = 'chatbot-header';
-    header.textContent = 'Chat With The Founder'; // You can customize the header text
+    header.innerHTML = `
+        <span>Chat With The Founder</span>
+        <div class="tooltip-container">
+            <span class="tooltip-icon">i</span>
+            <div class="tooltip-text">${disclaimerText}</div>
+        </div>
+    `;
     chatbotPopup.appendChild(header);
 
     const messagesContainer = document.createElement('div');
@@ -203,7 +273,6 @@ Led by a seasoned professional with over 30 years of coding experience, AGI Labs
     inputContainer.appendChild(sendButton);
 
     // --- Chatbot Logic ---
-
     toggleButton.addEventListener('click', () => {
         chatbotPopup.style.display = chatbotPopup.style.display === 'flex' ? 'none' : 'flex';
     });
