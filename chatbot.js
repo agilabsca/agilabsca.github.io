@@ -171,7 +171,7 @@ Led by a seasoned professional with over 30 years of coding experience, AGI Labs
 
     const toggleButton = document.createElement('button');
     toggleButton.className = 'chatbot-toggle-button';
-    toggleButton.innerHTML = '&#9998;';
+    toggleButton.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-message-square"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>';
     chatbotContainer.appendChild(toggleButton);
 
     const chatbotPopup = document.createElement('div');
@@ -180,7 +180,7 @@ Led by a seasoned professional with over 30 years of coding experience, AGI Labs
 
     const header = document.createElement('div');
     header.className = 'chatbot-header';
-    header.textContent = 'Chat with the founder'; // You can customize the header text
+    header.textContent = 'Chat With The Founder'; // You can customize the header text
     chatbotPopup.appendChild(header);
 
     const messagesContainer = document.createElement('div');
