@@ -1,7 +1,7 @@
 (function() {
     const openaiApiKey = 'APIKeyNotRequired'; // Replace with your OpenAI API key
 
-    // Create Style Element
+    // --- Create and Inject CSS ---
     const style = document.createElement('style');
     style.innerHTML = `
         .chatbot-container {
@@ -10,7 +10,6 @@
             right: 20px;
             z-index: 1000;
         }
-
         .chatbot-toggle-button {
             background-color: #007bff;
             color: white;
@@ -25,7 +24,6 @@
             justify-content: center;
             align-items: center;
         }
-
         .chatbot-popup {
             display: none;
             position: fixed;
@@ -39,7 +37,6 @@
             flex-direction: column;
             overflow: hidden;
         }
-
         .chatbot-header {
             background-color: #007bff;
             color: white;
@@ -47,7 +44,6 @@
             text-align: center;
             font-weight: bold;
         }
-
         .chatbot-messages {
             flex-grow: 1;
             padding: 10px;
@@ -55,20 +51,17 @@
             display: flex;
             flex-direction: column;
         }
-
         .chatbot-input-container {
             display: flex;
             padding: 10px;
             border-top: 1px solid #ddd;
         }
-
         .chatbot-input {
             flex-grow: 1;
             border: 1px solid #ccc;
             border-radius: 4px;
             padding: 8px;
         }
-
         .chatbot-send-button {
             background-color: #007bff;
             color: white;
@@ -78,30 +71,74 @@
             margin-left: 10px;
             cursor: pointer;
         }
-
         .user-message, .bot-message {
             margin-bottom: 10px;
             padding: 8px 12px;
             border-radius: 18px;
             max-width: 80%;
             word-wrap: break-word;
+            line-height: 1.4;
         }
-
         .user-message {
             background-color: #007bff;
             color: white;
             align-self: flex-end;
         }
-
         .bot-message {
             background-color: #f1f1f1;
             color: #333;
             align-self: flex-start;
         }
+        /* Typing indicator styles */
+        .typing-indicator {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 8px 0;
+        }
+        .typing-indicator span {
+            height: 8px;
+            width: 8px;
+            background-color: #999;
+            border-radius: 50%;
+            display: inline-block;
+            margin: 0 2px;
+            animation: blink 1.4s infinite both;
+        }
+        .typing-indicator span:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+        .typing-indicator span:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+        @keyframes blink {
+            0% { opacity: 0.2; }
+            20% { opacity: 1; }
+            100% { opacity: 0.2; }
+        }
+        /* Styles for formatted code */
+        .bot-message code {
+            font-family: monospace;
+            background-color: rgba(0,0,0,0.05);
+            padding: 2px 4px;
+            border-radius: 4px;
+        }
+        .bot-message pre {
+            background-color: #2d2d2d;
+            color: #f1f1f1;
+            padding: 10px;
+            border-radius: 8px;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+        .bot-message pre code {
+            background-color: transparent;
+            padding: 0;
+        }
     `;
     document.head.appendChild(style);
 
-    // Create HTML Elements
+    // --- Create HTML Elements ---
     const chatbotContainer = document.createElement('div');
     chatbotContainer.className = 'chatbot-container';
     document.body.appendChild(chatbotContainer);
@@ -139,10 +176,22 @@
     sendButton.textContent = 'Send';
     inputContainer.appendChild(sendButton);
 
+    // --- Chatbot Logic ---
+
     // Toggle chatbot visibility
     toggleButton.addEventListener('click', () => {
         chatbotPopup.style.display = chatbotPopup.style.display === 'flex' ? 'none' : 'flex';
     });
+    
+    // Function to convert basic markdown to HTML
+    function formatResponse(text) {
+        let html = text.replace(/```([\s\S]*?)```/g, '<pre><code>$1</code></pre>');
+        html = html.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+        html = html.replace(/\*(.*?)\*/g, '<em>$1</em>');
+        html = html.replace(/`(.*?)`/g, '<code>$1</code>');
+        html = html.replace(/\n/g, '<br>');
+        return html;
+    }
 
     // Handle sending messages
     const sendMessage = async () => {
@@ -152,8 +201,11 @@
         addMessage(userInput, 'user');
         inputField.value = '';
 
-        const botMessageElement = addMessage('', 'bot');
+        // Show typing indicator
+        const indicatorHtml = '<div class="typing-indicator"><span></span><span></span><span></span></div>';
+        const botMessageElement = addMessage(indicatorHtml, 'bot');
         let botMessageText = '';
+        let isFirstChunk = true;
 
         try {
             const response = await fetch('https://text.pollinations.ai/openai', {
@@ -171,8 +223,7 @@
 
             if (!response.ok) {
                 const errorData = await response.json();
-                console.error('Error from OpenAI API:', errorData);
-                botMessageElement.textContent = `Error: ${errorData.error.message}`;
+                botMessageElement.innerHTML = `Error: ${errorData.error.message}`;
                 return;
             }
 
@@ -187,7 +238,7 @@
 
                     buffer += decoder.decode(value, { stream: true });
                     const lines = buffer.split('\n');
-                    buffer = lines.pop(); // Keep the last, possibly incomplete, line in the buffer
+                    buffer = lines.pop(); 
 
                     for (const line of lines) {
                         if (line.startsWith('data: ')) {
@@ -198,13 +249,19 @@
                             try {
                                 const parsed = JSON.parse(data);
                                 const content = parsed.choices[0]?.delta?.content;
+
                                 if (content) {
+                                    // If it's the first chunk, remove the indicator
+                                    if (isFirstChunk) {
+                                        botMessageElement.innerHTML = '';
+                                        isFirstChunk = false;
+                                    }
                                     botMessageText += content;
-                                    botMessageElement.textContent = botMessageText;
+                                    botMessageElement.innerHTML = formatResponse(botMessageText);
                                     messagesContainer.scrollTop = messagesContainer.scrollHeight;
                                 }
                             } catch (error) {
-                                console.error('Error parsing stream data:', error, 'Data:', data);
+                                console.error('Could not parse stream data:', data, error);
                             }
                         }
                     }
@@ -215,7 +272,7 @@
 
         } catch (error) {
             console.error('Error fetching OpenAI response:', error);
-            botMessageElement.textContent = 'Sorry, an error occurred.';
+            botMessageElement.innerHTML = 'Sorry, an error occurred while connecting.';
         }
     };
 
@@ -229,7 +286,11 @@
     function addMessage(text, sender) {
         const messageElement = document.createElement('div');
         messageElement.className = `${sender}-message`;
-        messageElement.textContent = text;
+        if (sender === 'user') {
+            messageElement.textContent = text;
+        } else {
+            messageElement.innerHTML = text; // Allow HTML for bot messages
+        }
         messagesContainer.appendChild(messageElement);
         messagesContainer.scrollTop = messagesContainer.scrollHeight;
         return messageElement;
