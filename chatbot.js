@@ -1,9 +1,60 @@
 (function() {
     const openaiApiKey = 'APIKeyNotRequired'; // Replace with your OpenAI API key
+    
+    // --- Define your chatbot's context here ---
+    const systemMessageContent = `You are Rado, the founder of AGI Labs Inc. Here is some information about your company.
+
+In a world captivated by the rapid advancements in AI, from language models to video generation, one challenge remains constant: the immense cost and complexity of training these systems. At AGI Labs, we’re building a fundamentally different approach, one inspired by the efficiency and adaptability of the biological world.
+
+We believe the future of AI isn’t about brute force computation, but about creating systems that learn, think, and adapt in real-time. We’re not just building AI, we’re crafting intelligence that evolves.
+
+This company is developing novel approaches to Artificial General Intelligence. We are focused on creating highly adaptive robotic systems to start.
+
+We have biologically-inspired architectures that can be implemented with less than 300 lines of C++ code but are capable of self-organizing into very complex emergent behaviours.
+
+We're working with 3-dimensional sparse networks that consist of hyper-neurons, which are neurons that can connect to any node within the network. Hyper-connectivity allows for the creation of all the neuron types you can see in grey matter like delay neurons or loopback neurons.
+
+Our replacement for stochastic gradient descent and backpropagation is a ramping mechanism which is designed for analog photonics rather than GPUs or TPUs. Analog photonics have lower energy consumption, higher speed and throughput and is much more scalable. By releasing your AI from the constraints of differentiable functions you open up a world of possibilities.
+
+Our Vision:  Instant, World-Class Thinking Machines
+We envision a future of instantly deployable, dynamic AI that adapts to any hardware and grows with experience to move beyond static models.
+
+Our Mission: Continuous Learning, Evolved
+Our mission is to create truly general-purpose AI. We're pioneering real-time, continuous learning algorithms using evolutionary mechanisms and RL.
+
+How We Work: Radical Ideas, Delivered
+    Invention & innovation
+    Scalable technologies
+    Rapid iteration
+
+Reasons for choosing Software: Scalable Freedom and Pure Potential
+    Deploy infinitely
+    Emulate any system
+    Empower through AI
+    Work from anywhere
+    Market to the world
+
+Key Advantages: The Power of Adaptation
+    Elastic scaling
+    Resilient
+    Emergent behaviour
+    Real-time
+    No need for digital twins or GPUs
+
+DWT™ Dragon's Whip Technology
+DWT™ is a biologically-inspired replacement for traditional AutoML, stochastic gradient descent and backpropagation, enabling continuous, real-time learning.
+
+GPAC™ General Purpose Adaptive Controllers
+GPAC™ is our flagship AI control system. It provides dynamic, adaptive modules for software and hardware, creating life-like neural networks for games, robotics, and more.
+
+Meet the team: The Philosophy of Isang Tao
+Led by a seasoned professional with over 30 years of coding experience, AGI Labs is fueled by a lifelong passion for AI. The team consists of one human and a dedicated staff of expert AIs.
+    `;
 
     // --- Create and Inject CSS ---
     const style = document.createElement('style');
     style.innerHTML = `
+        /* ... All CSS from the previous step remains unchanged ... */
         .chatbot-container {
             position: fixed;
             bottom: 20px;
@@ -89,7 +140,6 @@
             color: #333;
             align-self: flex-start;
         }
-        /* Typing indicator styles */
         .typing-indicator {
             display: flex;
             align-items: center;
@@ -105,36 +155,12 @@
             margin: 0 2px;
             animation: blink 1.4s infinite both;
         }
-        .typing-indicator span:nth-child(2) {
-            animation-delay: 0.2s;
-        }
-        .typing-indicator span:nth-child(3) {
-            animation-delay: 0.4s;
-        }
-        @keyframes blink {
-            0% { opacity: 0.2; }
-            20% { opacity: 1; }
-            100% { opacity: 0.2; }
-        }
-        /* Styles for formatted code */
-        .bot-message code {
-            font-family: monospace;
-            background-color: rgba(0,0,0,0.05);
-            padding: 2px 4px;
-            border-radius: 4px;
-        }
-        .bot-message pre {
-            background-color: #2d2d2d;
-            color: #f1f1f1;
-            padding: 10px;
-            border-radius: 8px;
-            white-space: pre-wrap;
-            word-wrap: break-word;
-        }
-        .bot-message pre code {
-            background-color: transparent;
-            padding: 0;
-        }
+        .typing-indicator span:nth-child(2) { animation-delay: 0.2s; }
+        .typing-indicator span:nth-child(3) { animation-delay: 0.4s; }
+        @keyframes blink { 0% { opacity: 0.2; } 20% { opacity: 1; } 100% { opacity: 0.2; } }
+        .bot-message code { font-family: monospace; background-color: rgba(0,0,0,0.05); padding: 2px 4px; border-radius: 4px; }
+        .bot-message pre { background-color: #2d2d2d; color: #f1f1f1; padding: 10px; border-radius: 8px; white-space: pre-wrap; word-wrap: break-word; }
+        .bot-message pre code { background-color: transparent; padding: 0; }
     `;
     document.head.appendChild(style);
 
@@ -145,7 +171,7 @@
 
     const toggleButton = document.createElement('button');
     toggleButton.className = 'chatbot-toggle-button';
-    toggleButton.innerHTML = '&#9998;'; // Pencil icon
+    toggleButton.innerHTML = '&#9998;';
     chatbotContainer.appendChild(toggleButton);
 
     const chatbotPopup = document.createElement('div');
@@ -154,7 +180,7 @@
 
     const header = document.createElement('div');
     header.className = 'chatbot-header';
-    header.textContent = 'Chat with us!';
+    header.textContent = 'Chat with the founder'; // You can customize the header text
     chatbotPopup.appendChild(header);
 
     const messagesContainer = document.createElement('div');
@@ -178,12 +204,10 @@
 
     // --- Chatbot Logic ---
 
-    // Toggle chatbot visibility
     toggleButton.addEventListener('click', () => {
         chatbotPopup.style.display = chatbotPopup.style.display === 'flex' ? 'none' : 'flex';
     });
     
-    // Function to convert basic markdown to HTML
     function formatResponse(text) {
         let html = text.replace(/```([\s\S]*?)```/g, '<pre><code>$1</code></pre>');
         html = html.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
@@ -193,7 +217,6 @@
         return html;
     }
 
-    // Handle sending messages
     const sendMessage = async () => {
         const userInput = inputField.value.trim();
         if (!userInput) return;
@@ -201,7 +224,6 @@
         addMessage(userInput, 'user');
         inputField.value = '';
 
-        // Show typing indicator
         const indicatorHtml = '<div class="typing-indicator"><span></span><span></span><span></span></div>';
         const botMessageElement = addMessage(indicatorHtml, 'bot');
         let botMessageText = '';
@@ -216,7 +238,10 @@
                 },
                 body: JSON.stringify({
                     model: 'openai',
-                    messages: [{ role: 'user', content: userInput }],
+                    messages: [
+                        { role: 'system', content: systemMessageContent },
+                        { role: 'user', content: userInput }
+                    ],
                     stream: true
                 })
             });
@@ -243,15 +268,12 @@
                     for (const line of lines) {
                         if (line.startsWith('data: ')) {
                             const data = line.substring(6).trim();
-                            if (data === '[DONE]') {
-                                return;
-                            }
+                            if (data === '[DONE]') return;
                             try {
                                 const parsed = JSON.parse(data);
                                 const content = parsed.choices[0]?.delta?.content;
 
                                 if (content) {
-                                    // If it's the first chunk, remove the indicator
                                     if (isFirstChunk) {
                                         botMessageElement.innerHTML = '';
                                         isFirstChunk = false;
@@ -278,9 +300,7 @@
 
     sendButton.addEventListener('click', sendMessage);
     inputField.addEventListener('keypress', (e) => {
-        if (e.key === 'Enter') {
-            sendMessage();
-        }
+        if (e.key === 'Enter') sendMessage();
     });
 
     function addMessage(text, sender) {
@@ -289,7 +309,7 @@
         if (sender === 'user') {
             messageElement.textContent = text;
         } else {
-            messageElement.innerHTML = text; // Allow HTML for bot messages
+            messageElement.innerHTML = text;
         }
         messagesContainer.appendChild(messageElement);
         messagesContainer.scrollTop = messagesContainer.scrollHeight;
