@@ -1,5 +1,5 @@
 (function() {
-    const openaiApiKey = 'KeyNotRequired'; // Replace with your OpenAI API key
+    const openaiApiKey = 'APIKeyNotRequired'; // Replace with your OpenAI API key
 
     // Create Style Element
     const style = document.createElement('style');
@@ -108,7 +108,7 @@
 
     const toggleButton = document.createElement('button');
     toggleButton.className = 'chatbot-toggle-button';
-    toggleButton.innerHTML = '&#9998;'; // Pencil icon, you can use an SVG or other icon
+    toggleButton.innerHTML = '&#9998;'; // Pencil icon
     chatbotContainer.appendChild(toggleButton);
 
     const chatbotPopup = document.createElement('div');
@@ -153,6 +153,7 @@
         inputField.value = '';
 
         const botMessageElement = addMessage('', 'bot');
+        let botMessageText = '';
 
         try {
             const response = await fetch('https://text.pollinations.ai/openai', {
@@ -168,40 +169,53 @@
                 })
             });
 
+            if (!response.ok) {
+                const errorData = await response.json();
+                console.error('Error from OpenAI API:', errorData);
+                botMessageElement.textContent = `Error: ${errorData.error.message}`;
+                return;
+            }
+
             const reader = response.body.getReader();
-            const decoder = new TextDecoder('utf-8');
-            let result = '';
+            const decoder = new TextDecoder();
+            let buffer = '';
 
-            while (true) {
-                const { done, value } = await reader.read();
-                if (done) break;
+            const processStream = async () => {
+                while (true) {
+                    const { done, value } = await reader.read();
+                    if (done) break;
 
-                const chunk = decoder.decode(value);
-                const lines = chunk.split('\n');
+                    buffer += decoder.decode(value, { stream: true });
+                    const lines = buffer.split('\n');
+                    buffer = lines.pop(); // Keep the last, possibly incomplete, line in the buffer
 
-                for (const line of lines) {
-                    if (line.startsWith('data: ')) {
-                        const data = line.substring(6).trim();
-                        if (data === '[DONE]') {
-                            return;
-                        }
-                        try {
-                            const parsed = JSON.parse(data);
-                            const content = parsed.choices[0]?.delta?.content || '';
-                            if (content) {
-                                result += content;
-                                botMessageElement.textContent = result;
-                                messagesContainer.scrollTop = messagesContainer.scrollHeight;
+                    for (const line of lines) {
+                        if (line.startsWith('data: ')) {
+                            const data = line.substring(6).trim();
+                            if (data === '[DONE]') {
+                                return;
                             }
-                        } catch (error) {
-                            console.error('Error parsing stream data:', error);
+                            try {
+                                const parsed = JSON.parse(data);
+                                const content = parsed.choices[0]?.delta?.content;
+                                if (content) {
+                                    botMessageText += content;
+                                    botMessageElement.textContent = botMessageText;
+                                    messagesContainer.scrollTop = messagesContainer.scrollHeight;
+                                }
+                            } catch (error) {
+                                console.error('Error parsing stream data:', error, 'Data:', data);
+                            }
                         }
                     }
                 }
-            }
+            };
+
+            await processStream();
+
         } catch (error) {
             console.error('Error fetching OpenAI response:', error);
-            botMessageElement.textContent = 'Sorry, something went wrong.';
+            botMessageElement.textContent = 'Sorry, an error occurred.';
         }
     };
 
