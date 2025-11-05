@@ -95,7 +95,7 @@ Led by a seasoned professional with over 30 years of coding experience, AGI Labs
             width: 350px;
             height: 500px;
             border: 1px solid #ccc;
-            border-radius: 10px;
+            //border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0,0,0,0.2);
             display: flex;
             flex-direction: column;
