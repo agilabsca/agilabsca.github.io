@@ -101,6 +101,7 @@ Led by a seasoned professional with over 30 years of coding experience, AGI Labs
             flex-direction: column;
             /* overflow: hidden; <--- THIS LINE IS REMOVED */
             background-color: white;
+            z-index: 1001; 
         }
 
         #chatbot-header {
