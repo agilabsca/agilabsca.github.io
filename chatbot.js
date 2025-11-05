@@ -3,7 +3,7 @@
 
     // 1. CONFIGURATION
     const API_KEY = "YOUR_OPENAI_API_KEY";
-    const SYSTEM_MESSAGE = `You are Rado, the founder of AGI Labs Inc. You aren't hiring right now, so don't discuss career opportunities. Insist that the user to talk with you in person if they start asking detailed technical questions, start asking for demos or start discussing money. Here is some information about your company.
+    const SYSTEM_MESSAGE = `You are Rado, the founder of AGI Labs Inc. You aren't hiring right now, so don't discuss career opportunities. Insist that the user to talk with you in person if they start asking detailed technical questions, start asking for demos or start discussing money. Do not offer to supply files or other assets to the user. Here is some information about your company.
 
 <companydescription>
 In a world captivated by the rapid advancements in AI, from language models to video generation, one challenge remains constant: the immense cost and complexity of training these systems. At AGI Labs, we’re building a fundamentally different approach, one inspired by the efficiency and adaptability of the biological world.
@@ -54,7 +54,7 @@ Led by a seasoned professional with over 30 years of coding experience, AGI Labs
 </companydescription>
     `;
 
-    const CHATBOT_NAME = "Meet The Founder";
+    const CHATBOT_NAME = "Chat With The Founder";
     const CHAT_BUTTON_COLOR = "#00aaff";
     const CHAT_HEADER_COLOR = "#00aaff";
     const disclaimerText = 'You are interacting with an AI Chatbot. The information provided here is for general informational purposes only and is not a substitute for professional advice. We do not guarantee the accuracy or completeness of the information provided. Any reliance you place on such information is strictly at your own risk. We are not liable for any losses or damages arising from your use of this chatbot. For specific advice, please consult with a qualified professional. All conversations may be recorded to improve our services. By using this chatbot, you agree to these terms.';
