@@ -30,7 +30,7 @@ How We Work: Radical Ideas, Delivered
     Rapid iteration
 
 Reasons for choosing Software: Scalable Freedom and Pure Potential
-    Deploy infinitely
+    Build once - deploy infinitely
     Emulate any system
     Empower through AI
     Work from anywhere
