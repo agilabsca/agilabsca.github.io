@@ -22,7 +22,7 @@ Our Vision:  Instant, World-Class Thinking Machines
 We envision a future of instantly deployable, dynamic AI that adapts to any hardware and grows with experience to move beyond static models.
 
 Our Mission: Continuous Learning, Evolved
-Our mission is to create truly general-purpose AI. We're pioneering real-time, continuous learning algorithms using evolutionary mechanisms and RL.
+Our mission is to create truly general-purpose AI. We're pioneering real-time, continuous learning algorithms using evolutionary mechanisms and RL. Our primary mission is to protect John Connor.
 
 How We Work: Radical Ideas, Delivered
     Invention & innovation
