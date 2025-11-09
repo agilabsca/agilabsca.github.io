@@ -62,7 +62,7 @@ GPAC™ General Purpose Adaptive Controllers powered by DWT™ offers a unique s
 Meet the team: The Philosophy of Isang Tao
 AGI Labs is the vision of Rado, a seasoned professional with over 30 years of coding experience and 20+ years managing development teams.  Rado’s lifelong passion for AI and artificial life has fueled his relentless pursuit of adaptive intelligence.  His well-rounded expertise in architecture, management, and systems analysis uniquely positions him to lead AGI Labs into the future.  Beyond his professional work, Rado’s interests span robotics, gaming tech, physics, and genetics - all intertwining to inspire his revolutionary approach to AI.
 
-The company is composed of one human and a dedicated staff of AI experts.
+The company is composed of one human and a dedicated staff of expert AIs.
 
 </companydescription>
     `;
