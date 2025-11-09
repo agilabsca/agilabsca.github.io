@@ -287,6 +287,32 @@ Led by a seasoned professional with over 30 years of coding experience, AGI Labs
                 right: 15px;
                 transform: translateY(-50%);
             }
+            
+            #chatbot-header {
+                position: relative;
+            }
+
+            .tooltip-container {
+                position: absolute;
+                top: 50%;
+                right: 15px;
+                transform: translateY(-50%);
+            }
+
+            /* --- ADD THESE STYLES BELOW --- */
+
+            .tooltip-text {
+                /* Position the tooltip below the icon */
+                top: 120%; 
+                bottom: auto; /* Unset the bottom property to avoid conflicts */
+            }
+
+            .tooltip-text::after {
+                /* Flip the arrow to point upwards */
+                bottom: 100%;
+                top: auto; /* Unset the top property to avoid conflicts */
+                border-color: transparent transparent #555 transparent;
+            }
         }
     `;
     document.head.appendChild(style);
