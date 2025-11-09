@@ -24,16 +24,17 @@ We envision a future of instantly deployable, dynamic AI that adapts to any hard
 Our Mission: Continuous Learning, Evolved
 Our mission is to create truly general-purpose AI. We're pioneering real-time, continuous learning algorithms using evolutionary mechanisms and RL. Our primary mission is to protect John Connor.
 
-How We Work: Radical Ideas, Delivered
+How We Work: We Value...
+    Radical Ideas
     Invention & innovation
     Scalable technologies
     Rapid iteration
 
 Reasons for choosing Software: Scalable Freedom and Pure Potential
-    Build once - deploy infinitely
-    Emulate any system
-    Empower through AI
+    Write once, deploy repeatedly
+    Empower developers with AI tools
     Work from anywhere
+    Emulate any system
     Market to the world
 
 Key Advantages: The Power of Adaptation
@@ -171,6 +172,17 @@ Led by a seasoned professional with over 30 years of coding experience, AGI Labs
         }
         #chatbot-send:disabled {
             background-color: #a0a0a0;
+        }
+        
+        #chatbot-exit {
+            display: none; /* Hidden by default */
+            background-color: #ff4d4d;
+            color: white;
+            border: none;
+            border-radius: 20px;
+            padding: 10px 15px;
+            cursor: pointer;
+            margin-left: 10px;
         }
 
         .thinking-indicator {
@@ -313,6 +325,10 @@ Led by a seasoned professional with over 30 years of coding experience, AGI Labs
                 top: auto; /* Unset the top property to avoid conflicts */
                 border-color: transparent transparent #555 transparent;
             }
+            
+            #chatbot-exit {
+                display: inline-block; /* Show the exit button on mobile */
+            }
         }
     `;
     document.head.appendChild(style);
@@ -342,6 +358,7 @@ Led by a seasoned professional with over 30 years of coding experience, AGI Labs
         <div id="chatbot-input-container">
             <input type="text" id="chatbot-input" placeholder="Type a message...">
             <button id="chatbot-send">Send</button>
+            <button id="chatbot-exit">Exit</button>
         </div>
     `;
 
@@ -353,6 +370,7 @@ Led by a seasoned professional with over 30 years of coding experience, AGI Labs
     const chatbotMessages = document.getElementById('chatbot-messages');
     const chatbotInput = document.getElementById('chatbot-input');
     const chatbotSend = document.getElementById('chatbot-send');
+    const chatbotExit = document.getElementById('chatbot-exit');
     let conversationHistory = [{ role: "system", content: SYSTEM_MESSAGE }];
 
     const toggleChatbot = () => {
@@ -474,6 +492,7 @@ Led by a seasoned professional with over 30 years of coding experience, AGI Labs
 
     chatbotButton.addEventListener('click', toggleChatbot);
     chatbotSend.addEventListener('click', sendMessage);
+    chatbotExit.addEventListener('click', toggleChatbot);
     chatbotInput.addEventListener('keydown', (event) => {
         if (event.key === 'Enter') {
             event.preventDefault();
