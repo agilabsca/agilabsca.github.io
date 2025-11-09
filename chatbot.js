@@ -55,7 +55,7 @@ Led by a seasoned professional with over 30 years of coding experience, AGI Labs
 </companydescription>
     `;
 
-    const CHATBOT_NAME = "Chat With The Founder";
+    const CHATBOT_NAME = "Chat With Our Website";
     const CHAT_BUTTON_COLOR = "#00aaff";
     const CHAT_HEADER_COLOR = "#00aaff";
     const disclaimerText = 'You are interacting with an AI Chatbot. The information provided here is for general informational purposes only and is not a substitute for professional advice. We do not guarantee the accuracy or completeness of the information provided. Any reliance you place on such information is strictly at your own risk. We are not liable for any losses or damages arising from your use of this chatbot. For specific advice, please consult with a qualified professional. All conversations may be recorded to improve our services. By using this chatbot, you agree to these terms. AI inference graciously provided by pollinations.ai';
