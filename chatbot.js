@@ -251,6 +251,42 @@ Led by a seasoned professional with over 30 years of coding experience, AGI Labs
             visibility: visible;
             opacity: 1;
         }
+
+        /* --- Mobile Responsive Styles --- */
+        @media (max-width: 600px) {
+            #chatbot-popup {
+                width: 100%;
+                height: 100%;
+                bottom: 0;
+                right: 0;
+                border-radius: 0;
+                border: none;
+                box-shadow: none;
+            }
+
+            #chatbot-container {
+                bottom: 15px;
+                right: 15px;
+            }
+
+            #chatbot-button {
+                width: 55px;
+                height: 55px;
+            }
+
+             /* Make header elements relatively positioned to the header itself */
+            #chatbot-header {
+                position: relative;
+            }
+
+            /* Adjust tooltip positioning for mobile */
+            .tooltip-container {
+                position: absolute;
+                top: 50%;
+                right: 15px;
+                transform: translateY(-50%);
+            }
+        }
     `;
     document.head.appendChild(style);
 
