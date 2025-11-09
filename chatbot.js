@@ -110,6 +110,7 @@ Led by a seasoned professional with over 30 years of coding experience, AGI Labs
             padding: 10px;
             text-align: center;
             font-weight: bold;
+            position: relative; 
         }
 
         #chatbot-messages {
@@ -225,8 +226,8 @@ Led by a seasoned professional with over 30 years of coding experience, AGI Labs
             border-radius: 6px;
             padding: 8px;
             position: absolute;
-            z-index: 1001;
-            bottom: 140%;
+            z-index: 1002;
+            top: 120%;
             /* --- MODIFIED --- */
             right: 0; /* Align to the right of the container */
             /* transform: translateX(50%); <-- REMOVED */
@@ -238,20 +239,20 @@ Led by a seasoned professional with over 30 years of coding experience, AGI Labs
         .tooltip-text::after {
             content: "";
             position: absolute;
-            top: 100%;
+            bottom: 100%;
             /* --- MODIFIED --- */
             right: 8px; /* Position arrow on the right side */
             /* left: 50%; <-- REMOVED */
             /* margin-left: -5px; <-- REMOVED */
             border-width: 5px;
             border-style: solid;
-            border-color: #555 transparent transparent transparent;
+            border-color: transparent transparent #555 transparent;
         }
         .tooltip-container:hover .tooltip-text {
             visibility: visible;
             opacity: 1;
         }
-
+        
         /* --- Mobile Responsive Styles --- */
         @media (max-width: 600px) {
             #chatbot-popup {
