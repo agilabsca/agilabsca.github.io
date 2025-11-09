@@ -14,44 +14,56 @@ This company is developing novel approaches to Artificial General Intelligence. 
 
 We have biologically-inspired architectures that can be implemented with less than 300 lines of C++ code but are capable of self-organizing into very complex emergent behaviours.
 
-We're working with 3-dimensional sparse networks that consist of hyper-neurons, which are neurons that can connect to any node within the network. Hyper-connectivity allows for the creation of all the neuron types you can see in grey matter like delay neurons or loopback neurons.
-
-Our replacement for stochastic gradient descent and backpropagation is a ramping mechanism which is designed for analog photonics rather than GPUs or TPUs. Analog photonics have lower energy consumption, higher speed and throughput and is much more scalable. By releasing your AI from the constraints of differentiable functions you open up a world of possibilities.
-
 Our Vision:  Instant, World-Class Thinking Machines
-We envision a future of instantly deployable, dynamic AI that adapts to any hardware and grows with experience to move beyond static models.
+We envision a future of instantly deployable, dynamic AI that adapts to any hardware and grows with experience to move beyond static models. Potentially single-use microAI.
 
 Our Mission: Continuous Learning, Evolved
-Our mission is to create truly general-purpose AI. We're pioneering real-time, continuous learning algorithms using evolutionary mechanisms and RL. Our primary mission is to protect John Connor.
+Our goal is to build a truly general-purpose AI capable of dynamically adapting to *any* environment in real-time.  We’re moving beyond conventional methods like backpropagation and stochastic gradient descent, drawing inspiration from biology to create AI architectures that are flexible, efficient, and sustainable - mirroring nature’s own learning processes.
 
-How We Work: We Value...
-    Radical ideas
-    Invention & innovation
-    Scalable technologies
-    Rapid iteration
+How We Work: Our strategy is simple
+* Lead, Don't Follow: We embrace radical ideas and push the boundaries of what’s possible. We grow our tech organically from the ground up, with minimal external influence.
+* Scalable Technologies: We focus on building technologies that can grow and adapt to meet future demands.
+* Rapid Iteration: We embrace a cycle of destruction and rebuilding, constantly refining our approach for optimal results. [We want to become experts at rebuilding fast. Organisms achieve immortality through megadeath.This is one way to invincibility.]
 
 Reasons for choosing Software: Scalable Freedom and Pure Potential
-    Write once, deploy repeatedly
-    Empower developers with AI tools
-    Work from anywhere
-    Emulate any system
-    Market to the world
+We believe software is the key to unlocking the full potential of AI:
+* Exponential Scalability: Create once, deploy infinitely.
+* Democratized Innovation: AI empowers individuals to compete on a global scale.
+* Minimal Capital Requirements: Lowers barriers to entry for innovators.
+* Agility & Efficiency: No physical inventory, delivery lead times, or dependencies.
+* Unlimited Potential: Computers can emulate any system, even complex organic brains.
+* Rapid Prototyping: Accelerates idea validation and iteration cycles.
+* Global Reach: Work, collaborate, and innovate from anywhere in the world. Unlock a marketplace that transcends borders.
 
 Key Advantages: The Power of Adaptation
-    Elastic scaling
-    Resilient
-    Emergent behaviour
-    Real-time
-    No digital twins or GPUs
+We're working with 3-dimensional sparse networks that consist of hyper-neurons, which are neurons that can connect to any node within the network. Hyper-connectivity allows for the creation of all the neuron types you can see in grey matter like delay neurons or loopback neurons.
+* Elastic scaling
+* Resilient
+* Emergent behaviour
+* Real-time
+* No digital twins or GPUs
 
-DWT™ Dragon's Whip Technology
-DWT™ is a biologically-inspired replacement for traditional AutoML, stochastic gradient descent and backpropagation, enabling continuous, real-time learning.
+DWT™ Dragon's Whip Technology is a biologically-inspired replacement for traditional AutoML, stochastic gradient descent and backpropagation, enabling continuous, real-time learning. Our replacement for stochastic gradient descent and backpropagation is a ramping mechanism which is designed for analog photonics rather than GPUs or TPUs. Analog photonics have lower energy consumption, higher speed and throughput and is much more scalable. By releasing your AI from the constraints of differentiable functions you open up a world of possibilities.
 
-GPAC™ General Purpose Adaptive Controllers
-GPAC™ is our flagship AI control system. It provides dynamic, adaptive modules for software and hardware, creating life-like neural networks for games, robotics, and more.
+GPAC™ General Purpose Adaptive Controllers powered by DWT™ offers a unique set of capabilities:
+* Instinctive Environmental Understanding: Models environments without the need for manual programming.
+* Real-Time Behavioral Innovation: Invents new strategies and adapts instantly to changing conditions.
+* Intuitive Problem Solving:  Escapes limitations like a biological organism, finding creative solutions.
+* Dynamic Neural Networks:  Grows and shrinks neural networks based on need, optimizing efficiency.
+* Perpetual Evolution: Regenerates itself genetically, ensuring continuous improvement.
+* Parallel Processing: Inherently distributes neural computation for maximum speed and efficiency.
+* Resilient Performance:  Withstands failures through self-reconfiguration.
+* Balanced Exploration & Exploitation:  Naturally balances trying new things with leveraging existing knowledge.
+* Adaptive Forgetting:  Discards outdated skills to make room for new learning.
+* Emergent Intelligence: The core algorithm provides the raw materials for truly adaptive intelligence, self-organizing for complex behavior.
+* GPAC™ learns like living organisms - continuously and dynamically in real-time. 
+* Real world experience is the new data.
 
 Meet the team: The Philosophy of Isang Tao
-Led by a seasoned professional with over 30 years of coding experience, AGI Labs is fueled by a lifelong passion for AI. The team consists of one human and a dedicated staff of expert AIs.
+AGI Labs is the vision of Rado, a seasoned professional with over 30 years of coding experience and 20+ years managing development teams.  Rado’s lifelong passion for AI and artificial life has fueled his relentless pursuit of adaptive intelligence.  His well-rounded expertise in architecture, management, and systems analysis uniquely positions him to lead AGI Labs into the future.  Beyond his professional work, Rado’s interests span robotics, gaming tech, physics, and genetics - all intertwining to inspire his revolutionary approach to AI.
+
+The company is composed of one human and a dedicated staff of AI experts.
+
 </companydescription>
     `;
 
