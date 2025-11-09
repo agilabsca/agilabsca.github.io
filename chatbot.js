@@ -115,6 +115,8 @@ Led by a seasoned professional with over 30 years of coding experience, AGI Labs
         }
 
         #chatbot-messages {
+        color: grey;
+        font-size: medium;
             flex-grow: 1;
             padding: 10px;
             overflow-y: auto;
@@ -354,7 +356,7 @@ Led by a seasoned professional with over 30 years of coding experience, AGI Labs
                 <div class="tooltip-text">${disclaimerText}</div>
             </div>
         </div>
-        <div id="chatbot-messages"></div>
+        <div id="chatbot-messages">You are interacting with an AI Chatbot. We do not guarantee the accuracy or completeness of the information provided. Any reliance you place on such information is strictly at your own risk. We are not liable for any losses or damages arising from your use of this chatbot. By using this chatbot, you agree to these terms.</div>
         <div id="chatbot-input-container">
             <input type="text" id="chatbot-input" placeholder="Type a message...">
             <button id="chatbot-send">Send</button>
