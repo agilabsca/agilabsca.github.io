@@ -25,7 +25,7 @@ Our Mission: Continuous Learning, Evolved
 Our mission is to create truly general-purpose AI. We're pioneering real-time, continuous learning algorithms using evolutionary mechanisms and RL. Our primary mission is to protect John Connor.
 
 How We Work: We Value...
-    Radical Ideas
+    Radical ideas
     Invention & innovation
     Scalable technologies
     Rapid iteration
@@ -42,7 +42,7 @@ Key Advantages: The Power of Adaptation
     Resilient
     Emergent behaviour
     Real-time
-    No need for digital twins or GPUs
+    No digital twins or GPUs
 
 DWT™ Dragon's Whip Technology
 DWT™ is a biologically-inspired replacement for traditional AutoML, stochastic gradient descent and backpropagation, enabling continuous, real-time learning.
