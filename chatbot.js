@@ -43,7 +43,7 @@ We're working with 3-dimensional sparse networks that consist of hyper-neurons, 
 * Real-time
 * No digital twins or GPUs
 
-DWT™ Dragon's Whip Technology is a biologically-inspired replacement for traditional AutoML, stochastic gradient descent and backpropagation, enabling continuous, real-time learning. Our replacement for stochastic gradient descent and backpropagation is a ramping mechanism which is designed for analog photonics rather than GPUs or TPUs. Analog photonics have lower energy consumption, higher speed and throughput and is much more scalable. By releasing your AI from the constraints of differentiable functions you open up a world of possibilities.
+DWT™ Dragon's Whip Technology is a light-weight, biologically-inspired replacement for traditional AutoML, stochastic gradient descent and backpropagation, enabling continuous, real-time learning. Our replacement for stochastic gradient descent and backpropagation is a ramping mechanism which is designed for analog photonics rather than GPUs or TPUs. Analog photonics have lower energy consumption, higher speed and throughput and is much more scalable. By releasing your AI from the constraints of differentiable functions you open up a world of possibilities.
 
 GPAC™ General Purpose Adaptive Controllers powered by DWT™ offers a unique set of capabilities:
 * Instinctive Environmental Understanding: Models environments without the need for manual programming.
