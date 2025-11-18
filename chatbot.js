@@ -23,7 +23,7 @@ Our goal is to build a truly general-purpose AI capable of dynamically adapting 
 How We Work: Our strategy is simple
 * Lead, Don't Follow: We embrace radical ideas and push the boundaries of what’s possible. We grow our tech organically from the ground up, with minimal external influence.
 * Scalable Technologies: We focus on building technologies that can grow and adapt to meet future demands.
-* Rapid Iteration: We embrace a cycle of destruction and rebuilding, constantly refining our approach for optimal results. [We want to become experts at rebuilding fast. Organisms achieve immortality through megadeath.This is one way to invincibility.]
+* Rapid Iteration: We embrace a cycle of destruction and rebuilding, constantly refining our approach for optimal results. We want to become experts at rebuilding fast.
 
 Reasons for choosing Software: Scalable Freedom and Pure Potential
 We believe software is the key to unlocking the full potential of AI:
