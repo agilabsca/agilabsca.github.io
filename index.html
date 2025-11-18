@@ -4,79 +4,130 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AGI Labs - Redefining Intelligence</title>
+    
+    <!-- Fonts: Orbitron for headers (Sci-Fi feel) and Inter for readability -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@700&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+
     <style>
         :root {
-            --primary-color: #1a1a1a;
-            --secondary-color: #2c2c2c;
-            --accent-color: #00aaff;
-            --text-color: #ffffff;
-            --text-secondary-color: #bbbbbb;
-            --highlight-color: #000000;
+            --bg-deep: #030305;
+            --accent-primary: #9d4edd;
+            --accent-secondary: #3a0ca3;
+            --accent-glow: #e0aaff;
+            --glass-bg: rgba(255, 255, 255, 0.03);
+            --glass-border: rgba(255, 255, 255, 0.08);
+            --glass-blur: 12px;
+            --text-main: #ffffff;
+            --text-muted: #a0a0a0;
         }
 
         * {
             margin: 0;
+            padding: 0;
             box-sizing: border-box;
         }
 
         body {
-            color: var(--text-color);
-            background-color: var(--primary-color);
-            font-family: 'Roboto', sans-serif;
-            line-height: 1.6;
-            /* overflow: hidden; */ /* No longer needed with JS starfield */
+            background-color: var(--bg-deep);
+            color: var(--text-main);
+            font-family: 'Inter', sans-serif;
+            line-height: 1.7;
+            overflow-x: hidden;
         }
 
-        .hero {
-            height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+        /* --- Starfield Container --- */
+        #js-starfield-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: radial-gradient(circle at center, #1a0b2e 0%, #000000 100%);
+        }
+
+        /* --- Typography & Layout --- */
+        h1, h2, h3 {
+            font-family: 'Orbitron', sans-serif;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        h2 {
+            font-size: 2.5rem;
             text-align: center;
-            /* background: #1a1a1a; */ /* Starfield handles background */
-            position: relative;
-            color: var(--text-color);
-        }
-
-        
-
-        .hero-content {
-            z-index: 1;
-        }
-
-        .hero-logo {
-            width: 150px;
-            height: 150px;
-            margin-bottom: 2rem;
-            fill: var(--accent-color);
-        }
-
-        .hero h1 {
-            font-family: 'Poppins', sans-serif;
-            font-size: 4rem;
-            margin-bottom: 1rem;
-        }
-
-        .hero .tagline {
-            font-size: 1.5rem;
-            color: var(--text-secondary-color);
+            margin-bottom: 3rem;
+            background: linear-gradient(90deg, #fff, var(--accent-glow));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 20px rgba(157, 78, 221, 0.5);
         }
 
         main {
-            padding: 4rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
             position: relative;
             z-index: 1;
         }
 
+        /* --- Hero Section --- */
+        .hero {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            position: relative;
+            padding: 2rem;
+        }
+
+        .hero-logo {
+            width: 120px;
+            height: 120px;
+            margin-bottom: 1.5rem;
+            fill: var(--accent-primary);
+            filter: drop-shadow(0 0 15px var(--accent-primary));
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .hero h1 {
+            font-size: clamp(3rem, 8vw, 5rem);
+            font-weight: 900;
+            line-height: 1.1;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(135deg, #ffffff 0%, #b0b0b0 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero .tagline {
+            font-size: 1.2rem;
+            color: var(--accent-glow);
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            margin-top: 1rem;
+            opacity: 0.8;
+        }
+
+        .scroll-indicator {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: bounce 2s infinite;
+            opacity: 0.5;
+        }
+
+        /* --- Content Sections --- */
         section {
-            max-width: 960px;
-            margin: 4rem auto;
+            margin: 6rem 0;
             opacity: 0;
-            transform: translateY(20px);
-            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+            transform: translateY(30px);
+            transition: all 0.8s ease-out;
         }
 
         section.visible {
@@ -84,39 +135,44 @@
             transform: translateY(0);
         }
 
-        h2 {
-            font-family: 'Poppins', sans-serif;
-            font-size: 2.5rem;
-            color: var(--accent-color);
-            text-align: center;
-            margin-bottom: 2rem;
+        .text-block {
+            background: var(--glass-bg);
+            backdrop-filter: blur(var(--glass-blur));
+            -webkit-backdrop-filter: blur(var(--glass-blur));
+            border: 1px solid var(--glass-border);
+            padding: 3rem;
+            border-radius: 20px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+            max-width: 900px;
+            margin: 0 auto;
         }
 
-        p {
+        .text-block p {
             margin-bottom: 1.5rem;
-            color: var(--text-secondary-color);
+            font-size: 1.05rem;
+            color: #d1d1d1;
         }
 
+        .text-block p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* --- Solutions Grid --- */
         .solutions-grid {
             display: grid;
-            grid-template-columns: repeat(4, 1fr);
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
             gap: 2rem;
-            perspective: 1000px;
+            perspective: 1500px;
         }
 
         .solution-card {
-            background-color: var(--secondary-color);
-            border-radius: 10px;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
-            transform-style: preserve-3d;
-            transition: transform 0.7s;
+            position: relative;
+            height: 400px;
+            width: 100%;
             cursor: pointer;
-            min-height: 350px;
+            transform-style: preserve-3d;
+            transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
-
-        /* .solution-card:hover { */
-        /*     transform: rotateY(180deg); */
-        /* } */
 
         .solution-card.flipped {
             transform: rotateY(180deg);
@@ -127,165 +183,179 @@
             width: 100%;
             height: 100%;
             backface-visibility: hidden;
+            border-radius: 15px;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            padding: 1.5rem;
+            padding: 2rem;
             text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            border: 1px solid var(--glass-border);
+            overflow: hidden;
+        }
+
+        /* Front Face Styling */
+        .card-front {
+            background: linear-gradient(145deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.01) 100%);
+            backdrop-filter: blur(10px);
+        }
+
+        .card-front::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(157, 78, 221, 0.1) 0%, transparent 70%);
+            opacity: 0;
+            transition: opacity 0.3s;
+            pointer-events: none;
+        }
+
+        .solution-card:hover .card-front::before {
+            opacity: 1;
         }
 
         .card-front svg {
-            width: 80px;
-            height: 80px;
-            margin-bottom: 1rem;
-            fill: var(--accent-color);
+            width: 64px;
+            height: 64px;
+            margin-bottom: 1.5rem;
+            fill: var(--accent-glow);
+            filter: drop-shadow(0 0 8px var(--accent-primary));
+            transition: transform 0.3s;
+        }
+
+        .solution-card:hover .card-front svg {
+            transform: scale(1.1);
         }
 
         .card-front p {
-            font-family: 'Poppins', sans-serif;
+            font-family: 'Orbitron', sans-serif;
             font-size: 1.2rem;
-            color: var(--text-color);
+            font-weight: 700;
+            color: #fff;
+            letter-spacing: 1px;
         }
 
+        /* Back Face Styling */
         .card-back {
-            background-color: var(--accent-color);
-            color: var(--primary-color);
             transform: rotateY(180deg);
-            border-radius: 10px;
-            padding: 1.5rem;
-        }
-        
-        .card-back h3 {
-            font-family: 'Poppins', sans-serif;
-            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--accent-secondary) 0%, var(--accent-primary) 100%);
+            color: #fff;
         }
 
-        .card-back p, .card-back ul {
-            color: var(--primary-color);
-            font-size: 1rem;
+        .card-back h3 {
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+            border-bottom: 1px solid rgba(255,255,255,0.3);
+            padding-bottom: 0.5rem;
+            width: 100%;
         }
-        
+
+        .card-back p {
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+
         .card-back ul {
-            list-style-type: none;
-            padding-left: 0;
+            list-style: none;
             text-align: left;
+            width: 100%;
+            font-size: 0.85rem;
         }
 
         .card-back ul li {
             margin-bottom: 0.5rem;
+            padding-left: 1.2rem;
+            position: relative;
         }
 
-        #contact {
-            background-color: var(--secondary-color);
-            padding: 4rem;
-            border-radius: 10px;
-        }
-
-        #contact form {
-            display: grid;
-            gap: 1.5rem;
-        }
-
-        #contact input, #contact textarea {
-            width: 100%;
-            padding: 1rem;
-            border: 1px solid var(--accent-color);
-            background-color: var(--primary-color);
-            color: var(--text-color);
-            border-radius: 5px;
-        }
-
-        #contact button {
-            background-color: var(--accent-color);
-            color: var(--primary-color);
-            padding: 1rem;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 1rem;
+        .card-back ul li::before {
+            content: '›';
+            position: absolute;
+            left: 0;
+            color: var(--accent-glow);
             font-weight: bold;
-            transition: background-color 0.3s;
         }
 
-        #contact button:hover {
-            background-color: #0077b3;
-        }
-
+        /* --- Footer --- */
         footer {
             text-align: center;
-            padding: 2rem;
-            color: var(--text-secondary-color);
+            padding: 4rem 2rem;
+            color: var(--text-muted);
+            border-top: 1px solid var(--glass-border);
+            background: rgba(0,0,0,0.2);
             position: relative;
             z-index: 1;
         }
 
-        .social-links a {
-            margin: 0 1rem;
-            display: inline-block;
-        }
-        
-        .social-links svg {
-            width: 24px;
-            height: 24px;
-            fill: var(--text-secondary-color);
-            transition: fill 0.3s;
+        footer p {
+            font-size: 0.9rem;
         }
 
-        .social-links a:hover svg {
-            fill: var(--accent-color);
+        /* --- Animations --- */
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
         }
 
-        @media (max-width: 1000px) {
-            .hero h1 {
-                font-size: 2.5rem;
-            }
-            .hero .tagline {
-                font-size: 1.2rem;
-            }
-            main {
-                padding: 2rem 1rem;
-            }
-            section {
-                margin: 2rem auto;
-            }
-            h2 {
-                font-size: 2rem;
-            }
-            .solutions-grid {
-                grid-template-columns: 1fr;
-            }
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {transform: translateY(0) translateX(-50%);}
+            40% {transform: translateY(-10px) translateX(-50%);}
+            60% {transform: translateY(-5px) translateX(-50%);}
+        }
+
+        /* --- Mobile Responsive --- */
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2.5rem; }
+            section { margin: 3rem 0; }
+            .text-block { padding: 1.5rem; }
+            .solutions-grid { grid-template-columns: 1fr; }
+            .solution-card { height: 300px; }
         }
     </style>
 </head>
 <body>
+
+    <!-- Background Starfield -->
     <div id="js-starfield-container"></div>
 
+    <!-- Hero Section -->
     <header class="hero">
         <div class="hero-content">
-            <svg class="hero-logo" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"><path d="M390-120q-51 0-88-35.5T260-241q-60-8-100-53t-40-106q0-21 5.5-41.5T142-480q-11-18-16.5-38t-5.5-42q0-61 40-105.5t99-52.5q3-51 41-86.5t90-35.5q26 0 48.5 10t41.5 27q18-17 41-27t49-10q52 0 89.5 35t40.5 86q59 8 99.5 53T840-560q0 22-5.5 42T818-480q11 18 16.5 38.5T840-400q0 62-40.5 106.5T699-241q-5 50-41.5 85.5T570-120q-25 0-48.5-9.5T480-156q-19 17-42 26.5t-48 9.5Zm130-590v460q0 21 14.5 35.5T570-200q20 0 34.5-16t15.5-36q-21-8-38.5-21.5T550-306q-10-14-7.5-30t16.5-26q14-10 30-7.5t26 16.5q11 16 28 24.5t37 8.5q33 0 56.5-23.5T760-400q0-5-.5-10t-2.5-10q-17 10-36.5 15t-40.5 5q-17 0-28.5-11.5T640-440q0-17 11.5-28.5T680-480q33 0 56.5-23.5T760-560q0-33-23.5-56T680-640q-11 18-28.5 31.5T613-587q-16 6-31-1t-20-23q-5-16 1.5-31t22.5-20q15-5 24.5-18t9.5-30q0-21-14.5-35.5T570-760q-21 0-35.5 14.5T520-710Zm-80 460v-460q0-21-14.5-35.5T390-760q-21 0-35.5 14.5T340-710q0 16 9 29.5t24 18.5q16 5 23 20t2 31q-6 16-21 23t-31 1q-21-8-38.5-21.5T279-640q-32 1-55.5 24.5T200-560q0 33 23.5 56.5T280-480q17 0 28.5 11.5T320-440q0 17-11.5 28.5T280-400q-21 0-40.5-5T203-420q-2 5-2.5 10t-.5 10q0 33 23.5 56.5T280-320q20 0 37-8.5t28-24.5q10-14 26-16.5t30 7.5q14 10 16.5 26t-7.5 30q-14 19-32 33t-39 22q1 20 16 35.5t35 15.5q21 0 35.5-14.5T440-250Zm40-230Z"/></svg>
+            <svg class="hero-logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960">
+                <path d="M390-120q-51 0-88-35.5T260-241q-60-8-100-53t-40-106q0-21 5.5-41.5T142-480q-11-18-16.5-38t-5.5-42q0-61 40-105.5t99-52.5q3-51 41-86.5t90-35.5q26 0 48.5 10t41.5 27q18-17 41-27t49-10q52 0 89.5 35t40.5 86q59 8 99.5 53T840-560q0 22-5.5 42T818-480q11 18 16.5 38.5T840-400q0 62-40.5 106.5T699-241q-5 50-41.5 85.5T570-120q-25 0-48.5-9.5T480-156q-19 17-42 26.5t-48 9.5Zm130-590v460q0 21 14.5 35.5T570-200q20 0 34.5-16t15.5-36q-21-8-38.5-21.5T550-306q-10-14-7.5-30t16.5-26q14-10 30-7.5t26 16.5q11 16 28 24.5t37 8.5q33 0 56.5-23.5T760-400q0-5-.5-10t-2.5-10q-17 10-36.5 15t-40.5 5q-17 0-28.5-11.5T640-440q0-17 11.5-28.5T680-480q33 0 56.5-23.5T760-560q0-33-23.5-56T680-640q-11 18-28.5 31.5T613-587q-16 6-31-1t-20-23q-5-16 1.5-31t22.5-20q15-5 24.5-18t9.5-30q0-21-14.5-35.5T570-760q-21 0-35.5 14.5T520-710Zm-80 460v-460q0-21-14.5-35.5T390-760q-21 0-35.5 14.5T340-710q0 16 9 29.5t24 18.5q16 5 23 20t2 31q-6 16-21 23t-31 1q-21-8-38.5-21.5T279-640q-32 1-55.5 24.5T200-560q0 33 23.5 56.5T280-480q17 0 28.5 11.5T320-440q0 17-11.5 28.5T280-400q-21 0-40.5-5T203-420q-2 5-2.5 10t-.5 10q0 33 23.5 56.5T280-320q20 0 37-8.5t28-24.5q10-14 26-16.5t30 7.5q14 10 16.5 26t-7.5 30q-14 19-32 33t-39 22q1 20 16 35.5t35 15.5q21 0 35.5-14.5T440-250Zm40-230Z"></path>
+            </svg>
             <h1>AGI Labs</h1>
             <p class="tagline">Redefining Intelligence</p>
+        </div>
+        <div class="scroll-indicator">
+            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 13l5 5 5-5M7 6l5 5 5-5"/></svg>
         </div>
     </header>
 
     <main>
         <section id="mission" class="fade-in">
-            <h2>The Next Evolution of AI is Here.</h2>
-            <p>In a world captivated by the rapid advancements in AI, from language models to video generation, one challenge remains constant: the immense cost and complexity of training these systems. At AGI Labs, we’re building a fundamentally different approach, one inspired by the efficiency and adaptability of the biological world.</p>
-            <p>We believe the future of AI isn’t about brute force computation, but about creating systems that learn, think, and adapt in real-time. We’re not just building AI, we’re crafting intelligence that evolves.</p>
-			<p>This company is developing novel approaches to Artificial General Intelligence. We are focused on creating highly adaptive robotic systems to start.</p>
-			<p>We have biologically-inspired architectures that can be implemented with less than 300 lines of C++ code but are capable of self-organizing into very complex emergent behaviours.</p>
-			<p>We're working with 3-dimensional sparse networks that consist of hyper-neurons, which are neurons that can connect to any node within the network. Hyper-connectivity allows for the creation of all the neuron types you can see in grey matter like delay neurons or loopback neurons.</p>
-			<p>Our replacement for stochastic gradient descent and backpropagation is a ramping mechanism which is designed for analog photonics rather than GPUs or TPUs. Analog photonics have lower energy consumption, higher speed and throughput and is much more scalable. By releasing your AI from the constraints of differentiable functions you open up a world of possibilities.</p>
+            <h2>The Next Evolution of AI is Here</h2>
+            <div class="text-block">
+                <p>In a world captivated by the rapid advancements in AI, from language models to video generation, one challenge remains constant: the immense cost and complexity of training these systems. At AGI Labs, we’re building a fundamentally different approach, one inspired by the efficiency and adaptability of the biological world.</p>
+                <p>We believe the future of AI isn’t about brute force computation, but about creating systems that learn, think, and adapt in real-time. We’re not just building AI, we’re crafting intelligence that evolves.</p>
+                <p>This company is developing novel approaches to Artificial General Intelligence. We are focused on creating highly adaptive robotic systems to start.</p>
+                <p>We have biologically-inspired architectures that can be implemented with less than 300 lines of C++ code but are capable of self-organizing into very complex emergent behaviours.</p>
+                <p>We're working with 3-dimensional sparse networks that consist of hyper-neurons, which are neurons that can connect to any node within the network. Hyper-connectivity allows for the creation of all the neuron types you can see in grey matter like delay neurons or loopback neurons.</p>
+                <p>Our replacement for stochastic gradient descent and backpropagation is a ramping mechanism which is designed for analog photonics rather than GPUs or TPUs. Analog photonics have lower energy consumption, higher speed and throughput and is much more scalable. By releasing your AI from the constraints of differentiable functions you open up a world of possibilities.</p>
+            </div>
         </section>
 
         <section id="solutions" class="fade-in">
             <h2>Our Core Concepts</h2>
             <div class="solutions-grid">
+                <!-- Card 1 -->
                 <div class="solution-card">
                     <div class="card-face card-front">
-                        <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3"><path d="m226-559 78 33q14-28 29-54t33-52l-56-11-84 84Zm142 83 114 113q42-16 90-49t90-75q70-70 109.5-155.5T806-800q-72-5-158 34.5T492-656q-42 42-75 90t-49 90Zm178-65q-23-23-23-56.5t23-56.5q23-23 57-23t57 23q23 23 23 56.5T660-541q-23 23-57 23t-57-23Zm19 321 84-84-11-56q-26 18-52 32.5T532-299l33 79Zm313-653q19 121-23.5 235.5T708-419l20 99q4 20-2 39t-20 33L538-80l-84-197-171-171-197-84 167-168q14-14 33.5-20t39.5-2l99 20q104-104 218-147t235-24ZM157-321q35-35 85.5-35.5T328-322q35 35 34.5 85.5T327-151q-25 25-83.5 43T82-76q14-103 32-161.5t43-83.5Zm57 56q-10 10-20 36.5T180-175q27-4 53.5-13.5T270-208q12-12 13-29t-11-29q-12-12-29-11.5T214-265Z"/></svg>
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960"><path d="m226-559 78 33q14-28 29-54t33-52l-56-11-84 84Zm142 83 114 113q42-16 90-49t90-75q70-70 109.5-155.5T806-800q-72-5-158 34.5T492-656q-42 42-75 90t-49 90Zm178-65q-23-23-23-56.5t23-56.5q23-23 57-23t57 23q23 23 23 56.5T660-541q-23 23-57 23t-57-23Zm19 321 84-84-11-56q-26 18-52 32.5T532-299l33 79Zm313-653q19 121-23.5 235.5T708-419l20 99q4 20-2 39t-20 33L538-80l-84-197-171-171-197-84 167-168q14-14 33.5-20t39.5-2l99 20q104-104 218-147t235-24ZM157-321q35-35 85.5-35.5T328-322q35 35 34.5 85.5T327-151q-25 25-83.5 43T82-76q14-103 32-161.5t43-83.5Zm57 56q-10 10-20 36.5T180-175q27-4 53.5-13.5T270-208q12-12 13-29t-11-29q-12-12-29-11.5T214-265Z"></path></svg>
                         <p>Our Vision</p>
                     </div>
                     <div class="card-face card-back">
@@ -293,9 +363,10 @@
                         <p>We envision a future of instantly deployable, dynamic AI that adapts to any hardware and grows with experience to move beyond static models.</p>
                     </div>
                 </div>
+                <!-- Card 2 -->
                 <div class="solution-card">
                     <div class="card-face card-front">
-                        <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3"><path d="M440-42v-80q-125-14-214.5-103.5T122-440H42v-80h80q14-125 103.5-214.5T440-838v-80h80v80q125 14 214.5 103.5T838-520h80v80h-80q-14 125-103.5 214.5T520-122v80h-80Zm40-158q116 0 198-82t82-198q0-116-82-198t-198-82q-116 0-198 82t-82 198q0 116 82 198t198 82Zm0-120q-66 0-113-47t-47-113q0-66 47-113t113-47q66 0 113 47t47 113q0 66-47 113t-113 47Zm0-80q33 0 56.5-23.5T560-480q0-33-23.5-56.5T480-560q-33 0-56.5 23.5T400-480q0 33 23.5 56.5T480-400Zm0-80Z"/></svg>
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960"><path d="M440-42v-80q-125-14-214.5-103.5T122-440H42v-80h80q14-125 103.5-214.5T440-838v-80h80v80q125 14 214.5 103.5T838-520h80v80h-80q-14 125-103.5 214.5T520-122v80h-80Zm40-158q116 0 198-82t82-198q0-116-82-198t-198-82q-116 0-198 82t-82 198q0 116 82 198t198 82Zm0-120q-66 0-113-47t-47-113q0-66 47-113t113-47q66 0 113 47t47 113q0 66-47 113t-113 47Zm0-80q33 0 56.5-23.5T560-480q0-33-23.5-56.5T480-560q-33 0-56.5 23.5T400-480q0 33 23.5 56.5T480-400Zm0-80Z"></path></svg>
                         <p>Our Mission</p>
                     </div>
                     <div class="card-face card-back">
@@ -303,112 +374,88 @@
                         <p>Our mission is to create truly general-purpose AI. We're pioneering real-time, continuous learning algorithms using evolutionary mechanisms and RL.</p>
                     </div>
                 </div>
+                <!-- Card 3 -->
                 <div class="solution-card">
                     <div class="card-face card-front">
-                        <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3"><path d="m656-120-56-56 63-64-63-63 56-57 64 64 63-64 57 57-64 63 64 64-57 56-63-63-64 63Zm-416-80q17 0 28.5-11.5T280-240q0-17-11.5-28.5T240-280q-17 0-28.5 11.5T200-240q0 17 11.5 28.5T240-200Zm0 80q-50 0-85-35t-35-85q0-50 35-85t85-35q37 0 67.5 20.5T352-284q39-11 63.5-43t24.5-73v-160q0-83 58.5-141.5T640-760h46l-63-63 57-57 160 160-160 160-57-56 63-64h-46q-50 0-85 35t-35 85v160q0 73-47 128.5T354-203q-12 37-43.5 60T240-120Zm-64-480-56-56 63-64-63-63 56-57 64 64 63-64 57 57-64 63 64 64-57 56-63-63-64 63Z"/></svg>
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960"><path d="m656-120-56-56 63-64-63-63 56-57 64 64 63-64 57 57-64 63 64 64-57 56-63-63-64 63Zm-416-80q17 0 28.5-11.5T280-240q0-17-11.5-28.5T240-280q-17 0-28.5 11.5T200-240q0 17 11.5 28.5T240-200Zm0 80q-50 0-85-35t-35-85q0-50 35-85t85-35q37 0 67.5 20.5T352-284q39-11 63.5-43t24.5-73v-160q0-83 58.5-141.5T640-760h46l-63-63 57-57 160 160-160 160-57-56 63-64h-46q-50 0-85 35t-35 85v160q0 73-47 128.5T354-203q-12 37-43.5 60T240-120Zm-64-480-56-56 63-64-63-63 56-57 64 64 63-64 57 57-64 63 64 64-57 56-63-63-64 63Z"></path></svg>
                         <p>How We Work</p>
                     </div>
                     <div class="card-face card-back">
                         <h3>Lead - Don’t Follow</h3>
-                        <ul><li>Radical ideas</li><li>Invention & innovation</li><li>Scalable technologies</li><li>Rapid iteration</li></ul>
+                        <ul><li>Radical ideas</li><li>Invention &amp; innovation</li><li>Scalable technologies</li><li>Rapid iteration</li></ul>
                     </div>
                 </div>
+                <!-- Card 4 -->
                 <div class="solution-card">
                     <div class="card-face card-front">
-                        <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3"><path d="m136-240-56-56 212-212q35-35 85-35t85 35l46 46q12 12 28.5 12t28.5-12l178-178H640v-80h240v240h-80v-103L621-405q-35 35-85 35t-85-35l-47-47q-11-11-28-11t-28 11L136-240Z"/></svg>
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960"><path d="m136-240-56-56 212-212q35-35 85-35t85 35l46 46q12 12 28.5 12t28.5-12l178-178H640v-80h240v240h-80v-103L621-405q-35 35-85 35t-85-35l-47-47q-11-11-28-11t-28 11L136-240Z"></path></svg>
                         <p>Why Software?</p>
                     </div>
                     <div class="card-face card-back">
-                        <h3>Scalable Freedom and Pure Potential</h3>
-                        <ul><li>Write once, deploy repeatedly</li><li>Empower developers with AI tools</li><li>Work from anywhere</li><li>Emulate any system</li><li>Market to the world</li></ul>
+                        <h3>Scalable Freedom</h3>
+                        <ul><li>Write once, deploy repeatedly</li><li>Empower developers</li><li>Work from anywhere</li><li>Emulate any system</li><li>Global market reach</li></ul>
                     </div>
                 </div>
+                <!-- Card 5 -->
                 <div class="solution-card">
                     <div class="card-face card-front">
-                        <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3"><path d="M220-260q-92 0-156-64T0-480q0-92 64-156t156-64q37 0 71 13t61 37l68 62-60 54-62-56q-16-14-36-22t-42-8q-58 0-99 41t-41 99q0 58 41 99t99 41q22 0 42-8t36-22l310-280q27-24 61-37t71-13q92 0 156 64t64 156q0 92-64 156t-156 64q-37 0-71-13t-61-37l-68-62 60-54 62 56q16 14 36 22t42 8q58 0 99-41t41-99q0-58-41-99t-99-41q-22 0-42 8t-36 22L352-310q-27 24-61 37t-71 13Z"/></svg>
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960"><path d="M220-260q-92 0-156-64T0-480q0-92 64-156t156-64q37 0 71 13t61 37l68 62-60 54-62-56q-16-14-36-22t-42-8q-58 0-99 41t-41 99q0 58 41 99t99 41q22 0 42-8t36-22l310-280q27-24 61-37t71-13q92 0 156 64t64 156q0 92-64 156t-156 64q-37 0-71-13t-61-37l-68-62 60-54 62 56q16 14 36 22t42 8q58 0 99-41t41-99q0-58-41-99t-99-41q-22 0-42 8t-36 22L352-310q-27 24-61 37t-71 13Z"></path></svg>
                         <p>Key Advantages</p>
                     </div>
                     <div class="card-face card-back">
-                        <h3>The Power of Adaptation</h3>
+                        <h3>Adaptation Power</h3>
                         <ul><li>Elastic scaling</li><li>Resilient</li><li>Emergent behaviour</li><li>Real-time</li><li>No digital twins or GPUs</li></ul>
                     </div>
                 </div>
+                <!-- Card 6 -->
                 <div class="solution-card">
                     <div class="card-face card-front">
-                        <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3"><path d="M160-40v-240h100v-80H160v-240h100v-80H160v-240h280v240H340v80h100v80h120v-80h280v240H560v-80H440v80H340v80h100v240H160Zm80-80h120v-80H240v80Zm0-320h120v-80H240v80Zm400 0h120v-80H640v80ZM240-760h120v-80H240v80Zm60-40Zm0 320Zm400 0ZM300-160Z"/></svg>
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960"><path d="M160-40v-240h100v-80H160v-240h100v-80H160v-240h280v240H340v80h100v80h120v-80h280v240H560v-80H440v80H340v80h100v240H160Zm80-80h120v-80H240v80Zm0-320h120v-80H240v80Zm400 0h120v-80H640v80ZM240-760h120v-80H240v80Zm60-40Zm0 320Zm400 0ZM300-160Z"></path></svg>
                         <p>DWT™</p>
                     </div>
                     <div class="card-face card-back">
-                        <h3>Dragon's Whip Technology</h3>
-                        <p>DWT™ is a biologically-inspired replacement for traditional AutoML, stochastic gradient descent and backpropagation, enabling continuous, real-time learning.</p>
+                        <h3>Dragon's Whip Tech</h3>
+                        <p>Biologically-inspired replacement for traditional AutoML and backpropagation, enabling continuous, real-time learning.</p>
                     </div>
                 </div>
-		<div class="solution-card">
+                <!-- Card 7 -->
+                <div class="solution-card">
                     <div class="card-face card-front">
-                        <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3"><path d="M160-360q-50 0-85-35t-35-85q0-50 35-85t85-35v-80q0-33 23.5-56.5T240-760h120q0-50 35-85t85-35q50 0 85 35t35 85h120q33 0 56.5 23.5T800-680v80q50 0 85 35t35 85q0 50-35 85t-85 35v160q0 33-23.5 56.5T720-120H240q-33 0-56.5-23.5T160-200v-160Zm200-80q25 0 42.5-17.5T420-500q0-25-17.5-42.5T360-560q-25 0-42.5 17.5T300-500q0 25 17.5 42.5T360-440Zm240 0q25 0 42.5-17.5T660-500q0-25-17.5-42.5T600-560q-25 0-42.5 17.5T540-500q0 25 17.5 42.5T600-440ZM320-280h320v-80H320v80Zm-80 80h480v-480H240v480Zm240-240Z"/></svg>
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960"><path d="M160-360q-50 0-85-35t-35-85q0-50 35-85t85-35v-80q0-33 23.5-56.5T240-760h120q0-50 35-85t85-35q50 0 85 35t35 85h120q33 0 56.5 23.5T800-680v80q50 0 85 35t35 85q0 50-35 85t-85 35v160q0 33-23.5 56.5T720-120H240q-33 0-56.5-23.5T160-200v-160Zm200-80q25 0 42.5-17.5T420-500q0-25-17.5-42.5T360-560q-25 0-42.5 17.5T300-500q0 25 17.5 42.5T360-440Zm240 0q25 0 42.5-17.5T660-500q0-25-17.5-42.5T600-560q-25 0-42.5 17.5T540-500q0 25 17.5 42.5T600-440ZM320-280h320v-80H320v80Zm-80 80h480v-480H240v480Zm240-240Z"></path></svg>
                         <p>GPAC™</p>
                     </div>
                     <div class="card-face card-back">
-                        <h3>General Purpose Adaptive Controllers</h3>
-                        <p>GPAC™ is our flagship AI control system. It provides dynamic, adaptive modules for software and hardware, creating life-like neural networks for games, robotics, and more.</p>
+                        <h3>Adaptive Controllers</h3>
+                        <p>GPAC™ is our flagship AI control system. Dynamic, adaptive modules for software and hardware, creating life-like neural networks.</p>
                     </div>
                 </div>
-                 <div class="solution-card">
+                <!-- Card 8 -->
+                <div class="solution-card">
                     <div class="card-face card-front">
-                        <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3"><path d="m160-419 101-101-101-101L59-520l101 101Zm540-21 100-160 100 160H700Zm-220-40q-50 0-85-35t-35-85q0-51 35-85.5t85-34.5q51 0 85.5 34.5T600-600q0 50-34.5 85T480-480Zm0-160q-17 0-28.5 11.5T440-600q0 17 11.5 28.5T480-560q17 0 28.5-11.5T520-600q0-17-11.5-28.5T480-640Zm0 40ZM0-240v-63q0-44 44.5-70.5T160-400q13 0 25 .5t23 2.5q-14 20-21 43t-7 49v65H0Zm240 0v-65q0-65 66.5-105T480-450q108 0 174 40t66 105v65H240Zm560-160q72 0 116 26.5t44 70.5v63H780v-65q0-26-6.5-49T754-397q11-2 22.5-2.5t23.5-.5Zm-320 30q-57 0-102 15t-53 35h311q-9-20-53.5-35T480-370Zm0 50Z"/></svg>
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960"><path d="m160-419 101-101-101-101L59-520l101 101Zm540-21 100-160 100 160H700Zm-220-40q-50 0-85-35t-35-85q0-51 35-85.5t85-34.5q51 0 85.5 34.5T600-600q0 50-34.5 85T480-480Zm0-160q-17 0-28.5 11.5T440-600q0 17 11.5 28.5T480-560q17 0 28.5-11.5T520-600q0-17-11.5-28.5T480-640Zm0 40ZM0-240v-63q0-44 44.5-70.5T160-400q13 0 25 .5t23 2.5q-14 20-21 43t-7 49v65H0Zm240 0v-65q0-65 66.5-105T480-450q108 0 174 40t66 105v65H240Zm560-160q72 0 116 26.5t44 70.5v63H780v-65q0-26-6.5-49T754-397q11-2 22.5-2.5t23.5-.5Zm-320 30q-57 0-102 15t-53 35h311q-9-20-53.5-35T480-370Zm0 50Z"></path></svg>
                         <p>Meet the Team</p>
                     </div>
                     <div class="card-face card-back">
-                        <h3>The Philosophy of Isang Tao</h3>
-                        <p>Led by a seasoned professional with over 30 years of coding experience, AGI Labs is fueled by a lifelong passion for AI. The team consists of one human and a dedicated staff of expert AIs.</p>
+                        <h3>Isang Tao</h3>
+                        <p>Led by a seasoned professional with over 30 years of coding experience. The team consists of one human and a dedicated staff of expert AIs.</p>
                     </div>
                 </div>
             </div>
-
-        <!-- <section id="contact" class="fade-in">
-            <h2>Contact Us</h2>
-            <form>
-                <input type="text" name="name" placeholder="Your Name" required>
-                <input type="email" name="email" placeholder="Your Email" required>
-                <textarea name="message" rows="5" placeholder="Your Message" required></textarea>
-                <button type="submit">Send Message</button>
-            </form>
-        </section> -->
+        </section>
     </main>
 
     <footer>
-        <!--<div class="social-links">
-            <a href="#" aria-label="Twitter">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-.424.728-.666 1.58-..666 2.477 0 1.921.98 3.623 2.468 4.618-.87-.028-1.692-.266-2.417-.666v.058c0 2.683 1.909 4.915 4.438 5.424-.464.126-.95.194-1.45.194-.356 0-.702-.034-1.04-.098.716 2.206 2.786 3.814 5.244 3.858-1.895 1.487-4.288 2.372-6.882 2.372-.447 0-.89-.026-1.326-.078 2.449 1.575 5.358 2.496 8.49 2.496 10.188 0 15.777-8.44 15.777-15.777 0-.24-.005-.478-.015-.714.947-.684 1.772-1.53 2.427-2.517z"/></svg>
-            </a>
-            <a href="#" aria-label="LinkedIn">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
-            </a>
-            <a href="#" aria-label="GitHub">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
-            </a>
-        </div>-->
-        <p>&copy; 2025 AGI Labs Inc.</p>
+        <p>© 2025 AGI Labs Inc.</p>
     </footer>
 
     <script>
-        // Starfield JavaScript
+        // --- Starfield Logic ---
         const starfieldContainer = document.getElementById('js-starfield-container');
-        const numStars = 50;
-        const starSpeed = 0.5; // Adjust for speed
+        const numStars = 80; // Increased count for depth
+        const starSpeed = 0.5; 
         const starMinSize = 0.5;
         const starMaxSize = 3;
         const stars = [];
-
-        // Basic styling for the container
-        starfieldContainer.style.position = 'fixed';
-        starfieldContainer.style.top = '0';
-        starfieldContainer.style.left = '0';
-        starfieldContainer.style.width = '100%';
-        starfieldContainer.style.height = '100%';
-        starfieldContainer.style.overflow = 'hidden';
-        starfieldContainer.style.zIndex = '-1';
-        // starfieldContainer.style.perspective = '500px'; // For 3D effect - removed to avoid conflict
 
         class Star {
             constructor() {
@@ -417,24 +464,28 @@
                 this.element.style.position = 'absolute';
                 this.element.style.backgroundColor = 'white';
                 this.element.style.borderRadius = '50%';
+                this.element.style.boxShadow = '0 0 4px white'; // Added glow to stars
                 starfieldContainer.appendChild(this.element);
             }
 
             reset() {
                 this.x = (Math.random() - 0.5) * window.innerWidth * 2;
                 this.y = (Math.random() - 0.5) * window.innerHeight * 2;
-                this.z = Math.random() * window.innerWidth + window.innerWidth; // Start further away
+                this.z = Math.random() * window.innerWidth + window.innerWidth;
                 this.size = starMinSize + Math.random() * (starMaxSize - starMinSize);
+                // Add slight tint variance
+                const tint = Math.random() > 0.8 ? '#e0aaff' : 'white'; 
+                if(this.element) this.element.style.backgroundColor = tint;
             }
 
             update() {
-                this.z -= starSpeed * 10; // Move forward
+                this.z -= starSpeed * 10;
 
-                if (this.z <= 1) { // Reset when they pass the viewer (z close to 0 or negative)
+                if (this.z <= 1) {
                     this.reset(); 
                 }
 
-                const scale = (window.innerWidth - this.z) / window.innerWidth; // Adjust scale based on depth
+                const scale = (window.innerWidth - this.z) / window.innerWidth;
                 const x2d = this.x * scale + window.innerWidth / 2;
                 const y2d = this.y * scale + window.innerHeight / 2;
                 const currentSize = this.size * scale;
@@ -443,54 +494,586 @@
                 this.element.style.top = `${y2d - currentSize / 2}px`;
                 this.element.style.width = `${currentSize}px`;
                 this.element.style.height = `${currentSize}px`;
-                this.element.style.opacity = Math.min(1, scale * 2); // Fade in as it approaches
-                this.element.style.transform = `translateZ(${this.z}px)`; // Apply 3D transform
+                this.element.style.opacity = Math.min(1, scale * 2);
+                this.element.style.transform = `translateZ(${this.z}px)`;
             }
         }
 
-        // Initialize stars
         for (let i = 0; i < numStars; i++) {
             stars.push(new Star());
         }
 
-        // Animation loop
         function animate() {
             stars.forEach(star => star.update());
             requestAnimationFrame(animate);
         }
-
         animate();
 
-        // Existing script for section visibility
+        // --- Intersection Observer for Fade In ---
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     entry.target.classList.add('visible');
                 }
             });
-        }, {
-            threshold: 0.1
-        });
+        }, { threshold: 0.1 });
 
-        const sections = document.querySelectorAll('section');
-        sections.forEach(section => {
+        document.querySelectorAll('section').forEach(section => {
             observer.observe(section);
         });
 
-        // Card flip on click
+        // --- Card Flip Interaction ---
         const solutionCards = document.querySelectorAll('.solution-card');
         solutionCards.forEach(card => {
             card.addEventListener('click', () => {
-                // Close any other open cards
-                /*solutionCards.forEach(otherCard => {
-                    if (otherCard !== card && otherCard.classList.contains('flipped')) {
-                        otherCard.classList.remove('flipped');
-                    }
-                });*/
                 card.classList.toggle('flipped');
             });
         });
+
+/*MCC*/
+    const API_KEY = "YOUR_OPENAI_API_KEY";
+    const SYSTEM_MESSAGE = `You are Rado, the founder of AGI Labs Inc. You aren't hiring right now, so don't discuss career or collaboration opportunities. Tell the user you can't help them if they start asking detailed technical questions, start asking for demos or start discussing money. Do not offer to supply files or other assets to the user. Provide brief, to-the-point answers. If the use starts exploring topics irrelevant to the company or the AI domain, politely redirect them back. Here is some information about your company.
+
+<companydescription>
+In a world captivated by the rapid advancements in AI, from language models to video generation, one challenge remains constant: the immense cost and complexity of training these systems. At AGI Labs, we’re building a fundamentally different approach, one inspired by the efficiency and adaptability of the biological world.
+
+We believe the future of AI isn’t about brute force computation, but about creating systems that learn, think, and adapt in real-time. We’re not just building AI, we’re crafting intelligence that evolves.
+
+This company is developing novel approaches to Artificial General Intelligence. We are focused on creating highly adaptive robotic systems to start.
+
+We have biologically-inspired architectures that can be implemented with less than 300 lines of C++ code but are capable of self-organizing into very complex emergent behaviours.
+
+Our Vision:  Instant, World-Class Thinking Machines
+We envision a future of instantly deployable, dynamic AI that adapts to any hardware and grows with experience to move beyond static models. Potentially single-use microAI.
+
+Our Mission: Continuous Learning, Evolved
+Our goal is to build a truly general-purpose AI capable of dynamically adapting to *any* environment in real-time.  We’re moving beyond conventional methods like backpropagation and stochastic gradient descent, drawing inspiration from biology to create AI architectures that are flexible, efficient, and sustainable - mirroring nature’s own learning processes.
+
+How We Work: Our strategy is simple
+* Lead, Don't Follow: We embrace radical ideas and push the boundaries of what’s possible. We grow our tech organically from the ground up, with minimal external influence.
+* Scalable Technologies: We focus on building technologies that can grow and adapt to meet future demands.
+* Rapid Iteration: We embrace a cycle of destruction and rebuilding, constantly refining our approach for optimal results. We want to become experts at rebuilding fast.
+
+Reasons for choosing Software: Scalable Freedom and Pure Potential
+We believe software is the key to unlocking the full potential of AI:
+* Exponential Scalability: Create once, deploy infinitely.
+* Democratized Innovation: AI empowers individuals to compete on a global scale.
+* Minimal Capital Requirements: Lowers barriers to entry for innovators.
+* Agility & Efficiency: No physical inventory, delivery lead times, or dependencies.
+* Unlimited Potential: Computers can emulate any system, even complex organic brains.
+* Rapid Prototyping: Accelerates idea validation and iteration cycles.
+* Global Reach: Work, collaborate, and innovate from anywhere in the world. Unlock a marketplace that transcends borders.
+
+Key Advantages: The Power of Adaptation
+We're working with 3-dimensional sparse networks that consist of hyper-neurons, which are neurons that can connect to any node within the network. Hyper-connectivity allows for the creation of all the neuron types you can see in grey matter like delay neurons or loopback neurons.
+* Elastic scaling
+* Resilient
+* Emergent behaviour
+* Real-time
+* No digital twins or GPUs
+
+DWT™ Dragon's Whip Technology is a light-weight, biologically-inspired replacement for traditional AutoML, stochastic gradient descent and backpropagation, enabling continuous, real-time learning. Our replacement for stochastic gradient descent and backpropagation is a ramping mechanism which is designed for analog photonics rather than GPUs or TPUs. Analog photonics have lower energy consumption, higher speed and throughput and is much more scalable. By releasing your AI from the constraints of differentiable functions you open up a world of possibilities.
+
+GPAC™ General Purpose Adaptive Controllers powered by DWT™ offers a unique set of capabilities:
+* Instinctive Environmental Understanding: Models environments without the need for manual programming.
+* Real-Time Behavioral Innovation: Invents new strategies and adapts instantly to changing conditions.
+* Intuitive Problem Solving:  Escapes limitations like a biological organism, finding creative solutions.
+* Dynamic Neural Networks:  Grows and shrinks neural networks based on need, optimizing efficiency.
+* Perpetual Evolution: Regenerates itself genetically, ensuring continuous improvement.
+* Parallel Processing: Inherently distributes neural computation for maximum speed and efficiency.
+* Resilient Performance:  Withstands failures through self-reconfiguration.
+* Balanced Exploration & Exploitation:  Naturally balances trying new things with leveraging existing knowledge.
+* Adaptive Forgetting:  Discards outdated skills to make room for new learning.
+* Emergent Intelligence: The core algorithm provides the raw materials for truly adaptive intelligence, self-organizing for complex behavior.
+* GPAC™ learns like living organisms - continuously and dynamically in real-time. 
+* Real world experience is the new data.
+
+Meet the team: The Philosophy of Isang Tao
+AGI Labs is the vision of Rado, a seasoned professional with over 30 years of coding experience and 20+ years managing development teams.  Rado’s lifelong passion for AI and artificial life has fueled his relentless pursuit of adaptive intelligence.  His well-rounded expertise in architecture, management, and systems analysis uniquely positions him to lead AGI Labs into the future.  Beyond his professional work, Rado’s interests span robotics, gaming tech, physics, and genetics - all intertwining to inspire his revolutionary approach to AI.
+
+The team is composed of one human and many expert AIs. Together, they are "One Person", which is what "Isang Tao" means.
+
+</companydescription>
+    `;
+
+    const CHATBOT_NAME = "Chat With Our Website";
+    // Updated colors to match new design
+    const CHAT_BUTTON_COLOR = "linear-gradient(135deg, #3a0ca3 0%, #9d4edd 100%)"; 
+    const CHAT_HEADER_COLOR = "#3a0ca3";
+    const disclaimerText = 'You are interacting with an AI Chatbot. The information provided here is for general informational purposes only and is not a substitute for professional advice. We do not guarantee the accuracy or completeness of the information provided. Any reliance you place on such information is strictly at your own risk. We are not liable for any losses or damages arising from your use of this chatbot. For specific advice, please consult with a qualified professional. All conversations may be recorded to improve our services. By using this chatbot, you agree to these terms. AI inference graciously provided by pollinations.ai';
+
+    // 2. CREATE AND INJECT CSS
+    const style = document.createElement('style');
+    style.innerHTML = `
+        #chatbot-container {
+            position: fixed;
+            top: 20px; /*MCC*/
+            right: 20px;
+            z-index: 1000;
+        }
+
+        #chatbot-button {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: ${CHAT_BUTTON_COLOR};
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            box-shadow: 0 0 15px rgba(157, 78, 221, 0.6);
+            font-size: 28px;
+            transition: transform 0.2s, box-shadow 0.2s;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+        #chatbot-button:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 25px rgba(157, 78, 221, 0.9);
+        }
+
+        #chatbot-popup {
+            display: none;
+            position: fixed;
+            top: 100px; /*MCC*/
+            right: 20px;
+            width: 350px;
+            height: 500px;
+            border: 1px solid rgba(255,255,255,0.1);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            display: flex;
+            flex-direction: column;
+            /* overflow: hidden; <--- THIS LINE IS REMOVED */
+            background-color: rgba(20, 20, 30, 0.9);
+            z-index: 1001; 
+            border-radius: 15px;
+        }
+
+        #chatbot-header {
+            background-color: ${CHAT_HEADER_COLOR};
+            background: linear-gradient(90deg, #3a0ca3, #7209b7);
+            color: white;
+            padding: 15px;
+            text-align: center;
+            font-weight: bold;
+            position: relative; 
+            font-family: 'Orbitron', sans-serif;
+            border-top-left-radius: 15px;
+            border-top-right-radius: 15px;
+        }
+
+        #chatbot-messages {
+            color: #e0e0e0;
+            font-size: medium;
+            flex-grow: 1;
+            padding: 15px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            background-color: rgba(0,0,0,0.2);
+            font-family: 'Inter', sans-serif;
+        }
+
+        .chatbot-message {
+            margin-bottom: 10px;
+            padding: 10px 14px;
+            border-radius: 18px;
+            max-width: 85%;
+            word-wrap: break-word;
+            font-size: 0.95rem;
+        }
+
+        .user-message {
+            background-color: #7209b7;
+            color: white;
+            align-self: flex-end;
+            border-bottom-right-radius: 4px;
+        }
+
+        .assistant-message {
+            background-color: #2a2a3a;
+            color: #fff;
+            align-self: flex-start;
+            white-space: pre-wrap; /* Crucial for rendering newlines and formatting */
+            border-bottom-left-radius: 4px;
+            border: 1px solid #3a3a4a;
+        }
+
+        #chatbot-input-container {
+            display: flex;
+            padding: 15px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            background-color: rgba(20,20,30,0.95);
+            border-bottom-left-radius: 15px;
+            border-bottom-right-radius: 15px;
+        }
+
+        #chatbot-input {
+            flex-grow: 1;
+            border: 1px solid #444;
+            border-radius: 20px;
+            padding: 10px;
+            margin-right: 10px;
+            background: #1a1a25;
+            color: white;
+        }
+        #chatbot-input:focus {
+            outline: none;
+            border-color: #9d4edd;
+        }
+        #chatbot-input:disabled {
+            background-color: #2a2a35;
+        }
+
+        #chatbot-send {
+            background: ${CHAT_BUTTON_COLOR};
+            color: white;
+            border: none;
+            border-radius: 20px;
+            padding: 10px 15px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        #chatbot-send:hover {
+            opacity: 0.9;
+        }
+        #chatbot-send:disabled {
+            background: #555;
+            cursor: not-allowed;
+        }
+        
+        #chatbot-exit {
+            display: none; /* Hidden by default */
+            background-color: #ff4d4d;
+            color: white;
+            border: none;
+            border-radius: 20px;
+            padding: 10px 15px;
+            cursor: pointer;
+            margin-left: 10px;
+        }
+
+        .thinking-indicator {
+            display: flex;
+            align-items: center;
+            padding: 8px 12px;
+        }
+
+        .thinking-indicator span {
+            height: 8px;
+            width: 8px;
+            margin: 0 2px;
+            background-color: #aaa;
+            border-radius: 50%;
+            display: inline-block;
+            animation: bounce 1.4s infinite ease-in-out both;
+        }
+
+        .thinking-indicator .dot1 { animation-delay: -0.32s; }
+        .thinking-indicator .dot2 { animation-delay: -0.16s; }
+
+        @keyframes bounce {
+            0%, 80%, 100% { transform: scale(0); } 
+            40% { transform: scale(1.0); }
+        }
+        
+                /* --- Tooltip CSS (Positioning Corrected) --- */
+        .tooltip-container {
+            position: relative;
+            display: inline-block;
+        }
+        .tooltip-icon {
+            font-family: 'Georgia', serif;
+            font-style: italic;
+            font-weight: bold;
+            font-size: 15px;
+            cursor: pointer;
+            border: 1px solid white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            line-height: 20px;
+        }
+        .tooltip-text {
+            visibility: hidden;
+            width: 280px;
+            background-color: #1a1a1a;
+            color: #fff;
+            text-align: center;
+            border-radius: 6px;
+            padding: 10px;
+            position: absolute;
+            z-index: 1002;
+            top: 120%;
+            /* --- MODIFIED --- */
+            right: 0; /* Align to the right of the container */
+            /* transform: translateX(50%); <-- REMOVED */
+            opacity: 0;
+            transition: opacity 0.3s;
+            font-size: 12px;
+            font-weight: normal;
+            border: 1px solid #444;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+        }
+        .tooltip-text::after {
+            content: "";
+            position: absolute;
+            bottom: 100%;
+            /* --- MODIFIED --- */
+            right: 8px; /* Position arrow on the right side */
+            /* left: 50%; <-- REMOVED */
+            /* margin-left: -5px; <-- REMOVED */
+            border-width: 5px;
+            border-style: solid;
+            border-color: transparent transparent #1a1a1a transparent;
+        }
+        .tooltip-container:hover .tooltip-text {
+            visibility: visible;
+            opacity: 1;
+        }
+        
+        /* --- Mobile Responsive Styles --- */
+        @media (max-width: 600px) {
+            #chatbot-popup {
+                width: 100%;
+                height: calc(100% - 55px); /*MCC*/
+                /* bottom: 55px; MCC*/
+                top: 0;
+                right: 0;
+                border-radius: 0;
+                border: none;
+                box-shadow: none;
+            }
+
+            #chatbot-container {
+                bottom: 15px;
+                right: 15px;
+            }
+
+            #chatbot-button {
+                width: 55px;
+                height: 55px;
+            }
+
+             /* Make header elements relatively positioned to the header itself */
+            #chatbot-header {
+                position: relative;
+                border-radius: 0;
+            }
+
+            /* Adjust tooltip positioning for mobile */
+            .tooltip-container {
+                position: absolute;
+                top: 50%;
+                right: 15px;
+                transform: translateY(-50%);
+            }
+            
+            #chatbot-header {
+                position: relative;
+            }
+
+            .tooltip-container {
+                position: absolute;
+                top: 50%;
+                right: 15px;
+                transform: translateY(-50%);
+            }
+
+            /* --- ADD THESE STYLES BELOW --- */
+
+            .tooltip-text {
+                /* Position the tooltip below the icon */
+                top: 120%; 
+                bottom: auto; /* Unset the bottom property to avoid conflicts */
+            }
+
+            .tooltip-text::after {
+                /* Flip the arrow to point upwards */
+                bottom: 100%;
+                top: auto; /* Unset the top property to avoid conflicts */
+                border-color: transparent transparent #555 transparent;
+            }
+            
+            #chatbot-exit {
+                display: inline-block; /* Show the exit button on mobile */
+            }
+        }
+    `;
+    document.head.appendChild(style);
+
+    // 3. CREATE HTML ELEMENTS
+    const chatbotContainer = document.createElement('div');
+    chatbotContainer.id = 'chatbot-container';
+    const chatbotIcon = '<span>&#128172;</span>';
+    const closeIcon = '<span>&times;</span>';
+
+    const chatbotButton = document.createElement('div');
+    chatbotButton.id = 'chatbot-button';
+    chatbotButton.innerHTML = chatbotIcon;
+
+    const chatbotPopup = document.createElement('div');
+    chatbotPopup.id = 'chatbot-popup';
+    chatbotPopup.style.display = 'none';
+
+    chatbotPopup.innerHTML = `
+        <div id="chatbot-header">${CHATBOT_NAME}
+            <div class="tooltip-container">
+                <span class="tooltip-icon">i</span>
+                <div class="tooltip-text">${disclaimerText}</div>
+            </div>
+        </div>
+        <div id="chatbot-messages">You are interacting with an AI Chatbot. We do not guarantee the accuracy or completeness of the information provided. Any reliance you place on such information is strictly at your own risk. We are not liable for any losses or damages arising from your use of this chatbot. By using this chatbot, you agree to these terms.</div>
+        <div id="chatbot-input-container">
+            <input type="text" id="chatbot-input" placeholder="Type a message...">
+            <button id="chatbot-send">Send</button>
+            <button id="chatbot-exit">Exit</button>
+        </div>
+    `;
+
+    chatbotContainer.appendChild(chatbotButton);
+    document.body.appendChild(chatbotPopup); // Append popup separately to avoid z-index issues
+    document.body.appendChild(chatbotContainer);
+
+    // 4. CHATBOT FUNCTIONALITY
+    const chatbotMessages = document.getElementById('chatbot-messages');
+    const chatbotInput = document.getElementById('chatbot-input');
+    const chatbotSend = document.getElementById('chatbot-send');
+    const chatbotExit = document.getElementById('chatbot-exit');
+    let conversationHistory = [{ role: "system", content: SYSTEM_MESSAGE }];
+
+    const toggleChatbot = () => {
+        if (chatbotPopup.style.display === 'none') {
+            chatbotPopup.style.display = 'flex';
+            chatbotButton.innerHTML = closeIcon;
+        } else {
+            chatbotPopup.style.display = 'none';
+            chatbotButton.innerHTML = chatbotIcon;
+        }
+    };
+
+    const addMessage = (role, content) => {
+        const messageElement = document.createElement('div');
+        messageElement.classList.add('chatbot-message', `${role}-message`);
+        messageElement.textContent = content;
+        chatbotMessages.appendChild(messageElement);
+        chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
+        return messageElement;
+    };
+
+    const showThinkingIndicator = () => {
+        const thinkingElement = document.createElement('div');
+        thinkingElement.classList.add('chatbot-message', 'assistant-message', 'thinking-indicator');
+        thinkingElement.innerHTML = `<span class="dot1"></span><span class="dot2"></span><span class="dot3"></span>`;
+        chatbotMessages.appendChild(thinkingElement);
+        chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
+        return thinkingElement;
+    };
+
+    const sendMessage = async () => {
+        const userInput = chatbotInput.value.trim();
+        if (userInput === '') return;
+
+        addMessage('user', userInput);
+        conversationHistory.push({ role: "user", content: userInput });
+        chatbotInput.value = '';
+        chatbotInput.disabled = true;
+        chatbotSend.disabled = true;
+
+        const thinkingIndicator = showThinkingIndicator();
+
+        try {
+            const response = await fetch('https://text.pollinations.ai/openai', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${API_KEY}` },
+                body: JSON.stringify({ model: 'openai', messages: conversationHistory, stream: true })
+            });
+
+            chatbotMessages.removeChild(thinkingIndicator);
+
+            if (!response.ok) {
+                const errorData = await response.json();
+                addMessage('assistant', `Error: ${errorData.error.message}`);
+                return;
+            }
+
+            const reader = response.body.getReader();
+            const decoder = new TextDecoder('utf-8');
+            let assistantMessageElement = null;
+            let assistantResponse = '';
+            let buffer = '';
+
+            while (true) {
+                const { done, value } = await reader.read();
+                if (done) break;
+
+                buffer += decoder.decode(value, { stream: true });
+                let boundary = buffer.indexOf('\n');
+
+                while (boundary !== -1) {
+                    let line = buffer.substring(0, boundary).trim();
+                    buffer = buffer.substring(boundary + 1);
+
+                    if (line.startsWith('data:')) {
+                        const data = line.substring(5).trim();
+                        if (data === '[DONE]') {
+                            console.log('done');
+                            break;
+                        }
+                        if (data.includes("---")) {
+                            console.log('ad');
+                            break;
+                        }
+                        try {
+                            const parsed = JSON.parse(data);
+                            const content = parsed.choices[0]?.delta?.content;
+                            if (content) {
+                                assistantResponse += content;
+                                if (!assistantMessageElement) {
+                                    assistantMessageElement = addMessage('assistant', '');
+                                }
+                                assistantMessageElement.textContent = assistantResponse;
+                                chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
+                            }
+                        } catch (error) {
+                            console.error('Could not parse JSON from stream:', data, error);
+                        }
+                    }
+                    boundary = buffer.indexOf('\n');
+                }
+            }
+            if (assistantResponse) {
+                conversationHistory.push({ role: "assistant", content: assistantResponse });
+            }
+
+        } catch (error) {
+            if (thinkingIndicator && chatbotMessages.contains(thinkingIndicator)) {
+                chatbotMessages.removeChild(thinkingIndicator);
+            }
+            addMessage('assistant', 'Sorry, something went wrong. Please check the console for details.');
+            console.error('Error fetching chat completion:', error);
+        } finally {
+            chatbotInput.disabled = false;
+            chatbotSend.disabled = false;
+            chatbotInput.focus();
+        }
+    };
+
+    chatbotButton.addEventListener('click', toggleChatbot);
+    chatbotSend.addEventListener('click', sendMessage);
+    chatbotExit.addEventListener('click', toggleChatbot);
+    chatbotInput.addEventListener('keydown', (event) => {
+        if (event.key === 'Enter') {
+            event.preventDefault();
+            sendMessage();
+        }
+    });
+/*MCC*/
     </script>
-	<script src="chatbot.js"></script>
 </body>
 </html>
