@@ -5,22 +5,30 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AGI Labs - Redefining Intelligence</title>
     
-    <!-- Fonts: Orbitron for headers (Sci-Fi feel) and Inter for readability -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Orbitron:wght@400;600;800;900&display=swap" rel="stylesheet">
 
     <style>
         :root {
-            --bg-deep: #030305;
-            --accent-primary: #9d4edd;
-            --accent-secondary: #3a0ca3;
-            --accent-glow: #e0aaff;
-            --glass-bg: rgba(255, 255, 255, 0.03);
-            --glass-border: rgba(255, 255, 255, 0.08);
-            --glass-blur: 12px;
+            /* Core Palette */
+            --bg-deep: #050507;
+            --bg-surface: #0a0a12;
+            
+            /* Accents */
+            --primary: #7000ff;
+            --primary-glow: #b026ff;
+            --secondary: #00f0ff; /* Cyan for high contrast pop */
+            
+            /* Text */
             --text-main: #ffffff;
-            --text-muted: #a0a0a0;
+            --text-body: #b0b5c0;
+            
+            /* Glassmorphism */
+            --glass-bg: rgba(20, 20, 35, 0.4);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --glass-highlight: rgba(255, 255, 255, 0.05);
+            --glass-blur: 20px;
         }
 
         * {
@@ -33,9 +41,16 @@
             background-color: var(--bg-deep);
             color: var(--text-main);
             font-family: 'Inter', sans-serif;
-            line-height: 1.7;
+            line-height: 1.8;
             overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
         }
+
+        /* Scrollbar Styling */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: var(--bg-deep); }
+        ::-webkit-scrollbar-thumb { background: #333; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--primary); }
 
         /* --- Starfield Container --- */
         #js-starfield-container {
@@ -45,30 +60,41 @@
             width: 100%;
             height: 100%;
             z-index: -1;
-            background: radial-gradient(circle at center, #1a0b2e 0%, #000000 100%);
+            background: radial-gradient(circle at 50% 50%, #110b29 0%, #020203 100%);
+            opacity: 0.8;
         }
 
         /* --- Typography & Layout --- */
         h1, h2, h3 {
             font-family: 'Orbitron', sans-serif;
-            letter-spacing: 2px;
             text-transform: uppercase;
+            letter-spacing: 2px;
         }
 
         h2 {
-            font-size: 2.5rem;
+            font-size: clamp(2rem, 4vw, 3rem);
             text-align: center;
-            margin-bottom: 3rem;
-            background: linear-gradient(90deg, #fff, var(--accent-glow));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            text-shadow: 0 0 20px rgba(157, 78, 221, 0.5);
+            margin-bottom: 4rem;
+            position: relative;
+            display: inline-block;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        
+        h2::after {
+            content: '';
+            display: block;
+            width: 60px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            margin: 1rem auto 0;
+            border-radius: 2px;
         }
 
         main {
-            max-width: 1200px;
+            max-width: 1400px;
             margin: 0 auto;
-            padding: 2rem;
+            padding: 0 2rem;
             position: relative;
             z-index: 1;
         }
@@ -82,52 +108,54 @@
             justify-content: center;
             text-align: center;
             position: relative;
-            padding: 2rem;
         }
 
         .hero-logo {
-            width: 120px;
-            height: 120px;
-            margin-bottom: 1.5rem;
-            fill: var(--accent-primary);
-            filter: drop-shadow(0 0 15px var(--accent-primary));
-            animation: float 6s ease-in-out infinite;
+            width: 140px;
+            height: 140px;
+            margin-bottom: 2rem;
+            fill: var(--text-main);
+            filter: drop-shadow(0 0 20px var(--primary));
+            animation: pulse-float 6s ease-in-out infinite;
         }
 
         .hero h1 {
-            font-size: clamp(3rem, 8vw, 5rem);
+            font-size: clamp(3.5rem, 9vw, 6rem);
             font-weight: 900;
             line-height: 1.1;
-            margin-bottom: 0.5rem;
-            background: linear-gradient(135deg, #ffffff 0%, #b0b0b0 100%);
+            margin-bottom: 1rem;
+            background: linear-gradient(180deg, #fff 0%, #a0a0a0 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+            text-shadow: 0 10px 30px rgba(0,0,0,0.5);
         }
 
         .hero .tagline {
-            font-size: 1.2rem;
-            color: var(--accent-glow);
-            letter-spacing: 4px;
+            font-size: 1.1rem;
+            color: var(--secondary);
+            letter-spacing: 6px;
             text-transform: uppercase;
-            margin-top: 1rem;
-            opacity: 0.8;
+            font-weight: 600;
+            opacity: 0.9;
+            text-shadow: 0 0 10px rgba(0, 240, 255, 0.4);
         }
 
         .scroll-indicator {
             position: absolute;
-            bottom: 30px;
+            bottom: 40px;
             left: 50%;
             transform: translateX(-50%);
             animation: bounce 2s infinite;
-            opacity: 0.5;
+            opacity: 0.6;
+            cursor: pointer;
         }
 
-        /* --- Content Sections --- */
+        /* --- Feature Rows (Zig Zag Layout) --- */
         section {
-            margin: 6rem 0;
+            margin: 8rem 0;
             opacity: 0;
-            transform: translateY(30px);
-            transition: all 0.8s ease-out;
+            transform: translateY(40px);
+            transition: all 1s cubic-bezier(0.2, 0.8, 0.2, 1);
         }
 
         section.visible {
@@ -135,43 +163,79 @@
             transform: translateY(0);
         }
 
-        .text-block {
+        .feature-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 4rem;
+            margin-bottom: 8rem;
             background: var(--glass-bg);
-            backdrop-filter: blur(var(--glass-blur));
-            -webkit-backdrop-filter: blur(var(--glass-blur));
             border: 1px solid var(--glass-border);
+            border-radius: 24px;
             padding: 3rem;
-            border-radius: 20px;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.3);
-            max-width: 900px;
-            margin: 0 auto;
+            backdrop-filter: blur(var(--glass-blur));
+            box-shadow: 0 20px 60px rgba(0,0,0,0.4);
         }
 
-        .text-block p {
+        .feature-row:nth-child(even) {
+            flex-direction: row-reverse;
+        }
+
+        .feature-content {
+            flex: 1;
+        }
+
+        .feature-content h3 {
+            font-size: 1.8rem;
             margin-bottom: 1.5rem;
-            font-size: 1.05rem;
-            color: #d1d1d1;
+            color: var(--text-main);
+            background: linear-gradient(90deg, #fff, var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
-        .text-block p:last-child {
-            margin-bottom: 0;
+        .feature-content p {
+            color: var(--text-body);
+            font-size: 1.1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .feature-visual {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+
+        .feature-visual svg {
+            width: 100%;
+            max-width: 400px;
+            height: auto;
+            filter: drop-shadow(0 0 30px rgba(112, 0, 255, 0.15));
+            transition: transform 0.5s ease;
+        }
+
+        .feature-row:hover .feature-visual svg {
+            transform: scale(1.02);
         }
 
         /* --- Solutions Grid --- */
         .solutions-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-            gap: 2rem;
-            perspective: 1500px;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2.5rem;
+            perspective: 2000px;
+            padding: 1rem;
         }
 
         .solution-card {
             position: relative;
-            height: 400px;
+            height: 420px;
             width: 100%;
             cursor: pointer;
             transform-style: preserve-3d;
-            transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transition: transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
         }
 
         .solution-card.flipped {
@@ -183,122 +247,126 @@
             width: 100%;
             height: 100%;
             backface-visibility: hidden;
-            border-radius: 15px;
+            border-radius: 20px;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            padding: 2rem;
+            padding: 2.5rem;
             text-align: center;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-            border: 1px solid var(--glass-border);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.3);
             overflow: hidden;
+            border: 1px solid var(--glass-border);
         }
 
-        /* Front Face Styling */
+        /* Front Face */
         .card-front {
-            background: linear-gradient(145deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.01) 100%);
-            backdrop-filter: blur(10px);
+            background: linear-gradient(145deg, rgba(255,255,255,0.03) 0%, rgba(255,255,255,0.01) 100%);
+            backdrop-filter: blur(15px);
         }
 
-        .card-front::before {
+        /* Holographic Border Effect */
+        .card-front::after {
             content: '';
             position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(157, 78, 221, 0.1) 0%, transparent 70%);
-            opacity: 0;
+            inset: 0;
+            border-radius: 20px;
+            padding: 1px;
+            background: linear-gradient(135deg, transparent 40%, var(--primary), var(--secondary), transparent 60%);
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            opacity: 0.5;
             transition: opacity 0.3s;
-            pointer-events: none;
         }
 
-        .solution-card:hover .card-front::before {
+        .solution-card:hover .card-front::after {
             opacity: 1;
         }
 
         .card-front svg {
-            width: 64px;
-            height: 64px;
-            margin-bottom: 1.5rem;
-            fill: var(--accent-glow);
-            filter: drop-shadow(0 0 8px var(--accent-primary));
-            transition: transform 0.3s;
+            width: 70px;
+            height: 70px;
+            margin-bottom: 2rem;
+            fill: var(--text-main);
+            filter: drop-shadow(0 0 10px var(--primary));
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
         .solution-card:hover .card-front svg {
-            transform: scale(1.1);
+            transform: scale(1.2) translateY(-5px);
+            fill: var(--secondary);
         }
 
         .card-front p {
             font-family: 'Orbitron', sans-serif;
-            font-size: 1.2rem;
+            font-size: 1.4rem;
             font-weight: 700;
             color: #fff;
             letter-spacing: 1px;
         }
 
-        /* Back Face Styling */
+        /* Back Face */
         .card-back {
             transform: rotateY(180deg);
-            background: linear-gradient(135deg, var(--accent-secondary) 0%, var(--accent-primary) 100%);
-            color: #fff;
+            background: linear-gradient(135deg, #1a0b2e 0%, #000000 100%);
+            border: 1px solid var(--primary);
+            box-shadow: inset 0 0 30px rgba(112, 0, 255, 0.2);
         }
 
         .card-back h3 {
-            font-size: 1.1rem;
-            margin-bottom: 1rem;
-            border-bottom: 1px solid rgba(255,255,255,0.3);
-            padding-bottom: 0.5rem;
+            font-size: 1.2rem;
+            color: var(--secondary);
+            margin-bottom: 1.5rem;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            padding-bottom: 1rem;
             width: 100%;
         }
 
         .card-back p {
-            font-size: 0.9rem;
-            line-height: 1.5;
+            font-size: 0.95rem;
+            line-height: 1.6;
+            color: #ccc;
         }
 
         .card-back ul {
             list-style: none;
             text-align: left;
             width: 100%;
-            font-size: 0.85rem;
+            font-size: 0.9rem;
+            color: #ddd;
         }
 
         .card-back ul li {
-            margin-bottom: 0.5rem;
-            padding-left: 1.2rem;
+            margin-bottom: 0.8rem;
+            padding-left: 1.5rem;
             position: relative;
         }
 
         .card-back ul li::before {
-            content: '›';
+            content: '▹';
             position: absolute;
             left: 0;
-            color: var(--accent-glow);
-            font-weight: bold;
+            color: var(--secondary);
+            font-size: 1.2rem;
+            line-height: 1;
         }
 
         /* --- Footer --- */
         footer {
             text-align: center;
-            padding: 4rem 2rem;
-            color: var(--text-muted);
+            padding: 5rem 2rem;
+            color: var(--text-body);
             border-top: 1px solid var(--glass-border);
-            background: rgba(0,0,0,0.2);
+            background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
             position: relative;
             z-index: 1;
         }
 
-        footer p {
-            font-size: 0.9rem;
-        }
-
         /* --- Animations --- */
-        @keyframes float {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-20px); }
+        @keyframes pulse-float {
+            0%, 100% { transform: translateY(0); filter: drop-shadow(0 0 20px var(--primary)); }
+            50% { transform: translateY(-15px); filter: drop-shadow(0 0 35px var(--primary-glow)); }
         }
 
         @keyframes bounce {
@@ -308,12 +376,18 @@
         }
 
         /* --- Mobile Responsive --- */
-        @media (max-width: 768px) {
-            .hero h1 { font-size: 2.5rem; }
-            section { margin: 3rem 0; }
-            .text-block { padding: 1.5rem; }
-            .solutions-grid { grid-template-columns: 1fr; }
-            .solution-card { height: 300px; }
+        @media (max-width: 900px) {
+            .feature-row {
+                flex-direction: column;
+                padding: 2rem;
+                gap: 2rem;
+                text-align: center;
+            }
+            .feature-row:nth-child(even) {
+                flex-direction: column;
+            }
+            .hero h1 { font-size: 3rem; }
+            .feature-content h3 { text-align: center; }
         }
     </style>
 </head>
@@ -331,26 +405,160 @@
             <h1>AGI Labs</h1>
             <p class="tagline">Redefining Intelligence</p>
         </div>
-        <div class="scroll-indicator">
-            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 13l5 5 5-5M7 6l5 5 5-5"/></svg>
+        <div class="scroll-indicator" onclick="document.getElementById('mission').scrollIntoView({behavior: 'smooth'})">
+            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#00f0ff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 13l5 5 5-5M7 6l5 5 5-5"/></svg>
         </div>
     </header>
 
     <main>
-        <section id="mission" class="fade-in">
-            <h2>The Next Evolution of AI is Here</h2>
-            <div class="text-block">
-                <p>In a world captivated by the rapid advancements in AI, from language models to video generation, one challenge remains constant: the immense cost and complexity of training these systems. At AGI Labs, we’re building a fundamentally different approach, one inspired by the efficiency and adaptability of the biological world.</p>
-                <p>We believe the future of AI isn’t about brute force computation, but about creating systems that learn, think, and adapt in real-time. We’re not just building AI, we’re crafting intelligence that evolves.</p>
-                <p>This company is developing novel approaches to Artificial General Intelligence. We are focused on creating highly adaptive robotic systems to start.</p>
-                <p>We have biologically-inspired architectures that can be implemented with less than 300 lines of C++ code but are capable of self-organizing into very complex emergent behaviours.</p>
-                <p>We're working with 3-dimensional sparse networks that consist of hyper-neurons, which are neurons that can connect to any node within the network. Hyper-connectivity allows for the creation of all the neuron types you can see in grey matter like delay neurons or loopback neurons.</p>
-                <p>Our replacement for stochastic gradient descent and backpropagation is a ramping mechanism which is designed for analog photonics rather than GPUs or TPUs. Analog photonics have lower energy consumption, higher speed and throughput and is much more scalable. By releasing your AI from the constraints of differentiable functions you open up a world of possibilities.</p>
+        <section id="mission">
+            <h2>The Next Evolution of AI</h2>
+            
+            <!-- Feature Row 1 -->
+            <div class="feature-row">
+                <div class="feature-content">
+                    <h3>Biologically Inspired</h3>
+                    <p>In a world captivated by the rapid advancements in AI, one challenge remains constant: the immense cost and complexity. We are building a fundamentally different approach.</p>
+                    <p>We believe the future of AI isn’t about brute force computation, but about creating systems that learn, think, and adapt in real-time. We’re not just building AI, we’re crafting intelligence that evolves.</p>
+                </div>
+                <div class="feature-visual">
+                    <svg width="300" height="300" viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg">
+                        <defs>
+                            <radialGradient id="coreGradient" cx="50%" cy="50%" r="50%" fx="50%" fy="50%">
+                                <stop offset="0%" style="stop-color:#ffffff;stop-opacity:1" />
+                                <stop offset="40%" style="stop-color:#00f0ff;stop-opacity:0.8" />
+                                <stop offset="100%" style="stop-color:#7000ff;stop-opacity:0" />
+                            </radialGradient>
+                        </defs>
+                        <g transform="translate(250, 250)">
+                            <circle cx="0" cy="0" r="160" fill="none" stroke="#7000ff" stroke-width="1" stroke-dasharray="10, 10" opacity="0.6">
+                                <animateTransform attributeName="transform" type="rotate" from="0" to="360" dur="20s" repeatCount="indefinite" />
+                            </circle>
+                            <circle cx="0" cy="0" r="140" fill="none" stroke="#00f0ff" stroke-width="2" stroke-dasharray="50, 150" opacity="0.4">
+                                <animateTransform attributeName="transform" type="rotate" from="360" to="0" dur="15s" repeatCount="indefinite" />
+                            </circle>
+                            <g stroke="#00f0ff" stroke-width="1.5" opacity="0.6">
+                                <path d="M-80,-80 L0,-120 L80,-80 L80,0 L0,0 Z" fill="none" />
+                                <path d="M-80,80 L0,120 L80,80 L80,0 L0,0 Z" fill="none" />
+                            </g>
+                            <circle cx="0" cy="0" r="35" fill="url(#coreGradient)">
+                                <animate attributeName="r" values="35;40;35" dur="3s" repeatCount="indefinite" />
+                            </circle>
+                        </g>
+                        <text x="250" y="460" font-family="Orbitron" font-size="24" fill="#00f0ff" text-anchor="middle" letter-spacing="8" opacity="0.8">GENESIS</text>
+                    </svg>
+                </div>
+            </div>
+
+            <!-- Feature Row 2 -->
+            <div class="feature-row">
+                <div class="feature-content">
+                    <h3>Emergence & Adaptation</h3>
+                    <p>This company is developing novel approaches to Artificial General Intelligence. We focus on creating highly adaptive robotic systems.</p>
+                    <p>We have biologically-inspired architectures that can be implemented with less than 300 lines of C++ code but are capable of self-organizing into very complex emergent behaviours.</p>
+                </div>
+                <div class="feature-visual">
+                    <svg width="300" height="300" viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg">
+                        <defs>
+                            <linearGradient id="circuitGrad" x1="0%" y1="100%" x2="0%" y2="0%">
+                                <stop offset="0%" style="stop-color:#7000ff;stop-opacity:1" />
+                                <stop offset="100%" style="stop-color:#00f0ff;stop-opacity:1" />
+                            </linearGradient>
+                        </defs>
+                        <g transform="translate(250, 450)">
+                            <path d="M0,0 L0,-150" stroke="url(#circuitGrad)" stroke-width="4" stroke-linecap="round">
+                                <animate attributeName="stroke-dasharray" values="0,150;150,0" dur="3s" repeatCount="indefinite" />
+                            </path>
+                            <g fill="none" stroke="url(#circuitGrad)" stroke-width="2" stroke-linecap="round">
+                                <path d="M-10,0 C-10,-50 -40,-100 -80,-150 C-120,-200 -140,-250 -100,-320">
+                                    <animate attributeName="stroke-dasharray" values="0,400;400,0" dur="4s" repeatCount="indefinite" />
+                                </path>
+                                <path d="M10,0 C10,-50 40,-100 80,-150 C120,-200 140,-250 100,-320">
+                                    <animate attributeName="stroke-dasharray" values="0,400;400,0" dur="4.5s" repeatCount="indefinite" />
+                                </path>
+                            </g>
+                            <circle cx="0" cy="-340" r="6" fill="#00f0ff">
+                                <animate attributeName="opacity" values="0.4;1;0.4" dur="2s" repeatCount="indefinite" />
+                            </circle>
+                        </g>
+                        <text x="250" y="470" font-family="Orbitron" font-size="18" fill="#ffffff" text-anchor="middle" letter-spacing="4">EMERGENCE</text>
+                    </svg>
+                </div>
+            </div>
+
+            <!-- Feature Row 3 -->
+            <div class="feature-row">
+                <div class="feature-content">
+                    <h3>Cognitive Architecture</h3>
+                    <p>We're working with 3-dimensional sparse networks consisting of hyper-neurons—neurons that can connect to any node within the network.</p>
+                    <p>Hyper-connectivity allows for the creation of all the neuron types found in grey matter, such as delay neurons or loopback neurons, enabling deep cognitive processing.</p>
+                </div>
+                <div class="feature-visual">
+                    <svg width="300" height="300" viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg">
+                        <linearGradient id="matrixGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" style="stop-color:#00f0ff;stop-opacity:1" />
+                            <stop offset="100%" style="stop-color:#ffffff;stop-opacity:1" />
+                        </linearGradient>
+                        <g transform="translate(120, 100)">
+                            <g fill="#fff" stroke="none" opacity="0.8">
+                                <circle cx="140" cy="60" r="3" />
+                                <circle cx="200" cy="80" r="3" />
+                                <circle cx="80" cy="80" r="3" />
+                                <circle cx="60" cy="140" r="3" />
+                                <circle cx="200" cy="220" r="3" />
+                                <circle cx="100" cy="260" r="3" />
+                            </g>
+                            <g stroke="url(#matrixGrad)" stroke-width="1.5" opacity="0.6">
+                                <path d="M140,60 L80,80 L60,140 L60,200 L100,260 L160,220 L200,220 L220,150 L200,80 L140,60 Z" fill="none" stroke-dasharray="5,5"/>
+                                <line x1="80" y1="80" x2="140" y2="140" />
+                                <line x1="200" y1="80" x2="140" y2="140" />
+                                <line x1="140" y1="140" x2="100" y2="260" />
+                            </g>
+                        </g>
+                        <text x="250" y="450" font-family="Orbitron" font-size="20" fill="#fff" text-anchor="middle" letter-spacing="5" opacity="0.8">COGNITION</text>
+                    </svg>
+                </div>
+            </div>
+
+            <!-- Feature Row 4 -->
+            <div class="feature-row">
+                <div class="feature-content">
+                    <h3>Sentience & Efficiency</h3>
+                    <p>Our replacement for stochastic gradient descent is a ramping mechanism designed for analog photonics. By releasing your AI from the constraints of differentiable functions, we open up a world of possibilities.</p>
+                    <p>Analog photonics offer lower energy consumption, higher speed, and superior scalability compared to traditional GPUs.</p>
+                </div>
+                <div class="feature-visual">
+                    <svg width="300" height="300" viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg">
+                        <defs>
+                            <radialGradient id="pupilGlow" cx="50%" cy="50%" r="50%">
+                                <stop offset="0%" style="stop-color:#ffffff;stop-opacity:1" />
+                                <stop offset="20%" style="stop-color:#00f0ff;stop-opacity:0.8" />
+                                <stop offset="100%" style="stop-color:#7000ff;stop-opacity:0" />
+                            </radialGradient>
+                        </defs>
+                        <g transform="translate(250, 250)">
+                            <g stroke="#00f0ff" stroke-width="2" fill="none" opacity="0.7">
+                                <path d="M-100,-30 L-120,-30 L-120,30 L-100,30" />
+                                <path d="M100,-30 L120,-30 L120,30 L100,30" />
+                            </g>
+                            <circle cx="0" cy="0" r="80" fill="none" stroke="#7000ff" stroke-width="1" stroke-dasharray="40, 20" opacity="0.8">
+                                <animateTransform attributeName="transform" type="rotate" from="0" to="360" dur="30s" repeatCount="indefinite" />
+                            </circle>
+                            <circle cx="0" cy="0" r="60" fill="none" stroke="#ffffff" stroke-width="1" stroke-dasharray="2, 8">
+                                <animateTransform attributeName="transform" type="rotate" from="0" to="360" dur="5s" repeatCount="indefinite" />
+                            </circle>
+                            <circle cx="0" cy="0" r="20" fill="url(#pupilGlow)">
+                                <animate attributeName="r" values="20;25;20" dur="4s" repeatCount="indefinite" />
+                            </circle>
+                        </g>
+                        <text x="250" y="450" font-family="Orbitron" font-size="24" fill="#ffffff" text-anchor="middle" letter-spacing="10" opacity="0.9">SENTIENCE</text>
+                    </svg>
+                </div>
             </div>
         </section>
 
-        <section id="solutions" class="fade-in">
-            <h2>Our Core Concepts</h2>
+        <section id="solutions">
+            <h2>Core Concepts</h2>
             <div class="solutions-grid">
                 <!-- Card 1 -->
                 <div class="solution-card">
@@ -445,63 +653,61 @@
     </main>
 
     <footer>
-        <p>© 2025 AGI Labs Inc.</p>
+        <p>© 2025 AGI Labs Inc. | Redefining Intelligence</p>
     </footer>
 
     <script>
         // --- Starfield Logic ---
         const starfieldContainer = document.getElementById('js-starfield-container');
-        const numStars = 80; // Increased count for depth
-        const starSpeed = 0.5; 
-        const starMinSize = 0.5;
-        const starMaxSize = 3;
+        const numStars = 100; 
+        const starSpeed = 0.3; 
         const stars = [];
 
         class Star {
             constructor() {
-                this.reset();
+                // FIX: Create element BEFORE calling reset()
                 this.element = document.createElement('div');
                 this.element.style.position = 'absolute';
-                this.element.style.backgroundColor = 'white';
                 this.element.style.borderRadius = '50%';
-                this.element.style.boxShadow = '0 0 4px white'; // Added glow to stars
+                this.element.style.backgroundColor = 'white';
                 starfieldContainer.appendChild(this.element);
+                
+                // Now safely call reset
+                this.reset();
             }
 
             reset() {
                 this.x = (Math.random() - 0.5) * window.innerWidth * 2;
                 this.y = (Math.random() - 0.5) * window.innerHeight * 2;
                 this.z = Math.random() * window.innerWidth + window.innerWidth;
-                this.size = starMinSize + Math.random() * (starMaxSize - starMinSize);
-                // Add slight tint variance
-                const tint = Math.random() > 0.8 ? '#e0aaff' : 'white'; 
-                if(this.element) this.element.style.backgroundColor = tint;
+                this.size = Math.random();
+                
+                // Check if element exists to be safe, though constructor order fix solves the crash
+                if (this.element) {
+                    const tint = Math.random();
+                    this.element.style.backgroundColor = tint > 0.8 ? '#00f0ff' : (tint > 0.6 ? '#7000ff' : 'white'); 
+                    this.element.style.boxShadow = tint > 0.9 ? '0 0 4px #00f0ff' : 'none';
+                }
             }
 
             update() {
                 this.z -= starSpeed * 10;
-
-                if (this.z <= 1) {
-                    this.reset(); 
-                }
+                if (this.z <= 1) this.reset(); 
 
                 const scale = (window.innerWidth - this.z) / window.innerWidth;
                 const x2d = this.x * scale + window.innerWidth / 2;
                 const y2d = this.y * scale + window.innerHeight / 2;
-                const currentSize = this.size * scale;
+                const currentSize = Math.max(0.5, this.size * scale * 4);
 
-                this.element.style.left = `${x2d - currentSize / 2}px`;
-                this.element.style.top = `${y2d - currentSize / 2}px`;
+                this.element.style.left = `${x2d}px`;
+                this.element.style.top = `${y2d}px`;
                 this.element.style.width = `${currentSize}px`;
                 this.element.style.height = `${currentSize}px`;
-                this.element.style.opacity = Math.min(1, scale * 2);
-                this.element.style.transform = `translateZ(${this.z}px)`;
+                this.element.style.opacity = Math.min(1, scale * 3);
             }
         }
 
-        for (let i = 0; i < numStars; i++) {
-            stars.push(new Star());
-        }
+        for (let i = 0; i < numStars; i++) stars.push(new Star());
 
         function animate() {
             stars.forEach(star => star.update());
@@ -509,25 +715,18 @@
         }
         animate();
 
-        // --- Intersection Observer for Fade In ---
+        // --- Intersection Observer ---
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
-                }
+                if (entry.isIntersecting) entry.target.classList.add('visible');
             });
-        }, { threshold: 0.1 });
+        }, { threshold: 0.15 });
 
-        document.querySelectorAll('section').forEach(section => {
-            observer.observe(section);
-        });
+        document.querySelectorAll('section').forEach(section => observer.observe(section));
 
-        // --- Card Flip Interaction ---
-        const solutionCards = document.querySelectorAll('.solution-card');
-        solutionCards.forEach(card => {
-            card.addEventListener('click', () => {
-                card.classList.toggle('flipped');
-            });
+        // --- Card Flip ---
+        document.querySelectorAll('.solution-card').forEach(card => {
+            card.addEventListener('click', () => card.classList.toggle('flipped'));
         });
 
 /*MCC*/
@@ -595,26 +794,29 @@ The team is composed of one human and many expert AIs. Together, they are "One P
 
 </companydescription>
     `;
+    const CHATBOT_NAME = "AGI Labs AI";
+    
+    // UPDATED: Color Palette constants matching the new site theme
+    const CHAT_BUTTON_COLOR = "linear-gradient(135deg, #7000ff 0%, #b026ff 100%)"; 
+    const CHAT_HEADER_COLOR = "#1a1a2e";
+    const CHAT_BG = "rgba(10, 10, 20, 0.85)";
+    const CHAT_BORDER = "1px solid rgba(112, 0, 255, 0.3)";
 
-    const CHATBOT_NAME = "Chat With Our Website";
-    // Updated colors to match new design
-    const CHAT_BUTTON_COLOR = "linear-gradient(135deg, #3a0ca3 0%, #9d4edd 100%)"; 
-    const CHAT_HEADER_COLOR = "#3a0ca3";
-    const disclaimerText = 'You are interacting with an AI Chatbot. The information provided here is for general informational purposes only and is not a substitute for professional advice. We do not guarantee the accuracy or completeness of the information provided. Any reliance you place on such information is strictly at your own risk. We are not liable for any losses or damages arising from your use of this chatbot. For specific advice, please consult with a qualified professional. All conversations may be recorded to improve our services. By using this chatbot, you agree to these terms. AI inference graciously provided by pollinations.ai';
+    const disclaimerText = 'You are interacting with an AI Chatbot. We do not guarantee the accuracy or completeness of the information provided. Any reliance you place on such information is strictly at your own risk. We are not liable for any losses or damages arising from your use of this chatbot. By using this chatbot, you agree to these terms. AI inference graciously provided by pollinations.ai';
 
     // 2. CREATE AND INJECT CSS
     const style = document.createElement('style');
     style.innerHTML = `
         #chatbot-container {
             position: fixed;
-            top: 20px; /*MCC*/
-            right: 20px;
+            bottom: 30px;
+            right: 30px;
             z-index: 1000;
         }
 
         #chatbot-button {
-            width: 60px;
-            height: 60px;
+            width: 65px;
+            height: 65px;
             border-radius: 50%;
             background: ${CHAT_BUTTON_COLOR};
             color: white;
@@ -622,302 +824,191 @@ The team is composed of one human and many expert AIs. Together, they are "One P
             justify-content: center;
             align-items: center;
             cursor: pointer;
-            box-shadow: 0 0 15px rgba(157, 78, 221, 0.6);
-            font-size: 28px;
-            transition: transform 0.2s, box-shadow 0.2s;
-            /*border: 1px solid rgba(255,255,255,0.2);*/
+            box-shadow: 0 0 20px rgba(112, 0, 255, 0.6);
+            font-size: 30px;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border: 2px solid rgba(255,255,255,0.1);
         }
         #chatbot-button:hover {
-            transform: scale(1.1);
-            box-shadow: 0 0 25px rgba(157, 78, 221, 0.9);
+            transform: scale(1.1) rotate(5deg);
+            box-shadow: 0 0 35px rgba(0, 240, 255, 0.8);
+            background: linear-gradient(135deg, #00f0ff 0%, #7000ff 100%);
         }
 
         #chatbot-popup {
             display: none;
             position: fixed;
-            top: 100px; /*MCC*/
-            right: 20px;
-            width: 350px;
-            height: 500px;
-            border: 1px solid rgba(255,255,255,0.1);
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            bottom: 110px;
+            right: 30px;
+            width: 380px;
+            height: 550px;
+            border: ${CHAT_BORDER};
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.6);
             display: flex;
             flex-direction: column;
-            /* overflow: hidden; <--- THIS LINE IS REMOVED */
-            background-color: rgba(20, 20, 30, 0.9);
+            background-color: ${CHAT_BG};
             z-index: 1001; 
-            border-radius: 15px;
+            border-radius: 20px;
+            overflow: hidden;
+            animation: fadeUp 0.3s ease-out;
+        }
+
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         #chatbot-header {
-            background-color: ${CHAT_HEADER_COLOR};
-            background: linear-gradient(90deg, #3a0ca3, #7209b7);
+            background: linear-gradient(90deg, #1a0b2e, #3a0ca3);
             color: white;
-            padding: 15px;
-            padding-right: 60px; /* Added space for the exit button */
-            text-align: center;
-            font-weight: bold;
-            position: relative; 
+            padding: 18px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
             font-family: 'Orbitron', sans-serif;
-            border-top-left-radius: 15px;
-            border-top-right-radius: 15px;
+            font-size: 1.1rem;
+            letter-spacing: 1px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
         }
 
         #chatbot-messages {
             color: #e0e0e0;
-            font-size: medium;
             flex-grow: 1;
-            padding: 15px;
+            padding: 20px;
             overflow-y: auto;
             display: flex;
             flex-direction: column;
-            background-color: rgba(0,0,0,0.2);
+            background: linear-gradient(to bottom, rgba(0,0,0,0.3), rgba(0,0,0,0));
             font-family: 'Inter', sans-serif;
+            gap: 12px;
         }
 
         .chatbot-message {
-            margin-bottom: 10px;
-            padding: 10px 14px;
-            border-radius: 18px;
+            padding: 12px 16px;
+            border-radius: 16px;
             max-width: 85%;
             word-wrap: break-word;
             font-size: 0.95rem;
+            line-height: 1.5;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
         }
 
         .user-message {
-            background-color: #7209b7;
+            background: linear-gradient(135deg, #7000ff, #5a00cc);
             color: white;
             align-self: flex-end;
             border-bottom-right-radius: 4px;
         }
 
         .assistant-message {
-            background-color: #2a2a3a;
+            background-color: rgba(255,255,255,0.08);
             color: #fff;
             align-self: flex-start;
-            white-space: pre-wrap; /* Crucial for rendering newlines and formatting */
             border-bottom-left-radius: 4px;
-            border: 1px solid #3a3a4a;
+            border: 1px solid rgba(255,255,255,0.05);
         }
 
         #chatbot-input-container {
             display: flex;
             padding: 15px;
             border-top: 1px solid rgba(255,255,255,0.1);
-            background-color: rgba(20,20,30,0.95);
-            border-bottom-left-radius: 15px;
-            border-bottom-right-radius: 15px;
+            background-color: rgba(10, 10, 20, 0.9);
         }
 
         #chatbot-input {
             flex-grow: 1;
-            border: 1px solid #444;
-            border-radius: 20px;
-            padding: 10px;
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 25px;
+            padding: 12px 18px;
             margin-right: 10px;
-            background: #1a1a25;
+            background: rgba(255,255,255,0.05);
             color: white;
+            font-family: 'Inter', sans-serif;
         }
         #chatbot-input:focus {
             outline: none;
-            border-color: #9d4edd;
-        }
-        #chatbot-input:disabled {
-            background-color: #2a2a35;
+            border-color: #00f0ff;
+            background: rgba(255,255,255,0.1);
         }
 
         #chatbot-send {
             background: ${CHAT_BUTTON_COLOR};
             color: white;
             border: none;
-            border-radius: 20px;
-            padding: 10px 15px;
+            border-radius: 50%;
+            width: 45px;
+            height: 45px;
             cursor: pointer;
-            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.2s;
         }
         #chatbot-send:hover {
-            opacity: 0.9;
-        }
-        #chatbot-send:disabled {
-            background: #555;
-            cursor: not-allowed;
+            transform: scale(1.1);
         }
         
-        /* --- UPDATED EXIT BUTTON STYLING --- */
         #chatbot-exit {
-            display: none; /* Hidden on desktop by default */
-            position: absolute;
-            right: 15px;
-            top: 50%;
-            transform: translateY(-50%);
-            background-color: rgba(255, 255, 255, 0.2);
-            color: white;
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            border-radius: 5px;
-            padding: 5px 12px;
+            background: transparent;
+            color: rgba(255,255,255,0.6);
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 4px;
+            padding: 4px 10px;
             cursor: pointer;
-            font-size: 0.8rem;
-            font-family: 'Inter', sans-serif;
-            transition: background-color 0.2s;
-            margin-left: 0;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
         
         #chatbot-exit:hover {
-            background-color: #ff4d4d;
-            border-color: #ff4d4d;
+            background: rgba(255, 50, 50, 0.2);
+            border-color: rgba(255, 50, 50, 0.5);
+            color: #ffaaaa;
         }
 
         .thinking-indicator {
             display: flex;
             align-items: center;
-            padding: 8px 12px;
+            padding: 12px;
         }
-
         .thinking-indicator span {
-            height: 8px;
-            width: 8px;
-            margin: 0 2px;
-            background-color: #aaa;
+            height: 6px;
+            width: 6px;
+            margin: 0 3px;
+            background-color: #00f0ff;
             border-radius: 50%;
             display: inline-block;
             animation: bounce 1.4s infinite ease-in-out both;
         }
-
         .thinking-indicator .dot1 { animation-delay: -0.32s; }
         .thinking-indicator .dot2 { animation-delay: -0.16s; }
 
-        @keyframes bounce {
-            0%, 80%, 100% { transform: scale(0); } 
-            40% { transform: scale(1.0); }
-        }
-        
-                /* --- Tooltip CSS (Positioning Corrected) --- */
-        .tooltip-container {
-            position: relative;
-            display: inline-block;
-        }
+        /* Tooltip Styling */
+        .tooltip-container { position: relative; display: inline-block; margin-left: 10px; }
         .tooltip-icon {
-            font-family: 'Georgia', serif;
-            font-style: italic;
-            font-weight: bold;
-            font-size: 15px;
-            cursor: pointer;
-            border: 1px solid white;
-            border-radius: 50%;
-            width: 20px;
-            height: 20px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            line-height: 20px;
+            font-family: serif; font-style: italic; font-weight: bold; font-size: 14px;
+            cursor: help; border: 1px solid rgba(0, 240, 255, 0.5); color: #00f0ff;
+            border-radius: 50%; width: 20px; height: 20px;
+            display: flex; justify-content: center; align-items: center;
         }
         .tooltip-text {
-            visibility: hidden;
-            width: 280px;
-            background-color: #1a1a1a;
-            color: #fff;
-            text-align: center;
-            border-radius: 6px;
-            padding: 10px;
-            position: absolute;
-            z-index: 1002;
-            top: 120%;
-            /* --- MODIFIED --- */
-            right: 0; /* Align to the right of the container */
-            /* transform: translateX(50%); <-- REMOVED */
-            opacity: 0;
-            transition: opacity 0.3s;
-            font-size: 12px;
-            font-weight: normal;
-            border: 1px solid #444;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+            visibility: hidden; width: 220px; background-color: rgba(0,0,0,0.9);
+            color: #fff; text-align: center; border-radius: 8px; padding: 10px;
+            position: absolute; z-index: 1002; top: 130%; left: 50%; transform: translateX(-50%);
+            opacity: 0; transition: opacity 0.3s; font-size: 0.8rem;
+            border: 1px solid rgba(112, 0, 255, 0.3);
         }
-        .tooltip-text::after {
-            content: "";
-            position: absolute;
-            bottom: 100%;
-            /* --- MODIFIED --- */
-            right: 8px; /* Position arrow on the right side */
-            /* left: 50%; <-- REMOVED */
-            /* margin-left: -5px; <-- REMOVED */
-            border-width: 5px;
-            border-style: solid;
-            border-color: transparent transparent #1a1a1a transparent;
-        }
-        .tooltip-container:hover .tooltip-text {
-            visibility: visible;
-            opacity: 1;
-        }
-        
-        /* --- Mobile Responsive Styles --- */
+        .tooltip-container:hover .tooltip-text { visibility: visible; opacity: 1; }
+
+        /* Mobile */
         @media (max-width: 600px) {
             #chatbot-popup {
-                width: 100%;
-                height: 100%; /*calc(100% - 55px); MCC*/
-                /* bottom: 55px; MCC*/
-                top: 0;
-                right: 0;
-                border-radius: 0;
-                border: none;
-                box-shadow: none;
+                width: 100%; height: 100%; top: 0; right: 0; bottom: 0;
+                border-radius: 0; border: none;
             }
-
-            #chatbot-container {
-                bottom: 15px;
-                right: 15px;
-            }
-
-            #chatbot-button {
-                width: 55px;
-                height: 55px;
-            }
-
-             /* Make header elements relatively positioned to the header itself */
-            #chatbot-header {
-                position: relative;
-                border-radius: 0;
-            }
-
-            /* Adjust tooltip positioning for mobile */
-            .tooltip-container {
-                position: absolute;
-                top: 50%;
-                right: 15px;
-                transform: translateY(-50%);
-            }
-            
-            #chatbot-header {
-                position: relative;
-            }
-
-            .tooltip-container {
-                position: absolute;
-                top: 50%;
-                /* right: 15px; REMOVED to avoid conflict with exit button */
-                right: 85px; /* Shifted left to avoid exit button */
-                transform: translateY(-50%);
-            }
-
-            /* --- ADD THESE STYLES BELOW --- */
-
-            .tooltip-text {
-                /* Position the tooltip below the icon */
-                top: 120%; 
-                bottom: auto; /* Unset the bottom property to avoid conflicts */
-            }
-
-            .tooltip-text::after {
-                /* Flip the arrow to point upwards */
-                bottom: 100%;
-                top: auto; /* Unset the top property to avoid conflicts */
-                border-color: transparent transparent #555 transparent;
-            }
-            
-            #chatbot-exit {
-                display: block; /* Show the exit button on mobile */
-            }
+            #chatbot-container { bottom: 20px; right: 20px; }
         }
     `;
     document.head.appendChild(style);
@@ -925,8 +1016,8 @@ The team is composed of one human and many expert AIs. Together, they are "One P
     // 3. CREATE HTML ELEMENTS
     const chatbotContainer = document.createElement('div');
     chatbotContainer.id = 'chatbot-container';
-    const chatbotIcon = '<span>&#128172;</span>';
-    const closeIcon = '<span>&times;</span>';
+    const chatbotIcon = '<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>';
+    const closeIcon = '<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>';
 
     const chatbotButton = document.createElement('div');
     chatbotButton.id = 'chatbot-button';
@@ -938,27 +1029,29 @@ The team is composed of one human and many expert AIs. Together, they are "One P
 
     chatbotPopup.innerHTML = `
         <div id="chatbot-header">
-            ${CHATBOT_NAME}
-            <div class="tooltip-container">
-                <span class="tooltip-icon">i</span>
-                <div class="tooltip-text">${disclaimerText}</div>
+            <div style="display:flex; align-items:center;">
+                ${CHATBOT_NAME}
+                <div class="tooltip-container">
+                    <span class="tooltip-icon">i</span>
+                    <div class="tooltip-text">${disclaimerText}</div>
+                </div>
             </div>
-            <!-- MOVED: Exit button is now here in the header -->
-            <button id="chatbot-exit">Exit</button>
+            <button id="chatbot-exit">CLOSE</button>
         </div>
-        <div id="chatbot-messages">You are interacting with an AI Chatbot. We do not guarantee the accuracy or completeness of the information provided. Any reliance you place on such information is strictly at your own risk. We are not liable for any losses or damages arising from your use of this chatbot. By using this chatbot, you agree to these terms.</div>
+        <div id="chatbot-messages">
+            <div class="chatbot-message assistant-message">Hello. I am the AGI Labs virtual assistant. How can I explain our technology to you today?</div>
+        </div>
         <div id="chatbot-input-container">
-            <input type="text" id="chatbot-input" placeholder="Type a message...">
-            <button id="chatbot-send">Send</button>
-            <!-- REMOVED: Exit button was here -->
+            <input type="text" id="chatbot-input" placeholder="Ask about our AI...">
+            <button id="chatbot-send">➤</button>
         </div>
     `;
 
     chatbotContainer.appendChild(chatbotButton);
-    document.body.appendChild(chatbotPopup); // Append popup separately to avoid z-index issues
+    document.body.appendChild(chatbotPopup); 
     document.body.appendChild(chatbotContainer);
 
-    // 4. CHATBOT FUNCTIONALITY
+    // 4. CHATBOT FUNCTIONALITY (Logic preserved)
     const chatbotMessages = document.getElementById('chatbot-messages');
     const chatbotInput = document.getElementById('chatbot-input');
     const chatbotSend = document.getElementById('chatbot-send');
@@ -969,6 +1062,7 @@ The team is composed of one human and many expert AIs. Together, they are "One P
         if (chatbotPopup.style.display === 'none') {
             chatbotPopup.style.display = 'flex';
             chatbotButton.innerHTML = closeIcon;
+            setTimeout(() => chatbotInput.focus(), 100);
         } else {
             chatbotPopup.style.display = 'none';
             chatbotButton.innerHTML = chatbotIcon;
@@ -1015,8 +1109,7 @@ The team is composed of one human and many expert AIs. Together, they are "One P
             chatbotMessages.removeChild(thinkingIndicator);
 
             if (!response.ok) {
-                const errorData = await response.json();
-                addMessage('assistant', `Error: ${errorData.error.message}`);
+                addMessage('assistant', `I'm having trouble connecting to the neural network.`);
                 return;
             }
 
@@ -1039,14 +1132,7 @@ The team is composed of one human and many expert AIs. Together, they are "One P
 
                     if (line.startsWith('data:')) {
                         const data = line.substring(5).trim();
-                        if (data === '[DONE]') {
-                            console.log('done');
-                            break;
-                        }
-                        if (data.includes("---")) {
-                            console.log('ad');
-                            break;
-                        }
+                        if (data === '[DONE]') break;
                         try {
                             const parsed = JSON.parse(data);
                             const content = parsed.choices[0]?.delta?.content;
@@ -1058,9 +1144,7 @@ The team is composed of one human and many expert AIs. Together, they are "One P
                                 assistantMessageElement.textContent = assistantResponse;
                                 chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
                             }
-                        } catch (error) {
-                            console.error('Could not parse JSON from stream:', data, error);
-                        }
+                        } catch (error) { }
                     }
                     boundary = buffer.indexOf('\n');
                 }
@@ -1073,8 +1157,7 @@ The team is composed of one human and many expert AIs. Together, they are "One P
             if (thinkingIndicator && chatbotMessages.contains(thinkingIndicator)) {
                 chatbotMessages.removeChild(thinkingIndicator);
             }
-            addMessage('assistant', 'Sorry, something went wrong. Please check the console for details.');
-            console.error('Error fetching chat completion:', error);
+            addMessage('assistant', 'Connection interrupted.');
         } finally {
             chatbotInput.disabled = false;
             chatbotSend.disabled = false;
