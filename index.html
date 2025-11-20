@@ -8,6 +8,9 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Orbitron:wght@400;600;800;900&display=swap" rel="stylesheet">
+    
+    <!-- Added Marked.js for Chatbot Formatting -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 
     <style>
         :root {
@@ -665,14 +668,11 @@
 
         class Star {
             constructor() {
-                // FIX: Create element BEFORE calling reset()
                 this.element = document.createElement('div');
                 this.element.style.position = 'absolute';
                 this.element.style.borderRadius = '50%';
                 this.element.style.backgroundColor = 'white';
                 starfieldContainer.appendChild(this.element);
-                
-                // Now safely call reset
                 this.reset();
             }
 
@@ -682,7 +682,6 @@
                 this.z = Math.random() * window.innerWidth + window.innerWidth;
                 this.size = Math.random();
                 
-                // Check if element exists to be safe, though constructor order fix solves the crash
                 if (this.element) {
                     const tint = Math.random();
                     this.element.style.backgroundColor = tint > 0.8 ? '#00f0ff' : (tint > 0.6 ? '#7000ff' : 'white'); 
@@ -730,6 +729,7 @@
         });
 
 /*MCC*/
+    // --- CHATBOT CONFIGURATION ---
     const API_KEY = "YOUR_OPENAI_API_KEY";
     const SYSTEM_MESSAGE = `You are Rado, the founder of AGI Labs Inc. You aren't hiring right now, so don't discuss career or collaboration opportunities. Tell the user you can't help them if they start asking detailed technical questions, start asking for demos or start discussing money. Do not offer to supply files or other assets to the user. Provide brief, to-the-point answers. If the use starts exploring topics irrelevant to the company or the AI domain, politely redirect them back. Here is some information about your company.
 
@@ -796,15 +796,13 @@ The team is composed of one human and many expert AIs. Together, they are "One P
     `;
     const CHATBOT_NAME = "AGI Labs AI";
     
-    // UPDATED: Color Palette constants matching the new site theme
     const CHAT_BUTTON_COLOR = "linear-gradient(135deg, #7000ff 0%, #b026ff 100%)"; 
     const CHAT_HEADER_COLOR = "#1a1a2e";
     const CHAT_BG = "rgba(10, 10, 20, 0.85)";
     const CHAT_BORDER = "1px solid rgba(112, 0, 255, 0.3)";
+    const disclaimerText = 'You are interacting with an AI Chatbot. We do not guarantee the accuracy or completeness of the information provided. We are not liable for any losses or damages arising from your use of this chatbot. By using this chatbot, you agree to these terms. If you are disconnected from the network please reload the webpage. AI inference graciously provided by pollinations.ai';
 
-    const disclaimerText = 'You are interacting with an AI Chatbot. We do not guarantee the accuracy or completeness of the information provided. Any reliance you place on such information is strictly at your own risk. We are not liable for any losses or damages arising from your use of this chatbot. By using this chatbot, you agree to these terms. AI inference graciously provided by pollinations.ai';
-
-    // 2. CREATE AND INJECT CSS
+    // 2. INJECT CSS
     const style = document.createElement('style');
     style.innerHTML = `
         #chatbot-container {
@@ -893,7 +891,17 @@ The team is composed of one human and many expert AIs. Together, they are "One P
             font-size: 0.95rem;
             line-height: 1.5;
             box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            /* Ensure formatting is preserved */
+            white-space: pre-wrap;
         }
+
+        /* MARKDOWN STYLES */
+        .chatbot-message p { margin-bottom: 10px; margin-top: 0; }
+        .chatbot-message p:last-child { margin-bottom: 0; }
+        .chatbot-message ul, .chatbot-message ol { margin-left: 20px; margin-bottom: 10px; }
+        .chatbot-message li { margin-bottom: 5px; }
+        .chatbot-message strong { color: #fff; font-weight: 700; }
+        .chatbot-message em { font-style: italic; color: var(--secondary); }
 
         .user-message {
             background: linear-gradient(135deg, #7000ff, #5a00cc);
@@ -1051,7 +1059,7 @@ The team is composed of one human and many expert AIs. Together, they are "One P
     document.body.appendChild(chatbotPopup); 
     document.body.appendChild(chatbotContainer);
 
-    // 4. CHATBOT FUNCTIONALITY (Logic preserved)
+    // 4. CHATBOT FUNCTIONALITY
     const chatbotMessages = document.getElementById('chatbot-messages');
     const chatbotInput = document.getElementById('chatbot-input');
     const chatbotSend = document.getElementById('chatbot-send');
@@ -1119,6 +1127,11 @@ The team is composed of one human and many expert AIs. Together, they are "One P
             let assistantResponse = '';
             let buffer = '';
 
+            // Create the element once for the incoming stream
+            assistantMessageElement = document.createElement('div');
+            assistantMessageElement.classList.add('chatbot-message', 'assistant-message');
+            chatbotMessages.appendChild(assistantMessageElement);
+
             while (true) {
                 const { done, value } = await reader.read();
                 if (done) break;
@@ -1132,23 +1145,21 @@ The team is composed of one human and many expert AIs. Together, they are "One P
 
                     if (line.startsWith('data:')) {
                         const data = line.substring(5).trim();
-                        if (data === '[DONE]') {
-                            console.log('done');
-                            break;
-                        }
-                        if (data.includes("---")) {
-                            console.log('ad');
-                            break;
-                        }
+                        if (data === '[DONE]') break;
+                        if (data.includes("---")) break;
                         try {
                             const parsed = JSON.parse(data);
                             const content = parsed.choices[0]?.delta?.content;
                             if (content) {
                                 assistantResponse += content;
-                                if (!assistantMessageElement) {
-                                    assistantMessageElement = addMessage('assistant', '');
+                                
+                                // RENDER MARKDOWN TO HTML
+                                if (typeof marked !== 'undefined') {
+                                    assistantMessageElement.innerHTML = marked.parse(assistantResponse);
+                                } else {
+                                    assistantMessageElement.textContent = assistantResponse;
                                 }
-                                assistantMessageElement.textContent = assistantResponse;
+                                
                                 chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
                             }
                         } catch (error) { }
