@@ -1161,6 +1161,7 @@ const sendMessage = async () => {
     if (userInput === '') return;
 
     addMessage('user', userInput);
+    conversationHistory = [{ role: "system", content: SYSTEM_MESSAGE }]; // MCC Reset History because of pollinations' limited context window (No memory)
     conversationHistory.push({ role: "user", content: userInput });
     chatbotInput.value = '';
     chatbotInput.disabled = true;
