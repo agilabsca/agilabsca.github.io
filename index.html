@@ -1119,7 +1119,7 @@ chatbotPopup.innerHTML = `
 chatbotContainer.appendChild(chatbotButton);
 document.body.appendChild(chatbotPopup);
 document.body.appendChild(chatbotContainer);
-
+/*
 // Chatbot Functionality
 const chatbotMessages = document.getElementById('chatbot-messages');
 const chatbotInput = document.getElementById('chatbot-input');
@@ -1169,8 +1169,8 @@ const sendMessage = async () => {
 
     const thinkingIndicator = showThinkingIndicator();
 
-    try { // changed to https to temporarily remove Not Secure warning
-        const response = await fetch('https://146.190.188.208:11434/v1/chat/completions', {
+    try {
+        const response = await fetch('http://localhost:11434/v1/chat/completions', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${API_KEY}` },
             body: JSON.stringify({ model: 'gemma3:27b', messages: conversationHistory, stream: true })
@@ -1248,6 +1248,7 @@ chatbotInput.addEventListener('keydown', (event) => {
         sendMessage();
     }
 });
+*/
 
     </script>
 </body>
