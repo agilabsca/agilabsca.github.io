@@ -1007,10 +1007,10 @@ const CHAT_BG = "rgba(10, 10, 20, 0.85)";
 const CHAT_BORDER = "1px solid rgba(112, 0, 255, 0.3)";
 const disclaimerText = 'In Chrome, click the lock/info icon in the address bar, select Site Settings, locate Insecure content, and change it from Block to Allow. You are interacting with an AI Chatbot. We do not guarantee the accuracy or completeness of the information provided.';
 
-// Inject Chatbot CSS
+// Inject Chatbot CSS (Added display: none; to chatbot-container to temporarily hide chatbot)
 const style = document.createElement('style');
 style.innerHTML = `
-    #chatbot-container { position: fixed; bottom: 30px; right: 30px; z-index: 1000; }
+    #chatbot-container {display: none;  position: fixed; bottom: 30px; right: 30px; z-index: 1000; }
     #chatbot-button {
         width: 65px; height: 65px; border-radius: 50%;
         background: ${CHAT_BUTTON_COLOR}; color: white;
@@ -1169,11 +1169,11 @@ const sendMessage = async () => {
 
     const thinkingIndicator = showThinkingIndicator();
 
-    try {
-        const response = await fetch('http://localhost:11434/v1/chat/completions', {
+    try { // changed to https to temporarily remove Not Secure warning
+        const response = await fetch('https://146.190.188.208:11434/v1/chat/completions', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${API_KEY}` },
-            body: JSON.stringify({ model: 'gemma3', messages: conversationHistory, stream: true })
+            body: JSON.stringify({ model: 'gemma3:27b', messages: conversationHistory, stream: true })
         });
 
         chatbotMessages.removeChild(thinkingIndicator);
