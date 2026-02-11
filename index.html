@@ -1170,7 +1170,7 @@ const sendMessage = async () => {
     const thinkingIndicator = showThinkingIndicator();
 
     try {
-        const response = await fetch('http://146.190.188.208:11434/v1/chat/completions', {
+        const response = await fetch('https://146.190.188.208:11434/v1/chat/completions', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${API_KEY}` },
             body: JSON.stringify({ model: 'gemma3:27b', messages: conversationHistory, stream: true })
