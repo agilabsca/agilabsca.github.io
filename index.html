@@ -1108,7 +1108,7 @@ chatbotPopup.innerHTML = `
         <button id="chatbot-exit">CLOSE</button>
     </div>
     <div id="chatbot-messages">
-        <div class="chatbot-message assistant-message">You are interacting with an AI Chatbot. We do not guarantee the accuracy or completeness of the information provided. We are not liable for any losses or damages arising from your use of this chatbot. By using this chatbot, you agree to these terms.</div>
+        <div class="chatbot-message assistant-message">Click the lock/info icon in the address bar, select Site Settings, locate Insecure content, and change it from Block to Allow. You are interacting with an AI Chatbot. We do not guarantee the accuracy or completeness of the information provided. We are not liable for any losses or damages arising from your use of this chatbot. By using this chatbot, you agree to these terms.</div>
     </div>
     <div id="chatbot-input-container">
         <input type="text" id="chatbot-input" placeholder="Ask about our AI...">
@@ -1170,7 +1170,7 @@ const sendMessage = async () => {
     const thinkingIndicator = showThinkingIndicator();
 
     try {
-        const response = await fetch('https://146.190.188.208:11434/v1/chat/completions', {
+        const response = await fetch('http://146.190.188.208:11434/v1/chat/completions', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${API_KEY}` },
             body: JSON.stringify({ model: 'gemma3:27b', messages: conversationHistory, stream: true })
