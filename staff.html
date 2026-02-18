@@ -16,7 +16,7 @@
             font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
             background-color: #0f1115; /* Dark background */
             color: #e0e0e0;
-            overflow: hidden; /* Prevent scrolling */
+            overflow: hidden; /* Prevent scrolling on body */
             height: 100vh;
             width: 100vw;
             display: flex;
@@ -53,6 +53,8 @@
             padding: 4rem;
             text-align: center;
             z-index: 1;
+            /* Allow scrolling within slide if content is too tall on mobile */
+            overflow-y: auto; 
         }
 
         .slide.active {
@@ -188,6 +190,7 @@
             color: #555;
             text-transform: uppercase;
             letter-spacing: 2px;
+            z-index: 20;
         }
 
         .progress-bar {
@@ -198,6 +201,7 @@
             background: #00d2ff;
             width: 0%;
             transition: width 0.3s ease;
+            z-index: 20;
         }
 
         .controls {
@@ -237,6 +241,55 @@
             font-family: monospace;
         }
 
+        /* --- MOBILE RESPONSIVENESS --- */
+        @media (max-width: 768px) {
+            .slide {
+                padding: 1.5rem;
+                justify-content: flex-start; /* Start from top on mobile */
+                padding-top: 4rem;
+            }
+
+            h1 { font-size: 2.5rem; }
+            h2 { font-size: 2rem; margin-bottom: 1.5rem; }
+            h3 { font-size: 1.4rem; }
+            p { font-size: 1.1rem; }
+            li { font-size: 1.1rem; }
+
+            .persona-grid {
+                grid-template-columns: 1fr; /* Stack personas */
+                gap: 1rem;
+                margin-top: 1rem;
+            }
+
+            .persona-card { padding: 1rem; }
+
+            .flow-step {
+                width: 100%;
+                padding: 1rem;
+                flex-direction: column;
+                text-align: center;
+                border-radius: 15px;
+            }
+
+            .hw-spec { font-size: 0.9rem; }
+
+            .controls {
+                bottom: 15px;
+                right: 15px;
+            }
+
+            .footer {
+                left: 15px;
+                bottom: 15px;
+                font-size: 0.7rem;
+            }
+
+            .nav-btn {
+                padding: 8px 16px;
+                font-size: 1rem;
+            }
+        }
+
     </style>
 </head>
 <body>
@@ -246,21 +299,13 @@
     <!-- SLIDE 1: TITLE -->
     <div class="slide active">
         <h1>My AI Staff</h1>
-        <p style="font-size: 2rem; color: #fff;">Completely Local and Private Virtual Staff<br>with Low Latency Voice Interface.</p>
+        <p style="font-size: 2rem; color: #fff;" class="responsive-sub">Completely Local and Private Virtual Staff<br>with Low Latency Voice Interface.</p>
         <div style="margin-top: 3rem; font-size: 1.2rem; color: #666;">AGI LABS PRESENTATION</div>
     </div>
 
-    <!-- SLIDE 2: OVERVIEW -->
-    <div class="slide">
-        <h2>Overview</h2>
-        <p>The team at AGI Labs consists of one human and a dedicated staff of expert AIs.</p>
-        <div style="font-size: 3rem; margin: 2rem 0; font-weight: bold; color: #fff;">
-            Together, we are one person.
-        </div>
-        <p>The phrase for "One person" in Filipino is <span style="color: #00d2ff; font-weight: bold;">"Isang Tao."</span></p>
-    </div>
+    <!-- PREVIOUS SLIDE 2 REMOVED -->
 
-    <!-- SLIDE 3: PERSONAS -->
+    <!-- SLIDE 3 (Now 2): PERSONAS -->
     <div class="slide">
         <h2>Meet The Team</h2>
         <p style="margin-bottom: 1rem;">Each member has a distinct voice and specialized role.</p>
@@ -293,7 +338,7 @@
         </div>
     </div>
 
-    <!-- SLIDE 4: ARCHITECTURE -->
+    <!-- SLIDE 4 (Now 3): ARCHITECTURE -->
     <div class="slide">
         <h2>Waterfall Architecture</h2>
         <p>Modular design allowing component swapping as required.</p>
@@ -317,7 +362,7 @@
         </div>
     </div>
 
-    <!-- SLIDE 5: LATENCY -->
+    <!-- SLIDE 5 (Now 4): LATENCY -->
     <div class="slide">
         <h2>Latency Engineering</h2>
         
@@ -334,7 +379,7 @@
         </div>
     </div>
 
-    <!-- SLIDE 6: OTHERS / SECURITY -->
+    <!-- SLIDE 6 (Now 5): OTHERS / SECURITY -->
     <div class="slide">
         <h2>Capabilities & Security</h2>
         <ul>
@@ -349,12 +394,11 @@
         </div>
     </div>
 
-    <!-- SLIDE 7: END -->
+    <!-- SLIDE 7 (Now 6): END -->
     <div class="slide">
         <h1>AGI LABS</h1>
         <p>Isang Tao.</p>
-        <p><a href='https://www.agilabs.ca/staff.mp3'>Sample Recording</a></p>
-        <!--<<p><a href='https://www.agilabs.ca/converser.html'>Web demo (single-thread)</a></p>-->
+        <p><a href='https://www.agilabs.ca/staff.mp3' style="color: #00d2ff;">Sample Recording</a></p>
     </div>
 
     <!-- UI ELEMENTS -->
