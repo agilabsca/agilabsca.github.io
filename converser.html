@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Converser (Configurable)</title>
+        <style>
+            body {font-family: sans-serif; color: #111111; padding: 2%; background-color: #eeeeee; max-width: 800px; margin: 0 auto;}
+            h2 {color: #111111}
+            .container {background: #ffffff; padding: 20px; border-radius: 8px; box-shadow: 0 0 10px grey}
+            
+            button {font-family: sans-serif; background-color: #003300; color: #ffffff; border: none; padding: 15px 30px; border-radius: 5px; cursor: pointer; font-size: 18px; margin-bottom: 20px; margin-right: 10px;}
+            button:disabled {background-color: #cccccc; cursor: not-allowed;}
+            button.stop {background-color: #8b0000;}
+            button.download {background-color: #006064;}
+            
+            p {white-space: pre-wrap; word-wrap: break-word; line-height: 1.5;}
+            .subtitle { font-size: 0.8em; color: #555; margin-bottom: 20px;}
+            #status { font-weight: bold; margin-bottom: 15px; padding: 10px; border-radius: 4px; background-color: #e0e0e0;}
+            .label { font-weight: bold; margin-right: 5px; color: #444;}
+            
+            /* Styles for the Editable System Card */
+            .system-card {
+                background-color: #e3f2fd;
+                border-left: 5px solid #2196f3;
+                padding: 15px;
+                margin-bottom: 20px;
+                font-size: 0.9em;
+                color: #0d47a1;
+                border-radius: 4px;
+            }
+            .config-row { margin-bottom: 10px; }
+            .config-row label { font-weight: bold; display: block; margin-bottom: 5px; }
+            .config-row input { 
+                padding: 8px; 
+                border-radius: 4px; 
+                border: 1px solid #90caf9; 
+                width: 100%; 
+                max-width: 300px;
+                font-family: monospace;
+            }
+            .config-row textarea { 
+                width: 95%; 
+                padding: 8px; 
+                border-radius: 4px; 
+                border: 1px solid #90caf9; 
+                resize: vertical;
+                font-family: sans-serif;
+                min-height: 80px;
+            }
+            /* Tooltip / Help Icon Styles */
+            .help-icon {
+                display: inline-block;
+                width: 22px;
+                height: 22px;
+                background-color: #555;
+                color: white;
+                border-radius: 50%;
+                text-align: center;
+                line-height: 22px;
+                font-size: 14px;
+                font-weight: bold;
+                margin-left: 10px;
+                cursor: help;
+                position: relative;
+                vertical-align: middle;
+            }
+
+            /* The actual popup text */
+            .help-icon:hover::after {
+                content: attr(data-tooltip);
+                position: absolute;
+                left: 35px;
+                top: 0;
+                width: 250px; /* Made slightly wider for text */
+                background-color: #333;
+                color: #fff;
+                font-size: 12px;
+                padding: 10px;
+                border-radius: 5px;
+                z-index: 100;
+                white-space: pre-wrap;
+                text-align: left;
+            }
+        </style>
+    </head>
+    <body>
+        <h2>Ollama Voice Chat<span class="help-icon" data-tooltip="In Chrome, click the lock/info icon in the address bar, select 'Site Settings', locate 'Insecure content', and change it from 'Block' to 'Allow'">?</span></h2>        
+        <!-- EDITABLE SYSTEM CARD -->
+        <div class="system-card">
+            <!-- NEW: Base URL Configuration -->
+            <div class="config-row">
+                <label for="urlInput">Ollama Base URL:</label>
+                <input type="text" id="urlInput" value="http://146.190.188.208:11434" placeholder="e.g., http://localhost:11434">
+            </div>
+            <div class="config-row">
+                <label for="modelInput">Ollama Model Name:</label>
+                <input type="text" id="modelInput" value="gemma3:27b" placeholder="e.g., gemma3:1b, llama3, mistral">
+            </div>
+            <div class="config-row">
+                <label for="sysPromptInput">System Persona:</label>
+                <textarea id="sysPromptInput"></textarea>
+            </div>
+        </div>
+
+        <div style="display: flex; flex-wrap: wrap;">
+            <button id="startBtn" onclick="StartChat()">Start Voice Chat</button>
+            <button id="dlBtn" class="download" onclick="downloadHistory()">Download Transcript</button>
+        </div>
+        
+        <div class="container">
+            <div id="status">Status: Configure settings above and click 'Start Voice Chat'.</div>
+            
+            <!-- Display current prompt -->
+            <p><span class="label">You:</span> <span id="prompt">...</span></p>
+            
+            <!-- Display current response -->
+            <p><span class="label">AI:</span> <span id="response">...</span></p>
+        </div>
+
+        <script>
+            // --- DEFAULTS ---
+            const DEFAULT_SYSTEM_PROMPT = "Your name is Shawna and you are a professional conversationalist. You are free to discuss any topic of your choosing. Your output should only contain conversational English text. Don't be sycophantic or apologetic. Your answers are being spoken aloud via Text-to-Speech. Therefore, keep your responses concise, short (1-2 sentences), and avoid using markdown (like bolding or lists), emojis, bullet lists, abbreviations, or code blocks.";
+            const DEFAULT_BASE_URL = "http://146.190.188.208:11434";
+
+            // Set initial values in inputs
+            document.getElementById('sysPromptInput').value = DEFAULT_SYSTEM_PROMPT;
+            document.getElementById('urlInput').value = DEFAULT_BASE_URL;
+
+            // --- CONFIGURATION OBJECT (Will be updated on Start) ---
+            let CONFIG = {
+                baseUrl: DEFAULT_BASE_URL,
+                modelName: 'gemma3:27b', 
+                apiKey: 'ollama'
+            };
+
+            let recognition;
+            let speechtext = "";           
+            let conversationHistory = []; // Initialized in StartChat
+            let controller; 
+            let isSpeaking = false;
+            let silenceTimer;
+            
+            // Fix for Chrome Garbage Collection bug
+            window.utterances = [];
+
+            // --- DOWNLOAD HISTORY ---
+            function downloadHistory() {
+                if (conversationHistory.length <= 1) {
+                    alert("No conversation data to download yet.");
+                    return;
+                }
+
+                let textContent = "CONVERSATION TRANSCRIPT\n";
+                textContent += "Date: " + new Date().toLocaleString() + "\n";
+                textContent += "Model: " + CONFIG.modelName + "\n";
+                textContent += "URL: " + CONFIG.baseUrl + "\n";
+                textContent += "----------------------------------------\n\n";
+
+                conversationHistory.forEach(entry => {
+                    const role = entry.role.toUpperCase();
+                    const content = entry.content;
+                    textContent += `[${role}]\n${content}\n\n`;
+                });
+
+                const blob = new Blob([textContent], { type: 'text/plain' });
+                const url = window.URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                
+                const timestamp = new Date().toISOString().replace(/[:.]/g, '-').slice(0, 19);
+                a.href = url;
+                a.download = `chat_transcript_${timestamp}.txt`;
+                
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                window.URL.revokeObjectURL(url);
+            }
+
+            function StartChat() {
+                // 1. Lock Configuration
+                const urlInput = document.getElementById('urlInput');
+                const modelInput = document.getElementById('modelInput');
+                const sysInput = document.getElementById('sysPromptInput');
+                const startBtn = document.getElementById('startBtn');
+
+                // 2. Update Config from Inputs
+                // Remove trailing slash if user added one
+                let cleanUrl = urlInput.value.trim();
+                if (cleanUrl.endsWith('/')) {
+                    cleanUrl = cleanUrl.slice(0, -1);
+                }
+                CONFIG.baseUrl = cleanUrl || DEFAULT_BASE_URL;
+                CONFIG.modelName = modelInput.value.trim() || 'gemma3:1b';
+                const currentSystemPrompt = sysInput.value.trim();
+
+                // 3. Initialize History
+                conversationHistory = [
+                    { role: "system", content: currentSystemPrompt }
+                ];
+
+                // 4. Update UI to show locked state
+                urlInput.disabled = true;
+                modelInput.disabled = true;
+                sysInput.disabled = true;
+                startBtn.innerText = "Listening...";
+                startBtn.disabled = true;
+                
+                // 5. Initialize speech engine
+                speechSynthesis.cancel();
+                InitRecognition();
+            }
+
+            function InitRecognition() {
+                window.SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+                
+                if (window.SpeechRecognition) {
+                    recognition = new SpeechRecognition();
+                    recognition.continuous = true; 
+                    recognition.interimResults = true;
+                    recognition.lang = 'en-US';
+
+                    recognition.onstart = () => {
+                        document.getElementById('status').innerText = `Status: Listening (Model: ${CONFIG.modelName})...`;
+                        document.getElementById('status').style.backgroundColor = "#d4edda"; 
+                    };
+
+                    recognition.onresult = (event) => {
+                        const promptElem = document.getElementById('prompt');
+                        clearTimeout(silenceTimer);
+
+                        let myprompt = '';
+                        const latestResult = event.results[event.results.length - 1];
+                        myprompt = latestResult[0].transcript;
+                        
+                        promptElem.innerText = myprompt;
+
+                        if (latestResult.isFinal) {
+                            HandleInput(myprompt);
+                        } else {
+                            silenceTimer = setTimeout(() => {
+                                if (myprompt.trim().length > 0) {
+                                    HandleInput(myprompt);
+                                }
+                            }, 1500); 
+                        }
+                    };
+
+                    recognition.onend = () => {
+                        if (!isSpeaking) {
+                            try { recognition.start(); } catch(e) {}
+                        } else {
+                            document.getElementById('status').innerText = "Status: AI Speaking (Mic Paused)...";
+                            document.getElementById('status').style.backgroundColor = "#fff3cd"; 
+                        }
+                    };
+
+                    try { recognition.start(); } catch(e) {}
+                } else {
+                    alert("Your browser does not support Speech Recognition. Please use Chrome.");
+                }
+            }
+
+            function HandleInput(myprompt) {
+                if (typeof controller !== 'undefined') controller.abort();
+                isSpeaking = true;
+                recognition.stop(); 
+                Go(myprompt);
+            }
+                    
+            function Speak(text) {
+                return new Promise((resolve, reject) => {
+                    const utterance = new SpeechSynthesisUtterance(text);
+                    const voices = speechSynthesis.getVoices();
+                    const preferredVoice = voices.find(v => v.name.includes("Google US English")) || voices[0];
+                    if (preferredVoice) utterance.voice = preferredVoice;
+
+                    window.utterances.push(utterance);
+
+                    utterance.onend = () => {
+                        window.utterances.shift();
+                        resolve();
+                    };
+                    
+                    utterance.onerror = (e) => {
+                        console.error("Speech error:", e);
+                        window.utterances.shift();
+                        resolve(); 
+                    };
+
+                    speechSynthesis.speak(utterance);
+                });
+            }
+
+            async function Go(myprompt) {
+                document.getElementById("status").innerText = "Status: Thinking...";
+                document.getElementById("response").innerText = "";
+                speechtext = "";
+                
+                conversationHistory.push({ role: "user", content: myprompt });
+
+                controller = new AbortController();
+                
+                await streamChatCompletion(conversationHistory, controller);
+                
+                let checkInterval = setInterval(() => {
+                    if (!speechSynthesis.speaking && window.utterances.length === 0) {
+                        clearInterval(checkInterval);
+                        isSpeaking = false;
+                        document.getElementById('prompt').innerText = "...";
+                        InitRecognition(); 
+                    }
+                }, 500);
+            }
+
+            async function streamChatCompletion(messages, abortController) {
+                const url = `${CONFIG.baseUrl}/v1/chat/completions`;
+                const payload = {
+                    model: CONFIG.modelName,
+                    messages: messages,
+                    stream: true, 
+                };
+
+                let fullAssistantResponse = "";
+
+                try {
+                    const response = await fetch(url, {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json", "Authorization": `Bearer ${CONFIG.apiKey}` },
+                        body: JSON.stringify(payload),
+                        signal: abortController.signal
+                    });
+
+                    if (!response.ok) throw new Error(`HTTP Error: ${response.status}`);
+
+                    const reader = response.body.getReader();
+                    const decoder = new TextDecoder();
+                    let buffer = "";
+
+                    while (true) {
+                        const { done, value } = await reader.read();
+                        if (done) break;
+
+                        buffer += decoder.decode(value, { stream: true });
+                        const lines = buffer.split("\n");
+                        buffer = lines.pop(); 
+
+                        for (const line of lines) {
+                            if (line.startsWith("data: ")) {
+                                const dataStr = line.substring(6).trim();
+                                if (dataStr === "[DONE]") continue;
+
+                                try {
+                                    const chunk = JSON.parse(dataStr);
+                                    const content = chunk?.choices?.[0]?.delta?.content;
+                                    if (content) {
+                                        fullAssistantResponse += content;
+                                        handleChunk(content); 
+                                    }
+                                } catch (e) { console.error(e); }
+                            }
+                        }
+                    }
+                    
+                    if (speechtext.trim().length > 0) {
+                        Speak(speechtext);
+                        speechtext = "";
+                    }
+
+                    conversationHistory.push({ role: "assistant", content: fullAssistantResponse });
+
+                } catch (error) {
+                    console.error(error);
+                    document.getElementById("response").innerText += ` [Error: ${error.message}]`;
+                }
+            }
+
+            function handleChunk(textChunk) {
+                const outputElement = document.getElementById("response");
+                outputElement.textContent += textChunk;
+                
+                speechtext += textChunk;
+                
+                if (/[.!?](\s|$)/.test(speechtext)) {
+                    Speak(speechtext);
+                    speechtext = "";
+                }  
+            }
+        </script>
+    </body>
+</html>
