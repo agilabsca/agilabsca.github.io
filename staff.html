@@ -22,6 +22,8 @@
             display: flex;
             justify-content: center;
             align-items: center;
+            /* Disable double-tap zoom on mobile for smoother tapping */
+            touch-action: manipulation; 
         }
 
         /* --- SLIDE CONTAINER --- */
@@ -55,6 +57,13 @@
             z-index: 1;
             /* Allow scrolling within slide if content is too tall on mobile */
             overflow-y: auto; 
+            /* Hide scrollbar for cleaner look */
+            scrollbar-width: none; 
+            -ms-overflow-style: none;
+        }
+        
+        .slide::-webkit-scrollbar { 
+            display: none; 
         }
 
         .slide.active {
@@ -243,6 +252,10 @@
 
         /* --- MOBILE RESPONSIVENESS --- */
         @media (max-width: 768px) {
+            .controls {
+                display: none; /* Hide Arrow Buttons on Mobile */
+            }
+
             .slide {
                 padding: 1.5rem;
                 justify-content: flex-start; /* Start from top on mobile */
@@ -273,20 +286,10 @@
 
             .hw-spec { font-size: 0.9rem; }
 
-            .controls {
-                bottom: 15px;
-                right: 15px;
-            }
-
             .footer {
                 left: 15px;
                 bottom: 15px;
                 font-size: 0.7rem;
-            }
-
-            .nav-btn {
-                padding: 8px 16px;
-                font-size: 1rem;
             }
         }
 
@@ -303,9 +306,7 @@
         <div style="margin-top: 3rem; font-size: 1.2rem; color: #666;">AGI LABS PRESENTATION</div>
     </div>
 
-    <!-- PREVIOUS SLIDE 2 REMOVED -->
-
-    <!-- SLIDE 3 (Now 2): PERSONAS -->
+    <!-- SLIDE 2: PERSONAS -->
     <div class="slide">
         <h2>Meet The Team</h2>
         <p style="margin-bottom: 1rem;">Each member has a distinct voice and specialized role.</p>
@@ -338,35 +339,35 @@
         </div>
     </div>
 
-    <!-- SLIDE 4 (Now 3): ARCHITECTURE -->
+    <!-- SLIDE 3: ARCHITECTURE -->
     <div class="slide">
         <h2>Waterfall Architecture</h2>
         <p>Modular design allowing component swapping as required.</p>
         
         <div class="flow-container">
             <div class="flow-step">
-                <span class="step-title">1. STT (Input)</span>
+                <span class="step-title">1. STT (Whisper)</span>
             </div>
             <div class="flow-arrow">↓</div>
             <div class="flow-step">
-                <span class="step-title">2. AI Core (Local OpenAI compatible API)</span>
+                <span class="step-title">2. AI Core (Ollama)</span>
             </div>
             <div class="flow-arrow">↓</div>
             <div class="flow-step">
-                <span class="step-title">3. TTS (Output)</span>
+                <span class="step-title">3. TTS (PocketTTS)</span>
             </div>
         </div>
 
     </div>
 
-    <!-- SLIDE 5 (Now 4): LATENCY -->
+    <!-- SLIDE 4: LATENCY -->
     <div class="slide">
         <h2>Latency Engineering</h2>
         
         <div style="text-align: left; max-width: 900px;">
             <div style="margin-bottom: 3rem;">
                 <h3 style="color: #00d2ff;">Multi-Threading</h3>
-                <p>I can interrupt the AI at any time, with any phrase, creating a more natural conversation flow.</p>
+                <p>I can interrupt the AI at any time, with any phrase, creating a natural conversation flow.</p>
             </div>
             
             <div>
@@ -376,22 +377,18 @@
         </div>
     </div>
 
-    <!-- SLIDE 6 (Now 5): OTHERS / SECURITY -->
+    <!-- SLIDE 5: OTHERS / SECURITY -->
     <div class="slide">
         <h2>Capabilities & Security</h2>
         <ul>
             <li><strong>Verbal Switching:</strong> Seamlessly switch between employees by name.</li>
             <li><strong>Persistent Memory:</strong> Each persona maintains its own engineering journal, storing important context from conversations automatically.</li>
             <li><strong>Tool Use:</strong> Access to a sand-boxed Linux shell (e.g. calculator, time/date, etc). Future: Text-based browser (links).</li>
+            <li><strong>Security:</strong> The setup runs on an Air-Gapped PC.</li>
         </ul>
-
-        <div style="margin-top: 3rem; border: 2px solid #ff4444; padding: 2rem; border-radius: 10px; background: rgba(255, 0, 0, 0.05);">
-            <h3 style="color: #ff4444; margin-bottom: 0.5rem;">SECURITY PROTOCOL</h3>
-            <p style="color: #fff; margin: 0;">All AGI IP is Proprietary and Secret.<br>The setup runs on an <strong>Air-Gapped PC</strong> that is active 24/7.</p>
-        </div>
     </div>
 
-    <!-- SLIDE 7 (Now 6): END -->
+    <!-- SLIDE 6: END -->
     <div class="slide">
         <h1>AGI LABS</h1>
         <p>Isang Tao.</p>
@@ -419,6 +416,8 @@
             slide.classList.remove('active');
             if (index === currentSlide) {
                 slide.classList.add('active');
+                // Scroll slide back to top when entering
+                slide.scrollTop = 0;
             }
         });
 
@@ -446,6 +445,30 @@
         if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'Enter') {
             nextSlide();
         } else if (e.key === 'ArrowLeft') {
+            prevSlide();
+        }
+    });
+
+    // Tap/Click Navigation for Mobile
+    document.addEventListener('click', (e) => {
+        // 1. Don't trigger if clicking a link or button
+        if (e.target.closest('a') || e.target.closest('button')) {
+            return;
+        }
+
+        // 2. Only active on mobile/touch screen widths (optional, but requested "in mobile mode")
+        // Note: We can remove this check if you want click-nav on desktop too.
+        // Currently keeping it simple: active always, but UI controls are hidden on mobile.
+        
+        const screenWidth = window.innerWidth;
+        const clickX = e.clientX;
+
+        // 3. Determine Side
+        if (clickX > screenWidth / 2) {
+            // Right Side -> Next
+            nextSlide();
+        } else {
+            // Left Side -> Prev
             prevSlide();
         }
     });
