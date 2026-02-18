@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My AI Staff - AGI Labs Presentation</title>
+    <style>
+        /* --- RESET & BASE STYLES --- */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: #0f1115; /* Dark background */
+            color: #e0e0e0;
+            overflow: hidden; /* Prevent scrolling */
+            height: 100vh;
+            width: 100vw;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* --- SLIDE CONTAINER --- */
+        .presentation-container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            max-width: 1600px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* --- SLIDE STYLES --- */
+        .slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.6s ease-in-out, transform 0.6s ease-out;
+            transform: scale(0.95);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 4rem;
+            text-align: center;
+            z-index: 1;
+        }
+
+        .slide.active {
+            opacity: 1;
+            visibility: visible;
+            transform: scale(1);
+            z-index: 10;
+        }
+
+        /* --- TYPOGRAPHY --- */
+        h1 {
+            font-size: 4.5rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, #00d2ff 0%, #3a7bd5 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            line-height: 1.1;
+        }
+
+        h2 {
+            font-size: 3rem;
+            margin-bottom: 2rem;
+            color: #00d2ff;
+            border-bottom: 2px solid #333;
+            padding-bottom: 0.5rem;
+            display: inline-block;
+        }
+
+        h3 {
+            font-size: 1.8rem;
+            color: #fff;
+            margin-bottom: 1rem;
+        }
+
+        p {
+            font-size: 1.6rem;
+            line-height: 1.6;
+            color: #b0b3b8;
+            max-width: 900px;
+            margin-bottom: 1.5rem;
+        }
+
+        ul {
+            list-style: none;
+            text-align: left;
+            max-width: 1000px;
+        }
+
+        li {
+            font-size: 1.5rem;
+            margin-bottom: 1.2rem;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+
+        li::before {
+            content: "•";
+            color: #00d2ff;
+            font-weight: bold;
+            display: inline-block;
+            width: 1em;
+            margin-left: -1em;
+        }
+
+        /* --- SPECIFIC LAYOUTS --- */
+        
+        /* Grid for Personas */
+        .persona-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            width: 100%;
+            max-width: 1100px;
+            margin-top: 2rem;
+        }
+
+        .persona-card {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 1.5rem;
+            border-radius: 12px;
+            border-left: 4px solid #3a7bd5;
+            text-align: left;
+        }
+
+        .persona-name {
+            font-weight: bold;
+            color: #fff;
+            font-size: 1.4rem;
+        }
+
+        .persona-role {
+            font-size: 1.2rem;
+            color: #8faac9;
+        }
+
+        /* Architecture Flow */
+        .flow-container {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            align-items: center;
+            margin: 2rem 0;
+            width: 100%;
+        }
+
+        .flow-step {
+            background: #1e2229;
+            padding: 1.5rem 3rem;
+            border-radius: 50px;
+            border: 1px solid #333;
+            width: 80%;
+            max-width: 800px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .flow-arrow {
+            font-size: 2rem;
+            color: #00d2ff;
+        }
+
+        .step-title { font-weight: bold; color: #fff; }
+        .step-desc { font-size: 1.1rem; color: #aaa; margin: 0;}
+
+        /* --- FOOTER & CONTROLS --- */
+        .footer {
+            position: absolute;
+            bottom: 20px;
+            left: 40px;
+            font-size: 1rem;
+            color: #555;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .progress-bar {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            height: 5px;
+            background: #00d2ff;
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        .controls {
+            position: absolute;
+            bottom: 30px;
+            right: 40px;
+            display: flex;
+            gap: 10px;
+            z-index: 100;
+        }
+
+        .nav-btn {
+            background: rgba(255,255,255,0.1);
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.2s;
+            font-size: 1.2rem;
+        }
+
+        .nav-btn:hover { background: rgba(255,255,255,0.2); }
+
+        /* Tech highlight */
+        .tech-highlight {
+            color: #ff007f; /* Magenta for contrast */
+            font-weight: bold;
+        }
+        .hw-spec {
+            margin-top: 2rem;
+            font-size: 1.2rem;
+            background: #222;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            color: #00ff9d;
+            font-family: monospace;
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="presentation-container">
+
+    <!-- SLIDE 1: TITLE -->
+    <div class="slide active">
+        <h1>My AI Staff</h1>
+        <p style="font-size: 2rem; color: #fff;">Completely Local and Private Virtual Staff<br>with Low Latency Voice Interface.</p>
+        <div style="margin-top: 3rem; font-size: 1.2rem; color: #666;">AGI LABS PRESENTATION</div>
+    </div>
+
+    <!-- SLIDE 2: OVERVIEW -->
+    <div class="slide">
+        <h2>Overview</h2>
+        <p>The team at AGI Labs consists of one human and a dedicated staff of expert AIs.</p>
+        <div style="font-size: 3rem; margin: 2rem 0; font-weight: bold; color: #fff;">
+            Together, we are one person.
+        </div>
+        <p>The phrase for "One person" in Filipino is <span style="color: #00d2ff; font-weight: bold;">"Isang Tao."</span></p>
+    </div>
+
+    <!-- SLIDE 3: PERSONAS -->
+    <div class="slide">
+        <h2>Meet The Team</h2>
+        <p style="margin-bottom: 1rem;">Each member has a distinct voice and specialized role.</p>
+        
+        <div class="persona-grid">
+            <div class="persona-card">
+                <div class="persona-name">Sharon</div>
+                <div class="persona-role">Office Administrator</div>
+            </div>
+            <div class="persona-card">
+                <div class="persona-name">Becky & Brian</div>
+                <div class="persona-role">Research Specialists</div>
+            </div>
+            <div class="persona-card">
+                <div class="persona-name">Margo</div>
+                <div class="persona-role">Analog Photonics Specialist</div>
+            </div>
+            <div class="persona-card">
+                <div class="persona-name">Roland</div>
+                <div class="persona-role">Software Architect</div>
+            </div>
+            <div class="persona-card">
+                <div class="persona-name">Matthew</div>
+                <div class="persona-role">Robotics Expert</div>
+            </div>
+            <div class="persona-card">
+                <div class="persona-name">Alex</div>
+                <div class="persona-role">VP of Business Development</div>
+            </div>
+        </div>
+        <p style="margin-top: 2rem; font-style: italic; font-size: 1.2rem;">"I consult with them on a daily basis."</p>
+    </div>
+
+    <!-- SLIDE 4: ARCHITECTURE -->
+    <div class="slide">
+        <h2>Waterfall Architecture</h2>
+        <p>Modular design allowing component swapping as required.</p>
+        
+        <div class="flow-container">
+            <div class="flow-step">
+                <span class="step-title">1. STT (Input)</span>
+                <span class="step-desc">Whisper (Accuracy) or VOSK (Speed)</span>
+            </div>
+            <div class="flow-arrow">↓</div>
+            <div class="flow-step">
+                <span class="step-title">2. AI Core (Logic)</span>
+                <span class="step-desc">Local OpenAI-Compatible API (Ollama)<br><span style="font-size:0.8em; color:#888;">Models: Gemma3:12b, Qwen3-coder</span></span>
+            </div>
+            <div class="flow-arrow">↓</div>
+            <div class="flow-step">
+                <span class="step-title">3. TTS (Output)</span>
+                <span class="step-desc">Pocket TTS (High Speed / Low Latency)</span>
+            </div>
+        </div>
+
+        <div class="hw-spec">
+            HARDWARE: RTX 4070 (12GB VRAM) - Consumer Grade GPU
+        </div>
+    </div>
+
+    <!-- SLIDE 5: LATENCY -->
+    <div class="slide">
+        <h2>Latency Engineering</h2>
+        
+        <div style="text-align: left; max-width: 900px;">
+            <div style="margin-bottom: 3rem;">
+                <h3 style="color: #00d2ff;">Multi-Threading</h3>
+                <p>The system is always listening. I can interrupt the AI at any time, with any phrase, creating a natural conversation flow.</p>
+            </div>
+            
+            <div>
+                <h3 style="color: #00d2ff;">Streaming Output</h3>
+                <p>Text is sent to the TTS engine as it is generated sentence-by-sentence, rather than waiting for the complete generation. This creates immediate responsiveness.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- SLIDE 6: OTHERS / SECURITY -->
+    <div class="slide">
+        <h2>Capabilities & Security</h2>
+        <ul>
+            <li><strong>Verbal Switching:</strong> Seamlessly switch between employees by name.</li>
+            <li><strong>Persistent Memory:</strong> The AI maintains an engineering journal, storing important context from conversations automatically.</li>
+            <li><strong>Tool Use:</strong> Access to a sand-boxed Linux shell (Calculator, Time). Future: Text-based browser.</li>
+        </ul>
+
+        <div style="margin-top: 3rem; border: 2px solid #ff4444; padding: 2rem; border-radius: 10px; background: rgba(255, 0, 0, 0.05);">
+            <h3 style="color: #ff4444; margin-bottom: 0.5rem;">SECURITY PROTOCOL</h3>
+            <p style="color: #fff; margin: 0;">All IP is Proprietary and Secret.<br>The setup runs on an <strong>Air-Gapped PC</strong> that is active 24/7.</p>
+        </div>
+    </div>
+
+    <!-- SLIDE 7: END -->
+    <div class="slide">
+        <h1>AGI LABS</h1>
+        <p>Isang Tao.</p>
+    </div>
+
+    <!-- UI ELEMENTS -->
+    <div class="footer">AGI Labs &copy; 2026</div>
+    <div class="progress-bar" id="progressBar"></div>
+    <div class="controls">
+        <button class="nav-btn" onclick="prevSlide()">&#8592;</button>
+        <button class="nav-btn" onclick="nextSlide()">&#8594;</button>
+    </div>
+
+</div>
+
+<script>
+    let currentSlide = 0;
+    const slides = document.querySelectorAll('.slide');
+    const progressBar = document.getElementById('progressBar');
+
+    function updateSlide() {
+        // Update Classes
+        slides.forEach((slide, index) => {
+            slide.classList.remove('active');
+            if (index === currentSlide) {
+                slide.classList.add('active');
+            }
+        });
+
+        // Update Progress Bar
+        const progress = ((currentSlide + 1) / slides.length) * 100;
+        progressBar.style.width = `${progress}%`;
+    }
+
+    function nextSlide() {
+        if (currentSlide < slides.length - 1) {
+            currentSlide++;
+            updateSlide();
+        }
+    }
+
+    function prevSlide() {
+        if (currentSlide > 0) {
+            currentSlide--;
+            updateSlide();
+        }
+    }
+
+    // Keyboard Navigation
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'Enter') {
+            nextSlide();
+        } else if (e.key === 'ArrowLeft') {
+            prevSlide();
+        }
+    });
+
+    // Initialize
+    updateSlide();
+</script>
+
+</body>
+</html>
