@@ -11,7 +11,7 @@ Good evening everybody (GULMT)
 Here is my team (DFI) 
 * DRAMA I have someone doing business development, several researchers and just for fun I have an office admin. You'll notice that I don't have HR (There's no drama in my team).
 * FEEDBACK - I consult with them when I have an idea I need feedback on.
-* INNOVATION - Honestly, their knowledge is impressive and they spur a lot of innovation.
+* INNOVATION - The system cards are very simple. For example "Your name is Margo and you are an expert in analog photonics." That is usually sufficient to trigger the latent skills in a persona. Honestly, their knowledge is impressive and they spur a lot of innovation.
 
 I'm using a waterfall architecture where there is a ... (RLVM)
 * RECOG - local voice recognition system that feeds into a ...
