@@ -1,0 +1,125 @@
+https://www.agilabs.ca/staff
+
+Good evening everybody (GULMT)
+* GEMINI - I know that there are many AI voice interfaces out there like ChatGPT and Gemini and they're great!
+* UNFORTUNATELY - Unfortunately, I can't use them because I'm working with trade secrets.
+* LOCAL - I'm here to talk about a voice interface that is easy to setup, is 100% private and completely local (if you don't mind a little bit of latency)
+
+* MICHAEL - My name is Michael Carlos and I'm an AI researcher. 
+* THREE - I've only given myself 3 minutes, so I'll whip through the slides very quickly. You can catch me later for questions.
+
+Here is my team (DFI) 
+* DRAMA I have someone doing business development, several researchers and just for fun I have an office admin. You'll notice that I don't have HR (There's no drama in my team).
+* FEEDBACK - I consult with them when I have an idea I need feedback on.
+* INNOVATION - Honestly, their knowledge is impressive and they spur a lot of innovation.
+
+I'm using a waterfall architecture where there is a ... (RLVM)
+* RECOG - local voice recognition system that feeds into a ...
+* LLM - local LLM which, in turn, feeds into a ...
+* VOICE - voice generator.
+* MODULAR - The advantage is that it is modular and I'm able to switch out components as better ones come along.
+
+I deal with latency in two ways (MSG)
+* MULTI - I use multi-threading, so it's always listening. I can interrupt it with any phrase.
+* SENTENCE - I also send sentences to the voice engine while tokens are being streamed. I don't wait for the entire response to be completed.
+* GPU - This allows me to use larger, slower models on an RTX 4070 with 12GB VRAM.
+
+As with all agents, you want to give it tools to help it be successful (JS)
+* JOURNALS - I chose journals and ...
+* SHELL - access to the Linux shell. From the shell, it can use or create any tools it needs.
+
+A low-quality sample is available here if you're interested (DTRIE)
+* DELAY - You'll notice a few seconds of delay between when I stop talking and when it starts.
+* TOKENS - This is the duration for it to generate the first few tokens.
+* REDUCE - The delay can be reduced by using smaller models, a faster PC or a dedicated server running vLLM.
+* INSTANT - In real life though, nobody responds instantly, so, to me, it's natural enough. I'll use it until omni models are available.
+* EXPERTS - I suspect that there are voice experts here, so I'm open to pointers or suggestions for improvement.
+
+And that's all.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Create a single-file webpage that displays the following information as attractive, professional slides for a presentation. I'll be talking about this in an upcoming event.
+---
+
+Title: My AI Staff
+Description: Completely Local and Private Virtual Staff with Low Latency Voice Interface
+
+Introduction:
+* Good evening, everybody. I know there are many voice interfaces out there like ChatGPT and Gemini. They're great, but, unfortunately, I can't use them because I work with trade secrets. What I'm talking about here is a voice AI which is easy to implement, 100% private and completely local. I only have 3 minutes so I'll whip through this really quickly.
+
+My Name is Michael Carlos. I'm the founder of AGI Labs.
+
+Staff Personas:
+* So on staff, I have an office admin, several researchers and someone for business development.
+* They each have their own distinct voices and I consult with them when I need feedback on new ideas. 
+* They are quite impressive with their knowledge base and consistently contribute with their own ideas.
+
+Architecture:
+* The architecture is the classic waterfall or cascading setup.
+   * You have a voice recognition system that feeds into a
+   * Regular local language model which, in turn feeds into a
+   * Speech generator.
+The advantage is it's modular and I'm able to switch out components when better ones come along.
+
+Latency Tricks:
+* It uses multi-threading so it is always listening. Can interrupt any time with any phrase.
+* Sentences are sent to the speech engine as the text is streamed, rather than waiting for the complete generation. This allows me to use slow models on consumer-grade GPUs
+
+Capabilities:
+* As with any agent, you can customize it to use any tools. I chose to give them journals and access to the shell. I believe these are enough to do anything.
+
+You can listen to a low-quality recording at https://www.agilabs.ca/staff.mp3. You'll notice a delay of a few seconds between my voice and theirs. This is the time it takes to generate the first few words. You can reduce this using a smaller model, faster computer or vLLM on a dedicated server. Honestly, nobody responds instantly in real life anyways so it feels very natural.
+
+I suspect that there are several voice-to-voice experts here so I'm open to any pointers or suggestions for improvements.
+
+Do we have time for questions?
+
+Unmute.
+M small 3.2 instruct 24b 
+API
+
+Other Info:
+* RTX 4070 12GB VRAM
+* 160 lines of Python code
+* Whisper-Ollama-PocketTTS
+* Unmute, Chatterbox, vLLM
+* omni models
+* STT - Standard voice recognition (Whisper for accuracy, VOSK for speed.)
+* AI - Local OpenAI-Compatible API server (Ollama: gemma3:12b, qwen3-coder)
+* TTS - (High Speed/Low Latency engine) Pocket TTS from Kyutai Labs who also make Unmute.
+--- Reference
+
+Your response to Submit Your Demo for Vancouver.dev IRL - Feb Edition
+Name: Michael Carlos
+Email: mikecarlos@gmail.com
+Can you share a link to your LinkedIn profile? https://www.linkedin.com/in/mcarlos/
+Company/Organization: AGI Labs Inc.
+Demo Title: My AI Staff
+Provide a concise description of your demo: Completely Local and Private Virtual Staff with Low Latency Voice Interface
+Supporting Materials: https://www.agilabs.ca/
+Have you given any talks or demos before? Yes
+Can you complete the demo within 5 minutes? Yes
+Will I be notified about my application status? Yes
