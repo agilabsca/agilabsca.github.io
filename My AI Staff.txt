@@ -24,11 +24,11 @@ I deal with latency in two ways (MSG)
 * SENTENCE - I also send sentences to the voice engine while tokens are being streamed. I don't wait for the entire response to be completed.
 * GPU - This allows me to use larger, slower models on an RTX 4070 with 12GB VRAM.
 
-As with all agents, you want to give it tools to help it be successful (JS)
+As with all agents, you'll probably want to give it tools to help it so its job (JS)
 * JOURNALS - I chose journals and ...
-* SHELL - access to the Linux shell. From the shell, it can use or create any tools it needs.
+* SHELL - access to the Linux shell. From the shell, it can theoretically use or create any tools it needs.
 
-A low-quality sample is available here if you're interested (DTRIE)
+A recording is available here if you're interested it's low-quality so good luck cloning my voice (DTRIE)
 * DELAY - You'll notice a few seconds of delay between when I stop talking and when it starts.
 * TOKENS - This is the duration for it to generate the first few tokens.
 * REDUCE - The delay can be reduced by using smaller models, a faster PC or a dedicated server running vLLM.
