@@ -22,7 +22,7 @@ I'm using a waterfall architecture where there is a ... (RLVM)
 I deal with latency in two ways (MSG)
 * MULTI - I use multi-threading, so it's always listening. I can interrupt it with any phrase.
 * SENTENCE - I also send sentences to the voice engine while tokens are being streamed. I don't wait for the entire response to be completed.
-* GPU - This allows me to use larger, slower models on an RTX 4070 with 12GB VRAM.
+* GPU - This allows me to use smarter, but slower, models on an RTX 4070 with 12GB VRAM.
 
 As with all agents, you'll probably want to give it tools to help it so its job (JS)
 * JOURNALS - I chose journals and ...
