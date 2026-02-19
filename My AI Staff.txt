@@ -3,7 +3,7 @@ https://www.agilabs.ca/staff
 Good evening everybody (GULMT)
 * GEMINI - I know that there are many AI voice interfaces out there like ChatGPT and Gemini and they're great!
 * UNFORTUNATELY - Unfortunately, I can't use them because I'm working with trade secrets.
-* LOCAL - I'm here to talk about a voice interface that is easy to vibe code, is 100% private and completely local (if you don't mind a little bit of latency)
+* LOCAL - I'm here to talk about creating staff who you can talk to, is easy to vibe code, is 100% private and completely local (if you don't mind a little bit of latency)
 
 * MICHAEL - My name is Michael Carlos and I'm an AI researcher. 
 * THREE - I've only given myself 3 minutes, so I'll whip through the slides very quickly. You can catch me later for questions.
