@@ -5,13 +5,13 @@ Good evening everybody (GULMT)
 * UNFORTUNATELY - Unfortunately, I can't use them because I'm working with trade secrets.
 * LOCAL - I'm here to talk about creating virtual helpers who you can talk to, who are %100 local and basically free.
 
-* MICHAEL - My name is Michael Carlos and I'm an AI researcher searching for AGI.
+* MICHAEL - My name is Michael Carlos and I'm an AI researcher [crackpot - searching for AGI. Just to be clear, I treat LLMs as a subset of AGI.]
 * THREE - I've only given myself 3 minutes, so I'll whip through the slides very quickly. You can catch me later for questions.
 
-Here is my team (DFI) 
-* DRAMA I have someone doing business development, several researchers and just for fun I have an office admin. You'll notice that I don't have HR (There's no drama in my team).
+Here is my team (PFS) 
+* PERSONAS I have someone doing business development, several researchers and just for fun I have an office admin. [You'll notice that I don't have HR (There's no drama in my team).]
 * FEEDBACK - I consult with them when I have an idea I need feedback on.
-* INNOVATION - My system cards are very simple. For example "Your name is Margo and you are an expert in analog photonics." As you probably know, that is usually sufficient to trigger the latent skills in a persona. I'm personally still impressed with their knowledge and they spur a lot of innovation.
+* SYSTEM - My system cards are very simple. For example "Your name is Margo and you are an expert in analog photonics." As you probably know, that is usually sufficient to trigger the latent skills in a persona. I'm personally still impressed with their knowledge and they spur a lot of innovation.
 
 I'm using a waterfall architecture where there is a ... (RLVM)
 * RECOG - local voice recognition system that feeds into a ...
@@ -31,7 +31,7 @@ As with all agents, you'll probably want to give it tools to help it so its job 
 A recording is available here if you're interested it's low-quality so good luck cloning my voice (DTRIE)
 * DELAY - You'll notice a few seconds of delay between when I stop talking and when it starts.
 * TOKENS - This is the duration for it to generate the first few tokens.
-* REDUCE - The delay can be reduced by using smaller models, a faster PC or a dedicated server running vLLM.
+* REDUCE - The delay can be reduced by using smaller models, a faster PC or a dedicated server running vLLM. HW Inference.
 * INSTANT - In real life though, nobody responds instantly, so, to me, it's natural enough. I'll use it until omni models are available.
 * EXPERTS - I suspect that there are voice experts here, so I'm open to pointers or suggestions for improvement.
 
@@ -56,9 +56,20 @@ And that's all.
 
 
 
+tbd
 
+KittenTTL
 
+``` python
+import os
+stream = os.popen('ls -l')
+output = stream.read()
+print(output)
+```
 
+System prompt: "...you can execute shell commands by telling the user "i will execute the following shell command(s)" and enclosing the command or concatenated commands in ``` ", parse output, return to chat thread then say "here is the command output, please continue"
+
+---
 
 
 Create a single-file webpage that displays the following information as attractive, professional slides for a presentation. I'll be talking about this in an upcoming event.
