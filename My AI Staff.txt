@@ -67,7 +67,9 @@ output = stream.read()
 print(output)
 ```
 
-System prompt: "...you can execute shell commands by telling the user "i will execute the following shell command(s)" and enclosing the command or concatenated commands in ``` ", parse output, return to chat thread then say "here is the command output, please continue"
+System prompt: "Anything you wrap inside [these tags] will be stored in your journal for your future reference. Anything you wrap inside [these tags] will be executed on the Linux shell. The Shell output will be given back to you for consideration. Feel free to chain commands with && and use shell tools like bc or g++."
+
+* parse output, return to chat thread then say "here is the command output, please continue"
 
 ---
 
