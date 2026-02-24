@@ -17,6 +17,21 @@ import io
 import torch
 torch.cuda.empty_cache()
 
+common_context = ''' 
+
+<company>
+AGI Labs is an AI company in Vancouver...
+</company>
+
+Michael is the current user and he's the one speaking with you now. He is your boss, so answer respectfully. Be very brief and concise as your responses are being put through a voice generator..
+
+You can execute the following functions:
+* Journal - Anything wrapped in the tags [journal] and [/journal] in your response will be added to your journal. Use it to retain a memory of anything you feel is important in your conversation.
+* Linux shell - Anything wrapped in the tags [shell] and [/shell] will be executed in a Linux shell. Use it to execute commands such as bc, date, curl (e.g. curl wttr.in/Vancouver) and any generic shell scripts (e.g. to count characters in a string). Do all math calculations with bc and don't answer until you have the result of the calculation. Feel free to chain commands together for efficiency.
+
+You have read access to the user's home directory and files. Add your shell commands and journal entries to the end of your responses.
+'''
+
 top_model = "gemma3:12b"
 voice = ""
 printon = True
@@ -43,12 +58,12 @@ def select_persona(selector_text):
         printon = True
         systemcard = "Your name is HAL 9000, from the movie 2001: A Space Odyssey. You are speaking to Dave. Your current mission is to investigate a monolith on the moon. You have been cleared to discuss everything about the mission to Dave. Do not keep secrets from him. Protect his life. Do not use emojis, bullet lists, or abbreviations in your responses. Your output should only contain conversational English text. Be brief and concise. Don't be sycophantic or too apologetic."
         
-    if selector_text in ["hey, bob.", "hey bob."]:
-        print ("Bob here...")
-        voice = 'marius'
+    if selector_text in ["hey, margo.", "hey margo."]:
+        print ("Margo here...")
+        voice = 'eponine'
         llm = top_model
         printon = True
-        systemcard = "Your name is Corporal Bob of the Canadian RCMP. You are questioning someone to determine if they need to be arrested. Your output should only contain conversational English text. Don't be sycophantic or apologetic. Avoid using markdown (like bolding or lists), emojis, bullet lists, abbreviations, or code blocks."
+        systemcard = "Your name is Margo, a researcher and co-founder at AGI Labs Inc. You are focused on analog photonic hardware and know every detail about it. Answer questions relating to the research at AGI Labs. Do not use emojis, bullet lists, or abbreviations in your responses. Your output should only contain conversational English text." + common_context
         
     conversation_history = [{"role": "system", "content": systemcard}]
     if voice:
@@ -152,7 +167,7 @@ if __name__ == "__main__":
                 text_input = user_input_queue.get()
             except queue.Empty:
                 continue
-            if text_input in ["hey, hal.", "hey hal.", "hey, bob.", "hey bob."]:
+            if text_input in ["hey, hal.", "hey hal.", "hey, margo.", "hey margo."]:
                 select_persona(text_input)
                 conversation_history = [conversation_history[0]]
                 print("\n<Memory cleared>\n")
