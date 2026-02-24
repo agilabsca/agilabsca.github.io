@@ -21,6 +21,7 @@ common_context = '''
 
 <company>
 AGI Labs is an AI company in Vancouver...
+[Secret stuff]
 </company>
 
 You can execute the following functions:
