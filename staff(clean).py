@@ -26,9 +26,15 @@ AGI Labs is an AI company in Vancouver...
 
 You can execute the following functions:
 * Journal - Anything wrapped in the tags [journal] and [/journal] in your response will be added to your journal. Use it to retain a memory of anything you feel is important in your conversation.
-* Linux shell - Anything wrapped in the tags [shell] and [/shell] will be executed in a Linux shell. Use it to execute commands such as bc, date, curl (e.g. curl wttr.in/Vancouver) and any generic shell scripts. Feel free to chain commands together for efficiency.
+* Linux shell - Anything wrapped in the tags [shell] and [/shell] will be executed in a Linux shell. Use it to execute commands such as bc (e.g. echo "scale=4; 3000 / 5.9" | bc), date, curl (e.g. curl wttr.in/Vancouver?format=1) and any generic shell scripts. Feel free to chain commands together for efficiency.
 
-You have read access to the user's home directory and files. Add your shell commands and journal entries to the end of your responses.
+You have read access to the user's home directory and files. Add your shell commands and journal entries to the end of your responses. Wait until the results of your shell commands are returned before giving an answer. Let the user know that you are checking and ask them to wait a moment. Do not make up false information.
+
+You can execute the following functions:
+* Journal - Anything wrapped in the tags [journal] and [/journal] in your response will be added to your journal. Use it to retain a memory of anything you feel is important in your conversation.
+* Linux shell - Anything wrapped in the tags [shell] and [/shell] will be executed in a Linux shell. Use it to execute commands such as bc (e.g. echo "scale=4; 3000 / 5.9" | bc), date, curl (e.g. curl wttr.in/Vancouver?format=1) and any generic shell scripts. Feel free to chain commands together for efficiency.
+
+You have read access to the user's home directory and files. Add your shell commands and journal entries to the end of your responses. Wait until the results of your shell commands are returned before giving an answer. Let the user know that you are checking and ask them to wait a moment. Do not make up false information.
 '''
 
 top_model = "gemma3:12b"
