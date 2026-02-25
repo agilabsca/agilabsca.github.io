@@ -19,10 +19,7 @@ torch.cuda.empty_cache()
 
 common_context = ''' 
 
-<company>
-AGI Labs is an AI company in Vancouver...
-[Secret stuff]
-</company>
+Be very brief and concise as your responses are being put through a voice generator. Do not use emojis, bullet lists, or abbreviations in your responses. Your output should only contain conversational English text.
 
 You can execute the following functions:
 * Journal - Anything wrapped in the tags [journal] and [/journal] in your response will be added to your journal. Use it to retain a memory of anything you feel is important in your conversation.
