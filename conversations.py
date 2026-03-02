@@ -287,7 +287,7 @@ if __name__ == "__main__":
                             complete_assistant_response += fragment
                             current_assistant_text += fragment # Accumulate what she says so STT knows what to filter
                             
-                            if any(punct in fragment for punct in ".?!"):
+                            if any(punct in fragment for punct in ".?!:"):
                                 if printon:
                                     print(full_sentence_buffer, end="", flush=True)
                                 if tts == "pTTS":
