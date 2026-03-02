@@ -13,7 +13,7 @@
 # conda activate ai (or source ai/bin/activate)
 # sudo apt install build-essential portaudio19-dev python3-all-dev python3-pyaudio libasound2-dev
 # pip install pocket-tts sounddevice pyaudio faster_whisper openai speechrecognition gtts soundfile
-# Install Ollama and the following models. gemma3:12b qwen3-coder hf.co/hungng/Llama-3.2-uncensored-erotica:latest
+# Install Ollama and the following models. gemma3:12b qwen3-coder 
 # 'alba' ca_m_fem , 'marius' raspy_m, 'javert' demon_m, 'jean' am_m_b, 'fantine' br_f , 'cosette' am_f , 'eponine' af_f , 'azelma' ca_f (Ryder)
 
 common = "Do not use emojis, bullet lists, contractions, or abbreviations in your responses. Your output should only contain conversational English text. Don't be sycophantic or too apologetic."
