@@ -1,13 +1,13 @@
 ## Conversations (C) 2026 Michael Carlos
-## This application is not intended to provide medical advice and should not be considered a substitute for consultation with a qualified healthcare professional. It is in an experimental stage (i.e. brittle) and offers no warranty or guarantee.
+## This application is not intended to provide medical advice and should not be considered a substitute for consultation with a qualified healthcare professional. It is in an experimental (toy) stage (i.e. brittle) and offers no warranty or guarantee.
 
-## * Foster personal growth and exploration
-## * Provides customized reflective conversations 
-## * Proactively suggests interests 
-## * Creates a stimulating interactive environment 
-## * Safely process experiences and gain insights 
-## * The environment is completely local and private with no connection to any external service ensuring all conversations remain confidential 
-## * Customize the persona to become any virtual human you want. 
+## Foster personal growth and exploration
+## Provides customized reflective conversations 
+## Proactively suggests interests 
+## Creates a stimulating interactive environment 
+## Safely process experiences and gain insights 
+## The environment is completely local and private with no connection to any external service ensuring all conversations remain confidential 
+## Customize the persona to become any virtual being you want
 
 # conda create -n ai python=3.12.3 (or python3 -m venv ai)
 # conda activate ai (or source ai/bin/activate)
