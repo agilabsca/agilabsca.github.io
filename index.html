@@ -12,8 +12,8 @@
         href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Orbitron:wght@400;600;800;900&display=swap"
         rel="stylesheet">
 
-    <!-- Marked.js for Chatbot Formatting -->
-    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <!-- Marked.js for Chatbot Formatting (Disabled) -->
+    <!-- <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script> -->
 
     <!-- Custom Styles -->
     <style>
@@ -407,8 +407,8 @@ footer {
 
 <body>
 
-    <!-- Background Starfield -->
-    <div id="starfield"></div>
+    <!-- Background Starfield (Disabled) -->
+    <!-- <div id="starfield"></div> -->
     <div class="grid-overlay"></div>
 
     <!-- Hero Section -->
@@ -820,12 +820,13 @@ footer {
     </main>
 
     <footer>
-        <p>© 2025 AGI Labs Inc. | Redefining Intelligence</p>
+        <p>© 2026 AGI Labs Inc. | Redefining Intelligence</p>
     </footer>
 
     <!-- Main Script -->
     <script>
-    // --- Starfield Logic ---
+    // --- Starfield Logic (Disabled) ---
+/*
 const starfieldContainer = document.getElementById('starfield');
 const numStars = 200;
 const starSpeed = 0.2;
@@ -890,6 +891,7 @@ if (starfieldContainer) {
     }
     animateStars();
 }
+*/
 
 // --- Intersection Observer for Scroll Reveals ---
 const observer = new IntersectionObserver((entries) => {
@@ -934,7 +936,8 @@ document.querySelectorAll('.solution-card').forEach(card => {
     });
 });
 
-// --- Chatbot Logic (Preserved & Enhanced) ---
+// --- Chatbot Logic (Disabled) ---
+/*
 const API_KEY = "YOUR_OPENAI_API_KEY"; // Placeholder
 const SYSTEM_MESSAGE = `You are Rado, the founder of AGI Labs Inc. You aren't hiring right now, so don't discuss career or collaboration opportunities. Tell the user you can't help them if they start asking detailed technical questions, start asking for demos or start discussing money. Do not offer to supply files or other assets to the user. Provide brief, to-the-point answers. If the use starts exploring topics irrelevant to the company or the AI domain, politely redirect them back. Here is some information about your company.
 
@@ -1248,7 +1251,7 @@ chatbotInput.addEventListener('keydown', (event) => {
         sendMessage();
     }
 });
-
+*/
     </script>
 </body>
 
