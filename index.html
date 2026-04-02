@@ -1,5 +1,5 @@
-<!DOCTYPE hl>
-<hl lang="en">
+<!DOCTYPE html>
+<html lang="en">
 
 <head>
     <meta charset="UTF-8">
@@ -778,7 +778,7 @@ footer {
                                 d="M160-40v-240h100v-80H160v-240h100v-80H160v-240h280v240H340v80h100v80h120v-80h280v240H560v-80H440v80H340v80h100v240H160Zm80-80h120v-80H240v80Zm0-320h120v-80H240v80Zm400 0h120v-80H640v80ZM240-760h120v-80H240v80Zm60-40Zm0 320Zm400 0ZM300-160Z">
                             </path>
                         </svg>
-                        <p>DWT</p>
+                        <p>DWT™</p>
                     </div>
                     <div class="card-face card-back">
                         <h3>Dragon's Whip Tech</h3>
@@ -793,11 +793,11 @@ footer {
                                 d="M160-360q-50 0-85-35t-35-85q0-50 35-85t85-35v-80q0-33 23.5-56.5T240-760h120q0-50 35-85t85-35q50 0 85 35t35 85h120q33 0 56.5 23.5T800-680v80q50 0 85 35t35 85q0 50-35 85t-85 35v160q0 33-23.5 56.5T720-120H240q-33 0-56.5-23.5T160-200v-160Zm200-80q25 0 42.5-17.5T420-500q0-25-17.5-42.5T360-560q-25 0-42.5 17.5T300-500q0 25 17.5 42.5T360-440Zm240 0q25 0 42.5-17.5T660-500q0-25-17.5-42.5T600-560q-25 0-42.5 17.5T540-500q0 25 17.5 42.5T600-440ZM320-280h320v-80H320v80Zm-80 80h480v-480H240v480Zm240-240Z">
                             </path>
                         </svg>
-                        <p>GPAC</p>
+                        <p>GPAC™</p>
                     </div>
                     <div class="card-face card-back">
                         <h3>Adaptive Controllers</h3>
-                        <p>GPAC is our flagship AI control system. Dynamic, adaptive modules for software and hardware, creating life-like neural networks.</p>
+                        <p>GPAC™ is our flagship AI control system. Dynamic, adaptive modules for software and hardware, creating life-like neural networks.</p>
                     </div>
                 </div>
                 <!-- Card 8 -->
@@ -979,9 +979,9 @@ We're working with 3-dimensional sparse networks that consist of hyper-neurons, 
 * Real-time
 * No digital twins or GPUs
 
-DWT Dragon's Whip Technology is a light-weight, biologically-inspired replacement for traditional AutoML, stochastic gradient descent and backpropagation, enabling continuous, real-time learning. Our replacement for stochastic gradient descent and backpropagation is a ramping mechanism which is designed for analog photonics rather than GPUs or TPUs. Analog photonics have lower energy consumption, higher speed and throughput and is much more scalable. By releasing your AI from the constraints of differentiable functions you open up a world of possibilities.
+DWT™ Dragon's Whip Technology is a light-weight, biologically-inspired replacement for traditional AutoML, stochastic gradient descent and backpropagation, enabling continuous, real-time learning. Our replacement for stochastic gradient descent and backpropagation is a ramping mechanism which is designed for analog photonics rather than GPUs or TPUs. Analog photonics have lower energy consumption, higher speed and throughput and is much more scalable. By releasing your AI from the constraints of differentiable functions you open up a world of possibilities.
 
-GPAC General Purpose Adaptive Controllers powered by DWT offers a unique set of capabilities:
+GPAC™ General Purpose Adaptive Controllers powered by DWT™ offers a unique set of capabilities:
 * Instinctive Environmental Understanding: Models environments without the need for manual programming.
 * Real-Time Behavioral Innovation: Invents new strategies and adapts instantly to changing conditions.
 * Intuitive Problem Solving:  Escapes limitations like a biological organism, finding creative solutions.
@@ -992,7 +992,7 @@ GPAC General Purpose Adaptive Controllers powered by DWT offers a unique set of 
 * Balanced Exploration & Exploitation:  Naturally balances trying new things with leveraging existing knowledge.
 * Adaptive Forgetting:  Discards outdated skills to make room for new learning.
 * Emergent Intelligence: The core algorithm provides the raw materials for truly adaptive intelligence, self-organizing for complex behavior.
-* GPAC learns like living organisms - continuously and dynamically in real-time. 
+* GPAC™ learns like living organisms - continuously and dynamically in real-time. 
 * Real world experience is the new data.
 
 Meet the team: The Philosophy of Isang Tao
@@ -1012,7 +1012,7 @@ const disclaimerText = 'You are interacting with an AI Chatbot. We do not guaran
 
 // Inject Chatbot CSS
 const style = document.createElement('style');
-style.innerHL = `
+style.innerHTML = `
     #chatbot-container { position: fixed; bottom: 30px; right: 30px; z-index: 1000; }
     #chatbot-button {
         width: 65px; height: 65px; border-radius: 50%;
@@ -1101,11 +1101,11 @@ const closeIcon = '<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32
 
 const chatbotButton = document.createElement('div');
 chatbotButton.id = 'chatbot-button';
-chatbotButton.innerHL = chatbotIcon;
+chatbotButton.innerHTML = chatbotIcon;
 
 const chatbotPopup = document.createElement('div');
 chatbotPopup.id = 'chatbot-popup';
-chatbotPopup.innerHL = `
+chatbotPopup.innerHTML = `
     <div id="chatbot-header">
         <div>${CHATBOT_NAME}</div>
         <button id="chatbot-exit">CLOSE</button>
@@ -1124,7 +1124,7 @@ document.body.appendChild(chatbotPopup);
 document.body.appendChild(chatbotContainer);
 
 // Chatbot Functionality
-const chatboessages = document.getElementById('chatbot-messages');
+const chatbotMessages = document.getElementById('chatbot-messages');
 const chatbotInput = document.getElementById('chatbot-input');
 const chatbotSend = document.getElementById('chatbot-send');
 const chatbotExit = document.getElementById('chatbot-exit');
@@ -1133,10 +1133,10 @@ let conversationHistory = [{ role: "system", content: SYSTEM_MESSAGE }];
 const toggleChatbot = () => {
     if (chatbotPopup.style.display === 'flex') {
         chatbotPopup.style.display = 'none';
-        chatbotButton.innerHL = chatbotIcon;
+        chatbotButton.innerHTML = chatbotIcon;
     } else {
         chatbotPopup.style.display = 'flex';
-        chatbotButton.innerHL = closeIcon;
+        chatbotButton.innerHTML = closeIcon;
         setTimeout(() => chatbotInput.focus(), 100);
     }
 };
@@ -1145,17 +1145,17 @@ const addMessage = (role, content) => {
     const messageElement = document.createElement('div');
     messageElement.classList.add('chatbot-message', `${role}-message`);
     messageElement.textContent = content;
-    chatboessages.appendChild(messageElement);
-    chatboessages.scrollTop = chatboessages.scrollHeight;
+    chatbotMessages.appendChild(messageElement);
+    chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
     return messageElement;
 };
 
 const showThinkingIndicator = () => {
     const thinkingElement = document.createElement('div');
     thinkingElement.classList.add('chatbot-message', 'assistant-message', 'thinking-indicator');
-    thinkingElement.innerHL = `<span class="dot1"></span><span class="dot2"></span><span class="dot3"></span>`;
-    chatboessages.appendChild(thinkingElement);
-    chatboessages.scrollTop = chatboessages.scrollHeight;
+    thinkingElement.innerHTML = `<span class="dot1"></span><span class="dot2"></span><span class="dot3"></span>`;
+    chatbotMessages.appendChild(thinkingElement);
+    chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
     return thinkingElement;
 };
 
@@ -1179,7 +1179,7 @@ const sendMessage = async () => {
             body: JSON.stringify({ model: 'openai', messages: conversationHistory, stream: true })
         });
 
-        chatboessages.removeChild(thinkingIndicator);
+        chatbotMessages.removeChild(thinkingIndicator);
 
         if (!response.ok) {
             addMessage('assistant', `I'm having trouble connecting to the neural network.`);
@@ -1188,9 +1188,9 @@ const sendMessage = async () => {
 
         const reader = response.body.getReader();
         const decoder = new TextDecoder('utf-8');
-        let assistanessageElement = document.createElement('div');
-        assistanessageElement.classList.add('chatbot-message', 'assistant-message');
-        chatboessages.appendChild(assistanessageElement);
+        let assistantMessageElement = document.createElement('div');
+        assistantMessageElement.classList.add('chatbot-message', 'assistant-message');
+        chatbotMessages.appendChild(assistantMessageElement);
         let assistantResponse = '';
         let buffer = '';
 
@@ -1215,11 +1215,11 @@ const sendMessage = async () => {
                         if (content) {
                             assistantResponse += content;
                             if (typeof marked !== 'undefined') {
-                                assistanessageElement.innerHL = marked.parse(assistantResponse);
+                                assistantMessageElement.innerHTML = marked.parse(assistantResponse);
                             } else {
-                                assistanessageElement.textContent = assistantResponse;
+                                assistantMessageElement.textContent = assistantResponse;
                             }
-                            chatboessages.scrollTop = chatboessages.scrollHeight;
+                            chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
                         }
                     } catch (error) { }
                 }
@@ -1231,8 +1231,8 @@ const sendMessage = async () => {
         }
 
     } catch (error) {
-        if (thinkingIndicator && chatboessages.contains(thinkingIndicator)) {
-            chatboessages.removeChild(thinkingIndicator);
+        if (thinkingIndicator && chatbotMessages.contains(thinkingIndicator)) {
+            chatbotMessages.removeChild(thinkingIndicator);
         }
         addMessage('assistant', 'Connection interrupted.');
     } finally {
@@ -1255,4 +1255,4 @@ chatbotInput.addEventListener('keydown', (event) => {
     </script>
 </body>
 
-</hl>
+</html>
