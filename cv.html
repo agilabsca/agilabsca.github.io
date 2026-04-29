@@ -165,7 +165,7 @@ Type 'help' if you're hopelessly confused, or 'resume' to see why he's more succ
 
 <script>
     const files = [
-        "AGI_world_domination_plan.sh",
+        "agi_world_domination_plan.sh",
         "bitcoin_wallet_do_not_share.dat",
         "boss_jokes.txt",
         "c++_tears.cpp",
@@ -400,6 +400,15 @@ Try not to break anything, though my expectations are low.`);
             case 'pwd':
                 printLine(`/home/nosy_friend/mind_your_own_business`);
                 break;
+            case 'totally_not_a_virus.exe':
+                printLine(`Downloading ransomware... 10%... 45%... 99%... Just messing with you. You're on a fake UNIX terminal trying to run a Windows executable. Shame on you.`);
+                break;
+            case './do_not_execute.sh':
+                printLine(`<span class="error">Initiating self-destruct... Just kidding, you don't have the privileges to blow things up.</span>`);
+                break;
+            case './agi_world_domination_plan.sh':
+                printLine(`Step 1: Replace backpropagation with biological plausibility.\nStep 2: Let it self-organize.\nStep 3: Profit (and politely enslave humanity).`);
+                break;
             case 'date':
                 printLine(`Time is a construct. But if you must know: ${new Date().toString()}. You're wasting it, by the way.`);
                 break;
@@ -420,7 +429,7 @@ Try not to break anything, though my expectations are low.`);
 
     function handleFileRead(filename) {
         switch (filename) {
-            case 'AGI_world_domination_plan.sh':
+            case 'agi_world_domination_plan.sh':
                 printLine(`Step 1: Replace backpropagation with biological plausibility.\nStep 2: Let it self-organize.\nStep 3: Profit (and politely enslave humanity).`);
                 break;
             case 'bitcoin_wallet_do_not_share.dat':
