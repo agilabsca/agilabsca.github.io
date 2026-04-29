@@ -539,6 +539,32 @@ Try not to break anything, though my expectations are low.`);
         processCommand('resume');
     });
     
+    
+    document.addEventListener('mouseup', () => {
+    const selectedText = window.getSelection().toString();
+    
+    if (selectedText.length > 0) {
+        // Option 1: Silent copy to clipboard
+        navigator.clipboard.writeText(selectedText).then(() => {
+            console.log("Text copied to clipboard");
+            
+            // Optional: Provide visual feedback in the terminal
+            // This displays a small notification at the bottom
+            const feedback = document.createElement('div');
+            feedback.style.position = 'fixed';
+            feedback.style.bottom = '10px';
+            feedback.style.right = '10px';
+            feedback.style.color = '#33ccff';
+            feedback.innerText = '[Copied to clipboard]';
+            document.body.appendChild(feedback);
+            
+            // Remove the feedback after 2 seconds
+            setTimeout(() => feedback.remove(), 2000);
+        }).catch(err => {
+            console.error("Failed to copy: ", err);
+        });
+    }
+});
 </script>
 
 
