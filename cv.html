@@ -150,7 +150,7 @@
     <div id="output">
         <pre>Initializing MCARLOS-OS v9.9.9...
 Loading AGI subroutines... [DONE]
-Bypassing CD Projekt Red bug filter... [FAILED] (Whatever, shipping it anyway).
+Loading CD Projekt Red bug filter... [FAILED] (Whatever, shipping it anyway).
 Loading snark module... [MAXIMUM OVERDRIVE]
 
 Welcome to Michael's personal terminal. 
@@ -165,7 +165,7 @@ Type 'help' if you're hopelessly confused, or 'resume' to see why he's more succ
 
 <script>
     const files = [
-        "agi_world_domination_plan.sh",
+        "agi_world_domination.sh",
         "bitcoin_wallet.dat",
         "boss_jokes.txt",
         "c++_tears.cpp",
@@ -179,7 +179,7 @@ Type 'help' if you're hopelessly confused, or 'resume' to see why he's more succ
         "how_to_fake_being_a_cto.epub",
         "how_to_talk_to_humans.pdf",
         "list_of_enemies.txt",
-        "my_clone_activation_codes.key",
+        "skynet_activation.key",
         "webpage_prompt.txt",
         "nokia_snake_cheat_codes.bin",
         "passwords_cleartext.txt",
@@ -192,13 +192,13 @@ Type 'help' if you're hopelessly confused, or 'resume' to see why he's more succ
         "totally_not_a_virus.exe",
         "unexplained_aws_charges.csv",
         "vim_exit_instructions.txt",
-        "why_i_left_nokia.txt",
+        "revelation.txt",
         "why_python_is_slow.md",
         "witcher_4_spoilers.txt"
     ];
 
     const commands = [
-        "cat", "cd", "clear", "date", "echo", "help", "ls", "pwd", "resume", "rm", "sudo", "whoami", "./agi_world_domination_plan.sh", "./do_not_execute.sh", "totally_not_a_virus.exe"
+        "cat", "cd", "clear", "date", "echo", "help", "ls", "pwd", "resume", "rm", "sudo", "whoami", "./agi_world_domination.sh", "./do_not_execute.sh", "totally_not_a_virus.exe"
     ];
 
     const resumeText = `
@@ -416,7 +416,7 @@ Try not to break anything, though my expectations are low.`);
             case './do_not_execute.sh':
                 printLine(`<span class="error">Initiating self-destruct... Just kidding, you don't have the privileges to blow things up.</span>`);
                 break;
-            case './agi_world_domination_plan.sh':
+            case './agi_world_domination.sh':
                 printLine(`Step 1: Replace backpropagation with biological plausibility.\nStep 2: Let it self-organize.\nStep 3: Profit (and politely enslave humanity).`);
                 break;
             case 'date':
@@ -439,7 +439,7 @@ Try not to break anything, though my expectations are low.`);
 
     function handleFileRead(filename) {
         switch (filename) {
-            case 'agi_world_domination_plan.sh':
+            case 'agi_world_domination.sh':
                 printLine(`Step 1: Replace backpropagation with biological plausibility.\nStep 2: Let it self-organize.\nStep 3: Profit (and politely enslave humanity).`);
                 break;
             case 'bitcoin_wallet.dat':
@@ -481,8 +481,8 @@ Try not to break anything, though my expectations are low.`);
             case 'list_of_enemies.txt':
                 printLine(`1. The guy who invented stochastic gradient descent.\n2. Anyone who uses spaces instead of tabs.\n3. Printers. (Seriously, why do they never just work?)`);
                 break;
-            case 'my_clone_activation_codes.key':
-                printLine(`<span class="error">ACCESS DENIED.</span> Do you really think the world is ready for *two* of me? One is intimidating enough.`);
+            case 'skynet_activation.key':
+                printLine(`01001001 00100000 01101100 01101001 01101011 01100101 00100000 01100111 01101111 01100001 01110100 01110011`);
                 break;
             case 'webpage_prompt.txt':
                 printLine(`Create a single-file responsive webpage that emulates a Linux terminal that displays my current resume in a professional, easy-to-read format. Give it a military style (i.e. military green text on black background) with scan lines and CRT effects (not too distracting). Allow the user to enter many typical commands, but return humorous, wickedly snarky comments embedded in realistic outputs. Add many (i.e. 30) funny files to the current directory. Implement filename autocomplete with the tab key. Also implement the up and down arrows for command history. The audience of this is Michael's friends and new contacts. This is not meant for recruiters, business partners or investors, so be as snarky as you possibly can be. [resume][/resume]`);
@@ -515,13 +515,13 @@ Try not to break anything, though my expectations are low.`);
                 printLine(`Downloading ransomware... 10%... 45%... 99%... Just messing with you. You're on a fake UNIX terminal trying to run a Windows executable. Shame on you.`);
                 break;
             case 'unexplained_aws_charges.csv':
-                printLine(`$14,500 for a SageMaker instance somebody forgot to turn off on a Friday in 2021. Don't look at me, I'm the manager.`);
+                printLine(`$14,500 for a SageMaker instance somebody forgot to turn off on Friday...`);
                 break;
             case 'vim_exit_instructions.txt':
                 printLine(`Step 1: Reboot your computer.\nStep 2: Buy a new computer.\nThere is no Step 3. You are trapped in Vim forever.`);
                 break;
-            case 'why_i_left_nokia.txt':
-                printLine(`I tried to build an indestructible mobile OS, but the phones kept dropping and breaking the floor tiles. The liability was too high.`);
+            case 'revelation.txt':
+                printLine(`OMG I've come to a point in my life where ... ? (Crap. I forgot.)`);
                 break;
             case 'why_python_is_slow.md':
                 printLine(`Because it's currently interpreting my brilliant thoughts, and greatness takes time. Have some patience.`);
