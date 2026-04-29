@@ -197,12 +197,16 @@ Type 'help' if you're hopelessly confused, or 'resume' to see why he's more succ
         "witcher_4_spoilers.txt"
     ];
 
+    const commands = [
+        "cat", "cd", "clear", "date", "echo", "help", "ls", "pwd", "resume", "rm", "sudo", "whoami", "./agi_world_domination_plan.sh", "./do_not_execute.sh", "totally_not_a_virus.exe"
+    ];
+
     const resumeText = `
-================================================================================
-                                M I C H A E L   C A R L O S
---------------------------------------------------------------------------------
+======================================
+M I C H A E L   C A R L O S
+--------------------------------------
 https://ca.linkedin.com/in/mcarlos
-================================================================================
+======================================
 
 > EXPERIENCE
 
@@ -320,26 +324,32 @@ Early Career: V-Tech, Voyus/GT Networks, Wainbee Ltd.
     }
 
     function handleAutocomplete(currentVal) {
-        const parts = currentVal.split(' ');
+        const parts = currentVal.trim().split(' ');
         const lastWord = parts[parts.length - 1];
         
         if (!lastWord) return;
 
-        const matches = files.filter(f => f.startsWith(lastWord));
+        // If it's the first word, autocomplete commands. Otherwise, autocomplete files.
+        let matches = [];
+        if (parts.length === 1) {
+            matches = commands.filter(c => c.startsWith(lastWord));
+        } else {
+            matches = files.filter(f => f.startsWith(lastWord));
+        }
 
         if (matches.length === 1) {
             parts[parts.length - 1] = matches[0];
-            inputField.value = parts.join(' ');
+            inputField.value = parts.join(' ') + ' ';
         } else if (matches.length > 1) {
             printLine(`<span class="prompt">nosy_friend@mcarlos-sys:~$</span> ${currentVal}`);
-            let fileListHTML = '<div class="file-list">';
-            matches.forEach(f => fileListHTML += `<span>${f}</span>`);
-            fileListHTML += '</div>';
-            printLine(fileListHTML);
+            let listHTML = '<div class="file-list">';
+            matches.forEach(m => listHTML += `<span>${m}</span>`);
+            listHTML += '</div>';
+            printLine(listHTML);
         }
         scrollToBottom();
     }
-
+    
     function printLine(html) {
         const div = document.createElement('div');
         div.innerHTML = html;
