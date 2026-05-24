@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AGI Research - Closed</title>
+    <style>
+        :root {
+            --bg-color: #0a0a0c;
+            --text-main: #e2e2e2;
+            --text-muted: #888888;
+            --accent: #333333;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            text-align: center;
+            box-sizing: border-box;
+        }
+
+        .container {
+            max-width: 600px;
+            padding: 0 30px;
+            opacity: 0;
+            animation: fadeIn 2.5s ease-out forwards;
+        }
+
+        h1 {
+            font-size: 1.2rem;
+            font-weight: 400;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            margin-bottom: 30px;
+        }
+
+        .divider {
+            width: 40px;
+            height: 1px;
+            background-color: var(--accent);
+            margin: 0 auto 30px auto;
+        }
+
+        p {
+            font-size: 1.15rem;
+            line-height: 1.7;
+            font-weight: 300;
+            margin-bottom: 20px;
+        }
+
+        @keyframes fadeIn {
+            0% {
+                opacity: 0;
+                transform: translateY(15px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Subtle responsive adjustment */
+        @media (max-width: 480px) {
+            p {
+                font-size: 1.05rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>AGI Research</h1>
+        <div class="divider"></div>
+        <p>After careful introspection regarding the nature and trajectory of this work, I have decided to permanently shut this site down.</p>
+        <p style="color: var(--text-muted); font-size: 0.95rem; margin-top: 40px;">
+            Thank you to those who engaged with the research.
+        </p>
+    </div>
+
+</body>
+</html>
