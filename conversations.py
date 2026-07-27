@@ -22,7 +22,7 @@ import sys
 persona = 0
 if len(sys.argv) > 1:
     persona = int(sys.argv[1])
-topmodel = "gemma3:12b" # Fast and smart
+topmodel = "gemma4-e2b-heretic" # Fast (120tps/131K) and smart (uncensored and can translate as well) serve via llamacpp on port 1234
 
 if persona == 0: # Lumin
     voice = 'fantine'
@@ -220,7 +220,8 @@ def stt_listening_worker():
             print(f"STT Error: {e}")
 
 # ------------------------------- OpenAI / Ollama Setup -------------------------------
-client = OpenAI(base_url='http://localhost:11434/v1/', api_key='ollama')
+#client = OpenAI(base_url='http://localhost:11434/v1/', api_key='ollama')
+client = OpenAI(base_url='http://localhost:1234', api_key='asdf')
 
 conversation_history =[
     {
