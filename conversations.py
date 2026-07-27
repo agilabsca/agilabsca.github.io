@@ -12,7 +12,7 @@
 # conda create -n ai python=3.12.3 (or python3 -m venv ai)
 # conda activate ai (or source ai/bin/activate)
 # sudo apt install build-essential portaudio19-dev python3-all-dev python3-pyaudio libasound2-dev
-# pip install pocket-tts sounddevice pyaudio faster_whisper openai speechrecognition gtts soundfile
+# pip install pocket-tts sounddevice pyaudio faster_whisper openai speechrecognition gtts soundfile nvidia-cublas-cu12 nvidia-cudnn-cu12
 # Install Ollama and the following models. gemma3:12b qwen3-coder 
 # 'alba' ca_m_fem , 'marius' raspy_m, 'javert' demon_m, 'jean' am_m_b, 'fantine' br_f , 'cosette' am_f , 'eponine' af_f , 'azelma' ca_f (Ryder)
 
