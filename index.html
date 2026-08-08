@@ -56,6 +56,13 @@
             margin-bottom: 20px;
         }
 
+        /* Styles to make the link invisible but active */
+        .invisible-link {
+            color: inherit;
+            text-decoration: none;
+            cursor: default;
+        }
+
         @keyframes fadeIn {
             0% {
                 opacity: 0;
@@ -82,7 +89,7 @@
         <div class="divider"></div>
         <p>After careful introspection regarding the nature and trajectory of this work, I have decided to shut this site down.</p>
         <p style="color: var(--text-muted); font-size: 0.95rem; margin-top: 40px;">
-            Thank you to those who engaged with the research<a href="agi">.</a>
+            Thank you to those who engaged with the research<a href="agi" class="invisible-link">.</a>
         </p>
     </div>
 
