@@ -1,0 +1,1528 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AGI Labs — Advanced Adaptive Intelligence</title>
+<meta name="description" content="AGI Labs crafts biologically-inspired intelligence that learns, thinks, and adapts in real time. The next evolution of AI.">
+<script>document.documentElement.classList.add('js');</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=Inter:wght@300;400;500;600&family=Space+Grotesk:wght@400;500;600&display=swap" rel="stylesheet">
+
+<style>
+/* ============================================================
+   AGI Labs — Advanced Adaptive Intelligence
+   "Midnight Synapse" — refined single-file recreation
+   ============================================================ */
+:root {
+    --bg: #04060d;
+    --bg-2: #070b17;
+    --surface: rgba(13, 18, 34, 0.55);
+    --surface-solid: #0b1020;
+    --border: rgba(148, 163, 216, 0.13);
+    --border-bright: rgba(124, 140, 255, 0.35);
+    --text: #e9edf7;
+    --muted: #9aa4bf;
+    --faint: #5f6a88;
+    --indigo: #7c8cff;
+    --indigo-deep: #5b5ff0;
+    --cyan: #4cc9f0;
+    --gold: #d4b483;
+    --grad: linear-gradient(115deg, #7c8cff 10%, #4cc9f0 90%);
+    --serif: 'Fraunces', Georgia, serif;
+    --sans: 'Inter', system-ui, sans-serif;
+    --label: 'Space Grotesk', monospace;
+    --ease-lux: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 92px;
+}
+
+body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--sans);
+    line-height: 1.7;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+}
+
+::selection { background: rgba(124, 140, 255, 0.35); color: #fff; }
+
+::-webkit-scrollbar { width: 9px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: rgba(148, 163, 216, 0.18); border-radius: 6px; }
+::-webkit-scrollbar-thumb:hover { background: var(--indigo); }
+
+a { color: inherit; }
+
+/* ---------- Ambient background stack ---------- */
+.aurora {
+    position: fixed; inset: 0;
+    z-index: 0;
+    overflow: hidden;
+    pointer-events: none;
+}
+.aurora::before,
+.aurora::after {
+    content: '';
+    position: absolute;
+    width: 68vw; height: 68vw;
+    border-radius: 50%;
+    filter: blur(70px);
+    opacity: 0.55;
+}
+.aurora::before {
+    left: -18vw; top: -24vw;
+    background: radial-gradient(circle, rgba(91, 95, 240, 0.30) 0%, rgba(91, 95, 240, 0.0) 62%);
+    animation: aurora-a 30s ease-in-out infinite alternate;
+}
+.aurora::after {
+    right: -22vw; bottom: -26vw;
+    background: radial-gradient(circle, rgba(76, 201, 240, 0.20) 0%, rgba(76, 201, 240, 0.0) 62%);
+    animation: aurora-b 38s ease-in-out infinite alternate;
+}
+@keyframes aurora-a {
+    0%   { transform: translate(0, 0) scale(1); }
+    100% { transform: translate(9vw, 7vh) scale(1.18); }
+}
+@keyframes aurora-b {
+    0%   { transform: translate(0, 0) scale(1.1); }
+    100% { transform: translate(-8vw, -6vh) scale(0.95); }
+}
+
+#neural {
+    position: fixed; inset: 0;
+    z-index: 0;
+    pointer-events: none;
+}
+
+.grid-overlay {
+    position: fixed; inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    background-image:
+        linear-gradient(rgba(124, 140, 255, 0.055) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(124, 140, 255, 0.055) 1px, transparent 1px);
+    background-size: 76px 76px;
+    opacity: 0.35;
+    -webkit-mask-image: radial-gradient(ellipse 90% 75% at 50% 32%, black 25%, transparent 78%);
+    mask-image: radial-gradient(ellipse 90% 75% at 50% 32%, black 25%, transparent 78%);
+}
+
+.grain {
+    position: fixed; inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    opacity: 0.05;
+    mix-blend-mode: overlay;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)' opacity='0.6'/%3E%3C/svg%3E");
+}
+
+/* ---------- Progress bar & nav ---------- */
+#progress {
+    position: fixed; top: 0; left: 0;
+    height: 2px; width: 0%;
+    background: var(--grad);
+    z-index: 60;
+    box-shadow: 0 0 12px rgba(76, 201, 240, 0.6);
+}
+
+#nav {
+    position: fixed; top: 0; left: 0; right: 0;
+    z-index: 50;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1.1rem clamp(1.2rem, 4vw, 3rem);
+    border-bottom: 1px solid transparent;
+    transition: background 0.5s ease, border-color 0.5s ease, padding 0.5s ease;
+}
+#nav.scrolled {
+    padding-top: 0.7rem; padding-bottom: 0.7rem;
+    background: rgba(5, 8, 16, 0.72);
+    -webkit-backdrop-filter: blur(18px);
+    backdrop-filter: blur(18px);
+    border-bottom-color: var(--border);
+}
+
+.brand {
+    display: flex; align-items: center; gap: 0.7rem;
+    text-decoration: none;
+    font-family: var(--label);
+    font-size: 0.92rem;
+    font-weight: 600;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+}
+.brand svg { width: 30px; height: 30px; }
+.brand em {
+    font-style: normal;
+    background: var(--grad);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.nav-links { display: flex; align-items: center; gap: 2.2rem; }
+.nav-links a {
+    font-family: var(--label);
+    font-size: 0.78rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: var(--muted);
+    transition: color 0.3s ease;
+}
+.nav-links a:hover { color: var(--text); }
+.nav-cta {
+    padding: 0.5rem 1.1rem;
+    border: 1px solid var(--border-bright);
+    border-radius: 999px;
+    color: var(--text) !important;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+.nav-cta:hover {
+    border-color: var(--cyan);
+    box-shadow: 0 0 22px rgba(76, 201, 240, 0.25);
+}
+
+/* ---------- Layout & typography ---------- */
+main, footer { position: relative; z-index: 3; }
+.wrap { max-width: 1180px; margin: 0 auto; padding: 0 clamp(1.2rem, 4vw, 2.5rem); }
+section { padding: clamp(5rem, 10vh, 8.5rem) 0; }
+
+h1, h2, h3, h4 { font-family: var(--serif); font-weight: 500; letter-spacing: -0.015em; }
+
+.kicker {
+    display: inline-flex; align-items: center; gap: 0.8rem;
+    font-family: var(--label);
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.38em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 1.4rem;
+}
+.kicker::before {
+    content: '';
+    width: 34px; height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold));
+}
+.kicker.center::after {
+    content: '';
+    width: 34px; height: 1px;
+    background: linear-gradient(90deg, var(--gold), transparent);
+}
+
+h2 {
+    font-size: clamp(2.1rem, 4.6vw, 3.3rem);
+    line-height: 1.12;
+    color: #fff;
+    margin-bottom: 1.1rem;
+}
+.section-head { text-align: center; max-width: 740px; margin: 0 auto clamp(3rem, 6vh, 4.5rem); }
+.section-head p { color: var(--muted); font-size: 1.05rem; }
+
+.grad-text {
+    background: var(--grad);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+/* ---------- Reveal on scroll ---------- */
+.js .reveal {
+    opacity: 0;
+    transform: translateY(28px);
+    transition: opacity 0.9s ease, transform 0.9s var(--ease-lux);
+    transition-delay: var(--d, 0s);
+}
+.js .reveal.in { opacity: 1; transform: none; }
+
+/* ---------- Hero ---------- */
+.hero {
+    min-height: 100vh;
+    min-height: 100svh;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    text-align: center;
+    padding: 8rem 1.5rem 5rem;
+    position: relative;
+    z-index: 3;
+}
+
+.hero-mark {
+    width: 92px; height: 92px;
+    margin-bottom: 2.4rem;
+    filter: drop-shadow(0 0 34px rgba(91, 95, 240, 0.45));
+    animation: float 7s ease-in-out infinite;
+}
+@keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-14px); }
+}
+
+.hero h1 {
+    font-size: clamp(3.4rem, 10vw, 7rem);
+    font-weight: 500;
+    line-height: 1.02;
+    color: #fff;
+    margin-bottom: 1.3rem;
+}
+.hero h1 .grad-text { font-style: italic; }
+
+.hero-tagline {
+    font-family: var(--label);
+    font-size: clamp(0.78rem, 1.6vw, 0.95rem);
+    letter-spacing: 0.42em;
+    text-transform: uppercase;
+    color: var(--cyan);
+    margin-bottom: 1.5rem;
+}
+.hero-sub {
+    max-width: 660px;
+    color: var(--muted);
+    font-size: clamp(1rem, 2vw, 1.15rem);
+    font-weight: 300;
+    margin-bottom: 2.8rem;
+}
+.hero-sub strong { color: var(--text); font-weight: 500; }
+
+.hero-ctas { display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center; margin-bottom: 4rem; }
+.btn {
+    display: inline-flex; align-items: center; gap: 0.6rem;
+    font-family: var(--label);
+    font-size: 0.8rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    text-decoration: none;
+    padding: 0.95rem 1.9rem;
+    border-radius: 999px;
+    transition: transform 0.4s var(--ease-lux), box-shadow 0.4s ease, border-color 0.4s ease;
+}
+.btn:active { transform: scale(0.97); }
+.btn-primary {
+    background: var(--grad);
+    color: #05070f;
+    font-weight: 600;
+    box-shadow: 0 12px 34px rgba(91, 95, 240, 0.35);
+}
+.btn-primary:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 18px 44px rgba(76, 201, 240, 0.4);
+}
+.btn-ghost {
+    border: 1px solid var(--border-bright);
+    color: var(--text);
+}
+.btn-ghost:hover {
+    transform: translateY(-3px);
+    border-color: var(--cyan);
+    box-shadow: 0 0 26px rgba(76, 201, 240, 0.18);
+}
+
+.stats {
+    display: flex; gap: clamp(2rem, 6vw, 5rem);
+    justify-content: center; flex-wrap: wrap;
+    padding-top: 2.4rem;
+    border-top: 1px solid var(--border);
+    width: min(100%, 760px);
+}
+.stat { min-width: 130px; }
+.stat-num {
+    display: block;
+    font-family: var(--serif);
+    font-size: clamp(1.9rem, 3.4vw, 2.6rem);
+    font-weight: 600;
+    color: #fff;
+    line-height: 1.1;
+}
+.stat-num sup { font-size: 0.55em; color: var(--cyan); }
+.stat-label {
+    font-family: var(--label);
+    font-size: 0.66rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--faint);
+}
+
+.scroll-cue {
+    position: absolute; bottom: 2rem; left: 50%;
+    transform: translateX(-50%);
+    color: var(--faint);
+    animation: cue 2.6s ease-in-out infinite;
+    text-decoration: none;
+}
+.scroll-cue:hover { color: var(--cyan); }
+@keyframes cue {
+    0%, 100% { transform: translate(-50%, 0); opacity: 0.65; }
+    50% { transform: translate(-50%, 9px); opacity: 1; }
+}
+
+/* ---------- Mission feature rows ---------- */
+.feature-row {
+    display: grid;
+    grid-template-columns: 1.08fr 0.92fr;
+    gap: clamp(2.5rem, 5vw, 4.5rem);
+    align-items: center;
+    margin-bottom: clamp(4rem, 9vh, 7rem);
+}
+.feature-row:last-child { margin-bottom: 0; }
+.feature-row:nth-of-type(even) .feature-visual { order: -1; }
+
+.feature-copy {
+    padding: 3rem clamp(1.6rem, 3.4vw, 3.2rem);
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 22px;
+    -webkit-backdrop-filter: blur(18px);
+    backdrop-filter: blur(18px);
+    box-shadow: 0 30px 70px rgba(0, 0, 0, 0.38);
+    position: relative;
+    overflow: hidden;
+    transition: border-color 0.5s ease, box-shadow 0.5s ease, transform 0.5s var(--ease-lux);
+}
+.feature-copy::before {
+    content: attr(data-index);
+    position: absolute;
+    top: -1.1rem; right: 0.6rem;
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 6.5rem;
+    font-weight: 500;
+    color: rgba(148, 163, 216, 0.07);
+    line-height: 1;
+    pointer-events: none;
+}
+.feature-copy:hover {
+    border-color: rgba(124, 140, 255, 0.32);
+    box-shadow: 0 34px 80px rgba(91, 95, 240, 0.12);
+    transform: translateY(-4px);
+}
+.feature-copy h3 {
+    font-size: clamp(1.6rem, 3vw, 2.1rem);
+    color: #fff;
+    margin-bottom: 1.1rem;
+}
+.feature-copy p { color: var(--muted); font-size: 1rem; font-weight: 300; }
+.feature-copy p:last-child { margin-bottom: 0; }
+.feature-copy p strong { color: var(--text); font-weight: 500; }
+
+.feature-visual { display: flex; justify-content: center; }
+.fv {
+    width: min(100%, 400px);
+    height: auto;
+    filter: drop-shadow(0 22px 44px rgba(0, 0, 0, 0.45));
+}
+
+/* SVG animation helpers */
+.node-pulse { animation: nodePulse 3.2s ease-in-out infinite; }
+@keyframes nodePulse {
+    0%, 100% { opacity: 0.35; }
+    50% { opacity: 1; }
+}
+.flow-line {
+    stroke-dasharray: 7 11;
+    animation: flowDash 1.6s linear infinite;
+}
+@keyframes flowDash {
+    from { stroke-dashoffset: 36; }
+    to { stroke-dashoffset: 0; }
+}
+.grow-line {
+    stroke-dasharray: 100;
+    animation: growLine 6s ease-in-out infinite;
+}
+@keyframes growLine {
+    0% { stroke-dashoffset: 100; opacity: 0; }
+    12% { opacity: 1; }
+    48% { stroke-dashoffset: 0; opacity: 1; }
+    82% { stroke-dashoffset: 0; opacity: 0.9; }
+    100% { stroke-dashoffset: 0; opacity: 0; }
+}
+
+/* ---------- Core concepts ---------- */
+#concepts { background: linear-gradient(180deg, transparent, rgba(10, 14, 28, 0.55) 18%, rgba(10, 14, 28, 0.55) 82%, transparent); }
+
+.concepts-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(258px, 1fr));
+    gap: 1.6rem;
+}
+
+.concept-card {
+    height: 396px;
+    position: relative;
+    cursor: pointer;
+    outline: none;
+}
+.concept-card:focus-visible .card-face { border-color: var(--cyan); }
+.card-inner {
+    position: relative;
+    width: 100%; height: 100%;
+    transform-style: preserve-3d;
+}
+.concept-card:not(.flipped) .card-inner {
+    transform: rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
+    transition: transform 0.16s ease-out;
+}
+.concept-card.flipped .card-inner {
+    transform: rotateY(180deg);
+    transition: transform 0.85s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.card-face {
+    position: absolute; inset: 0;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    border-radius: 20px;
+    border: 1px solid var(--border);
+    background: var(--surface);
+    -webkit-backdrop-filter: blur(18px);
+    backdrop-filter: blur(18px);
+    box-shadow: 0 18px 48px rgba(0, 0, 0, 0.35);
+    padding: 2.3rem 2rem;
+    display: flex; flex-direction: column;
+    overflow: hidden;
+    transition: border-color 0.4s ease, box-shadow 0.4s ease;
+}
+.card-face::after {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(120% 60% at 50% -10%, rgba(124, 140, 255, 0.12), transparent 60%);
+    pointer-events: none;
+}
+.concept-card:hover .card-front {
+    border-color: var(--border-bright);
+    box-shadow: 0 24px 60px rgba(91, 95, 240, 0.14);
+}
+
+.card-front { align-items: center; justify-content: center; text-align: center; }
+.card-front .icon {
+    width: 58px; height: 58px;
+    color: var(--cyan);
+    margin-bottom: 1.7rem;
+    filter: drop-shadow(0 10px 18px rgba(76, 201, 240, 0.35));
+    transition: transform 0.5s var(--ease-lux);
+}
+.concept-card:hover .card-front .icon { transform: translateY(-7px) scale(1.05); }
+.card-front .num {
+    font-family: var(--label);
+    font-size: 0.66rem;
+    letter-spacing: 0.3em;
+    color: var(--gold);
+    margin-bottom: 0.9rem;
+}
+.card-front h3 {
+    font-size: 1.45rem;
+    color: #fff;
+    line-height: 1.25;
+    margin-bottom: 1.2rem;
+}
+.card-front .hint {
+    margin-top: auto;
+    font-family: var(--label);
+    font-size: 0.64rem;
+    letter-spacing: 0.26em;
+    text-transform: uppercase;
+    color: var(--faint);
+}
+
+.card-back {
+    transform: rotateY(180deg);
+    background: linear-gradient(150deg, #0a0e1c 0%, #101631 100%);
+    border-color: rgba(124, 140, 255, 0.30);
+    justify-content: flex-start;
+    align-items: flex-start;
+    text-align: left;
+    padding: 2.2rem 1.9rem;
+}
+.card-back h4 {
+    font-size: 1.18rem;
+    color: var(--cyan);
+    margin-bottom: 1rem;
+    width: 100%;
+    padding-bottom: 0.85rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+.card-back p { font-size: 0.93rem; line-height: 1.65; color: var(--muted); }
+.card-back ul { list-style: none; width: 100%; }
+.card-back li {
+    margin-bottom: 0.65rem;
+    padding-left: 1.35rem;
+    position: relative;
+    font-size: 0.93rem;
+    color: var(--muted);
+}
+.card-back li::before {
+    content: '\2192';
+    position: absolute; left: 0;
+    color: var(--cyan);
+    font-weight: 600;
+}
+.card-back a {
+    color: var(--cyan);
+    text-decoration: none;
+    border-bottom: 1px dashed rgba(76, 201, 240, 0.6);
+    transition: color 0.25s ease, border-color 0.25s ease;
+}
+.card-back a:hover { color: #fff; border-color: #fff; }
+
+/* ---------- Team ---------- */
+.team-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(172px, 1fr));
+    gap: 1.3rem;
+}
+
+.team-card {
+    padding: 2rem 1.4rem 1.8rem;
+    text-align: center;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    -webkit-backdrop-filter: blur(16px);
+    backdrop-filter: blur(16px);
+    transition: border-color 0.4s ease, transform 0.5s var(--ease-lux), box-shadow 0.5s ease;
+}
+.team-card:hover {
+    border-color: var(--border-bright);
+    transform: translateY(-6px);
+    box-shadow: 0 22px 48px rgba(91, 95, 240, 0.14);
+}
+.avatar {
+    width: 62px; height: 62px;
+    margin: 0 auto 1.1rem;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--label);
+    font-size: 1.05rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    color: #fff;
+    background: linear-gradient(135deg, rgba(91, 95, 240, 0.85), rgba(76, 201, 240, 0.75));
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    box-shadow: 0 8px 22px rgba(91, 95, 240, 0.35);
+}
+.team-card h3 { font-size: 1.15rem; color: #fff; margin-bottom: 0.35rem; }
+.team-card p { font-size: 0.8rem; color: var(--muted); line-height: 1.5; }
+
+.team-card.lead {
+    background: linear-gradient(150deg, rgba(212, 180, 131, 0.10), rgba(13, 18, 34, 0.55));
+    border-color: rgba(212, 180, 131, 0.35);
+}
+.team-card.lead:hover {
+    border-color: rgba(212, 180, 131, 0.6);
+    box-shadow: 0 22px 48px rgba(212, 180, 131, 0.12);
+}
+.team-card.lead .avatar {
+    background: linear-gradient(135deg, rgba(212, 180, 131, 0.9), rgba(124, 140, 255, 0.7));
+    box-shadow: 0 8px 22px rgba(212, 180, 131, 0.3);
+}
+.team-card.lead .cv-link {
+    display: inline-block;
+    margin-top: 0.7rem;
+    font-family: var(--label);
+    font-size: 0.66rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--gold);
+    text-decoration: none;
+    border-bottom: 1px dashed rgba(212, 180, 131, 0.5);
+    transition: color 0.25s ease, border-color 0.25s ease;
+}
+.team-card.lead .cv-link:hover { color: #fff; border-color: #fff; }
+
+.team-note {
+    margin-top: 2.6rem;
+    text-align: center;
+    color: var(--muted);
+    font-size: 0.95rem;
+    max-width: 760px;
+    margin-left: auto; margin-right: auto;
+}
+.team-note .mono {
+    font-family: var(--label);
+    font-size: 0.85em;
+    color: var(--cyan);
+    letter-spacing: 0.04em;
+}
+.team-note a {
+    color: var(--cyan);
+    text-decoration: none;
+    border-bottom: 1px dashed rgba(76, 201, 240, 0.6);
+    transition: color 0.25s ease, border-color 0.25s ease;
+}
+.team-note a:hover { color: #fff; border-color: #fff; }
+
+/* ---------- Footer ---------- */
+footer {
+    border-top: 1px solid var(--border);
+    padding: 3.5rem 0 2.8rem;
+    background: linear-gradient(to bottom, rgba(5, 8, 16, 0), rgba(2, 3, 7, 0.9));
+    text-align: center;
+}
+.foot-mark { width: 44px; height: 44px; margin: 0 auto 1.4rem; opacity: 0.9; }
+.foot-brand {
+    font-family: var(--label);
+    font-size: 0.85rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--text);
+    margin-bottom: 0.5rem;
+}
+.foot-brand em {
+    font-style: normal;
+    background: var(--grad);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+.foot-links { display: flex; gap: 1.6rem; justify-content: center; margin: 1.2rem 0 1.4rem; flex-wrap: wrap; }
+.foot-links a {
+    font-family: var(--label);
+    font-size: 0.68rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--faint);
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+.foot-links a:hover { color: var(--cyan); }
+.foot-legal { font-size: 0.8rem; color: var(--faint); letter-spacing: 0.05em; }
+
+/* ---------- Responsive ---------- */
+@media (max-width: 900px) {
+    .feature-row { grid-template-columns: 1fr; }
+    .feature-row:nth-of-type(even) .feature-visual { order: 0; }
+    .feature-copy { padding: 2.4rem 1.8rem; }
+    .feature-visual { margin-bottom: 1.5rem; }
+    .fv { width: min(100%, 320px); }
+    .nav-links a:not(.nav-cta) { display: none; }
+}
+
+@media (max-width: 560px) {
+    .concept-card { height: 372px; }
+    .stats { gap: 1.8rem; }
+    .stat { min-width: 100px; }
+}
+
+/* ---------- Reduced motion ---------- */
+@media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+    .js .reveal { opacity: 1; transform: none; }
+}
+</style>
+</head>
+
+<body id="top">
+
+    <!-- Ambient background stack -->
+    <div class="aurora" aria-hidden="true"></div>
+    <canvas id="neural" aria-hidden="true"></canvas>
+    <div class="grid-overlay" aria-hidden="true"></div>
+    <div class="grain" aria-hidden="true"></div>
+    <div id="progress" aria-hidden="true"></div>
+
+    <!-- Navigation -->
+    <nav id="nav" aria-label="Primary">
+        <a class="brand" href="#top" aria-label="AGI Labs — home">
+            <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <defs>
+                    <linearGradient id="MG-nav" x1="4" y1="4" x2="28" y2="28" gradientUnits="userSpaceOnUse">
+                        <stop stop-color="#7c8cff"/><stop offset="1" stop-color="#4cc9f0"/>
+                    </linearGradient>
+                </defs>
+                <path d="M16 2.8 27.2 9.4v13.2L16 29.2 4.8 22.6V9.4L16 2.8Z" stroke="url(#MG-nav)" stroke-width="1.5"/>
+                <path d="M16 16V2.8M16 16l11.2-6.6M16 16l11.2 6.6M16 16 4.8 9.4M16 16 4.8 22.6M16 16v13.2" stroke="url(#MG-nav)" stroke-width="0.8" opacity="0.45"/>
+                <circle cx="16" cy="16" r="2.6" fill="url(#MG-nav)"/>
+                <circle cx="16" cy="2.8" r="1.3" fill="#4cc9f0"/><circle cx="27.2" cy="9.4" r="1.3" fill="#7c8cff"/>
+                <circle cx="27.2" cy="22.6" r="1.3" fill="#4cc9f0"/><circle cx="16" cy="29.2" r="1.3" fill="#7c8cff"/>
+                <circle cx="4.8" cy="22.6" r="1.3" fill="#4cc9f0"/><circle cx="4.8" cy="9.4" r="1.3" fill="#7c8cff"/>
+            </svg>
+            <span>AGI&nbsp;<em>Labs</em></span>
+        </a>
+        <div class="nav-links">
+            <a href="#vision">Vision</a>
+            <a href="#concepts">Concepts</a>
+            <a href="#team">Team</a>
+            <a class="nav-cta" href="https://agilabs.ca/" target="_blank" rel="noopener">agilabs.ca</a>
+        </div>
+    </nav>
+
+    <main>
+        <!-- ============ HERO ============ -->
+        <header class="hero">
+            <svg class="hero-mark reveal" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <defs>
+                    <linearGradient id="MG-hero" x1="4" y1="4" x2="28" y2="28" gradientUnits="userSpaceOnUse">
+                        <stop stop-color="#7c8cff"/><stop offset="1" stop-color="#4cc9f0"/>
+                    </linearGradient>
+                </defs>
+                <path d="M16 2.8 27.2 9.4v13.2L16 29.2 4.8 22.6V9.4L16 2.8Z" stroke="url(#MG-hero)" stroke-width="1.1"/>
+                <path d="M16 16V2.8M16 16l11.2-6.6M16 16l11.2 6.6M16 16 4.8 9.4M16 16 4.8 22.6M16 16v13.2" stroke="url(#MG-hero)" stroke-width="0.55" opacity="0.5"/>
+                <circle cx="16" cy="16" r="2.7" fill="url(#MG-hero)"/>
+                <circle cx="16" cy="2.8" r="1.3" fill="#4cc9f0"/><circle cx="27.2" cy="9.4" r="1.3" fill="#7c8cff"/>
+                <circle cx="27.2" cy="22.6" r="1.3" fill="#4cc9f0"/><circle cx="16" cy="29.2" r="1.3" fill="#7c8cff"/>
+                <circle cx="4.8" cy="22.6" r="1.3" fill="#4cc9f0"/><circle cx="4.8" cy="9.4" r="1.3" fill="#7c8cff"/>
+            </svg>
+            <div class="hero-tagline reveal" style="--d:.1s">Advanced Adaptive Intelligence</div>
+            <h1 class="reveal" style="--d:.2s">AGI&nbsp;<span class="grad-text">Labs</span></h1>
+            <p class="hero-sub reveal" style="--d:.3s">Redefining intelligence. We're not just building AI — we're crafting systems that <strong>learn, think, and adapt in real time.</strong></p>
+            <div class="hero-ctas reveal" style="--d:.42s">
+                <a class="btn btn-primary" href="#vision">Explore the Vision</a>
+                <a class="btn btn-ghost" href="#concepts">Core Concepts</a>
+            </div>
+            <div class="stats reveal" style="--d:.55s">
+                <div class="stat">
+                    <span class="stat-num"><span data-count="30">0</span><sup>+</sup></span>
+                    <span class="stat-label">Years of Engineering</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-num"><span data-count="6">0</span></span>
+                    <span class="stat-label">Specialized AI Staff</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-num"><span data-count="0">0</span></span>
+                    <span class="stat-label">Massive-GPU Dependencies</span>
+                </div>
+            </div>
+            <a class="scroll-cue" href="#vision" aria-label="Scroll to our vision">
+                <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M7 13l5 5 5-5M7 6l5 5 5-5"/>
+                </svg>
+            </a>
+        </header>
+
+        <!-- ============ VISION ============ -->
+        <section id="vision">
+            <div class="wrap">
+                <div class="section-head reveal">
+                    <span class="kicker center">Our Vision</span>
+                    <h2>The Next Evolution <span class="grad-text">of AI</span></h2>
+                    <p>Beyond brute force. A fundamentally different approach to artificial general intelligence.</p>
+                </div>
+
+                <!-- 01 · Biologically Inspired -->
+                <div class="feature-row reveal">
+                    <div class="feature-copy" data-index="01">
+                        <h3>Biologically Inspired</h3>
+                        <p>In a world captivated by the rapid advancements in AI, one challenge remains constant: the immense cost and complexity. We are building a <strong>fundamentally different approach.</strong></p>
+                        <p>We believe the future of AI isn't about brute force computation, but about creating systems that learn, think, and adapt in real time. We're not just building AI — we're crafting intelligence that evolves.</p>
+                    </div>
+                    <div class="feature-visual">
+                        <svg class="fv" viewBox="0 0 400 400" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                            <defs>
+                                <radialGradient id="fvCore" cx="50%" cy="50%" r="50%">
+                                    <stop offset="0%" stop-color="#ffffff" stop-opacity="0.95"/>
+                                    <stop offset="35%" stop-color="#4cc9f0" stop-opacity="0.7"/>
+                                    <stop offset="100%" stop-color="#5b5ff0" stop-opacity="0"/>
+                                </radialGradient>
+                            </defs>
+                            <circle cx="200" cy="200" r="152" stroke="rgba(124,140,255,0.35)" stroke-dasharray="3 14">
+                                <animateTransform attributeName="transform" type="rotate" from="0 200 200" to="360 200 200" dur="48s" repeatCount="indefinite"/>
+                            </circle>
+                            <circle cx="200" cy="200" r="118" stroke="rgba(76,201,240,0.45)" stroke-width="2" stroke-dasharray="90 649">
+                                <animateTransform attributeName="transform" type="rotate" from="360 200 200" to="0 200 200" dur="22s" repeatCount="indefinite"/>
+                            </circle>
+                            <circle cx="200" cy="200" r="86" stroke="rgba(148,163,216,0.2)"/>
+                            <path d="M200 114 274.5 157v86L200 286l-74.5-43v-86L200 114Z" stroke="rgba(76,201,240,0.35)"/>
+                            <path d="M200 200v-86M200 200l74.5-43M200 200l74.5 43M200 200l-74.5 43M200 200l-74.5-43M200 200v86" stroke="rgba(148,163,216,0.16)"/>
+                            <circle class="node-pulse" cx="200" cy="114" r="4" fill="#4cc9f0"/>
+                            <circle class="node-pulse" cx="274.5" cy="157" r="4" fill="#7c8cff" style="animation-delay:.5s"/>
+                            <circle class="node-pulse" cx="274.5" cy="243" r="4" fill="#4cc9f0" style="animation-delay:1s"/>
+                            <circle class="node-pulse" cx="200" cy="286" r="4" fill="#7c8cff" style="animation-delay:1.5s"/>
+                            <circle class="node-pulse" cx="125.5" cy="243" r="4" fill="#4cc9f0" style="animation-delay:2s"/>
+                            <circle class="node-pulse" cx="125.5" cy="157" r="4" fill="#7c8cff" style="animation-delay:2.5s"/>
+                            <circle cx="200" cy="200" r="44" fill="url(#fvCore)">
+                                <animate attributeName="r" values="44;50;44" dur="4.5s" repeatCount="indefinite"/>
+                            </circle>
+                        </svg>
+                    </div>
+                </div>
+
+                <!-- 02 · Emergence & Adaptation -->
+                <div class="feature-row reveal">
+                    <div class="feature-copy" data-index="02">
+                        <h3>Emergence &amp; Adaptation</h3>
+                        <p>We are developing novel approaches to Artificial General Intelligence, with a focus on creating <strong>highly adaptive robotic systems.</strong></p>
+                        <p>Our biologically-inspired architectures can be implemented without any proprietary software or hardware — yet remain capable of self-organizing into complex, emergent behaviors.</p>
+                    </div>
+                    <div class="feature-visual">
+                        <svg class="fv" viewBox="0 0 400 400" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                            <defs>
+                                <linearGradient id="fvBloom" x1="200" y1="380" x2="200" y2="80" gradientUnits="userSpaceOnUse">
+                                    <stop stop-color="#5b5ff0"/><stop offset="1" stop-color="#4cc9f0"/>
+                                </linearGradient>
+                            </defs>
+                            <g stroke="url(#fvBloom)" stroke-linecap="round">
+                                <path class="grow-line" pathLength="100" d="M200 368C200 330 200 300 200 268" stroke-width="4"/>
+                                <path class="grow-line" pathLength="100" d="M200 268C170 240 150 220 138 190" stroke-width="2.6" style="animation-delay:.55s"/>
+                                <path class="grow-line" pathLength="100" d="M200 268C230 240 250 220 262 190" stroke-width="2.6" style="animation-delay:.55s"/>
+                                <path class="grow-line" pathLength="100" d="M138 190C120 165 112 140 116 110" stroke-width="1.5" style="animation-delay:1.1s"/>
+                                <path class="grow-line" pathLength="100" d="M138 190C150 160 158 140 152 105" stroke-width="1.5" style="animation-delay:1.3s"/>
+                                <path class="grow-line" pathLength="100" d="M262 190C250 160 242 140 248 105" stroke-width="1.5" style="animation-delay:1.3s"/>
+                                <path class="grow-line" pathLength="100" d="M262 190C280 165 288 140 284 110" stroke-width="1.5" style="animation-delay:1.1s"/>
+                            </g>
+                            <circle class="node-pulse" cx="116" cy="110" r="5" fill="#4cc9f0" style="animation-delay:1.2s"/>
+                            <circle class="node-pulse" cx="152" cy="105" r="4" fill="#7c8cff" style="animation-delay:1.5s"/>
+                            <circle class="node-pulse" cx="248" cy="105" r="4" fill="#7c8cff" style="animation-delay:1.5s"/>
+                            <circle class="node-pulse" cx="284" cy="110" r="5" fill="#4cc9f0" style="animation-delay:1.2s"/>
+                            <circle class="node-pulse" cx="200" cy="368" r="5" fill="#5b5ff0"/>
+                        </svg>
+                    </div>
+                </div>
+
+                <!-- 03 · Cognitive Architecture -->
+                <div class="feature-row reveal">
+                    <div class="feature-copy" data-index="03">
+                        <h3>Cognitive Architecture</h3>
+                        <p>We work with sparse networks of <strong>hyper-neurons</strong> — neurons that can connect to any node within the network.</p>
+                        <p>Hyper-connectivity allows the creation of all network structures found in grey matter, such as delay or loopback structures, enabling deep cognitive processing.</p>
+                    </div>
+                    <div class="feature-visual">
+                        <svg class="fv" viewBox="0 0 400 400" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                            <!-- outer heptagon ring -->
+                            <path d="M200 50 317.4 106.2 346.1 233.4 265.4 335.4 134.6 335.4 53.9 233.4 82.6 106.2Z" stroke="rgba(124,140,255,0.3)"/>
+                            <!-- inner pentagon ring -->
+                            <path d="M200 125 271.3 176.8 244.1 260.7 155.9 260.7 128.7 176.8Z" stroke="rgba(76,201,240,0.45)"/>
+                            <!-- hyper-connections -->
+                            <g stroke="rgba(148,163,216,0.14)">
+                                <path d="M200 125 200 50M200 125 82.6 106.2M271.3 176.8 317.4 106.2M271.3 176.8 346.1 233.4M244.1 260.7 346.1 233.4M244.1 260.7 265.4 335.4M155.9 260.7 134.6 335.4M155.9 260.7 53.9 233.4M128.7 176.8 53.9 233.4M128.7 176.8 82.6 106.2"/>
+                                <path d="M200 200 200 125M200 200 271.3 176.8M200 200 244.1 260.7M200 200 155.9 260.7M200 200 128.7 176.8"/>
+                            </g>
+                            <!-- signal flow -->
+                            <g stroke="#4cc9f0" stroke-width="1.6" opacity="0.75">
+                                <path class="flow-line" d="M200 50 200 125 244.1 260.7 265.4 335.4"/>
+                                <path class="flow-line" d="M82.6 106.2 128.7 176.8 200 200" style="animation-direction:reverse"/>
+                                <path class="flow-line" d="M346.1 233.4 271.3 176.8 200 125" style="animation-delay:.6s"/>
+                            </g>
+                            <!-- outer nodes -->
+                            <g fill="rgba(233,237,247,0.85)">
+                                <circle class="node-pulse" cx="200" cy="50" r="3.5"/>
+                                <circle class="node-pulse" cx="317.4" cy="106.2" r="3.5" style="animation-delay:.4s"/>
+                                <circle class="node-pulse" cx="346.1" cy="233.4" r="3.5" style="animation-delay:.8s"/>
+                                <circle class="node-pulse" cx="265.4" cy="335.4" r="3.5" style="animation-delay:1.2s"/>
+                                <circle class="node-pulse" cx="134.6" cy="335.4" r="3.5" style="animation-delay:1.6s"/>
+                                <circle class="node-pulse" cx="53.9" cy="233.4" r="3.5" style="animation-delay:2s"/>
+                                <circle class="node-pulse" cx="82.6" cy="106.2" r="3.5" style="animation-delay:2.4s"/>
+                            </g>
+                            <!-- inner nodes -->
+                            <g fill="#4cc9f0">
+                                <circle class="node-pulse" cx="200" cy="125" r="4.5" style="animation-delay:.3s"/>
+                                <circle class="node-pulse" cx="271.3" cy="176.8" r="4.5" style="animation-delay:.9s"/>
+                                <circle class="node-pulse" cx="244.1" cy="260.7" r="4.5" style="animation-delay:1.5s"/>
+                                <circle class="node-pulse" cx="155.9" cy="260.7" r="4.5" style="animation-delay:2.1s"/>
+                                <circle class="node-pulse" cx="128.7" cy="176.8" r="4.5" style="animation-delay:2.7s"/>
+                            </g>
+                            <!-- hyper-neuron core -->
+                            <circle cx="200" cy="200" r="14" fill="rgba(212,180,131,0.18)"/>
+                            <circle cx="200" cy="200" r="7" fill="#d4b483">
+                                <animate attributeName="r" values="7;9;7" dur="3.5s" repeatCount="indefinite"/>
+                            </circle>
+                        </svg>
+                    </div>
+                </div>
+
+                <!-- 04 · Performance & Efficiency -->
+                <div class="feature-row reveal">
+                    <div class="feature-copy" data-index="04">
+                        <h3>Performance &amp; Efficiency</h3>
+                        <p>Our replacement for stochastic gradient descent is a <strong>ramping mechanism designed for analog photonics.</strong> By releasing AI from the constraints of differentiable functions, we open up new operational bounds.</p>
+                        <p>Analog photonics offers significantly lower energy consumption, higher speeds, and superior scalability compared to traditional silicon hardware configurations.</p>
+                    </div>
+                    <div class="feature-visual">
+                        <svg class="fv" viewBox="0 0 400 400" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                            <defs>
+                                <linearGradient id="fvFiber" x1="20" y1="0" x2="380" y2="0" gradientUnits="userSpaceOnUse">
+                                    <stop stop-color="#5b5ff0" stop-opacity="0.15"/>
+                                    <stop offset="0.5" stop-color="#7c8cff" stop-opacity="0.7"/>
+                                    <stop offset="1" stop-color="#4cc9f0" stop-opacity="0.9"/>
+                                </linearGradient>
+                            </defs>
+                            <g stroke="url(#fvFiber)" stroke-width="1.8" stroke-linecap="round">
+                                <path d="M20 110C55 84 95 84 130 110C165 136 205 136 240 110C275 84 315 84 350 110L372 110"/>
+                                <path d="M20 195C55 169 95 169 130 195C165 221 205 221 240 195C275 169 315 169 350 195L372 195"/>
+                                <path d="M20 280C55 254 95 254 130 280C165 306 205 306 240 280C275 254 315 254 350 280L372 280"/>
+                            </g>
+                            <!-- photon packets -->
+                            <g>
+                                <circle r="7" fill="rgba(76,201,240,0.22)">
+                                    <animateMotion dur="3.4s" repeatCount="indefinite" path="M20 110C55 84 95 84 130 110C165 136 205 136 240 110C275 84 315 84 350 110L372 110"/>
+                                </circle>
+                                <circle r="3" fill="#eaf6ff">
+                                    <animateMotion dur="3.4s" repeatCount="indefinite" path="M20 110C55 84 95 84 130 110C165 136 205 136 240 110C275 84 315 84 350 110L372 110"/>
+                                </circle>
+                                <circle r="7" fill="rgba(76,201,240,0.22)">
+                                    <animateMotion dur="4.3s" begin="0.7s" repeatCount="indefinite" path="M20 195C55 169 95 169 130 195C165 221 205 221 240 195C275 169 315 169 350 195L372 195"/>
+                                </circle>
+                                <circle r="3" fill="#eaf6ff">
+                                    <animateMotion dur="4.3s" begin="0.7s" repeatCount="indefinite" path="M20 195C55 169 95 169 130 195C165 221 205 221 240 195C275 169 315 169 350 195L372 195"/>
+                                </circle>
+                                <circle r="7" fill="rgba(76,201,240,0.22)">
+                                    <animateMotion dur="3.8s" begin="1.4s" repeatCount="indefinite" path="M20 280C55 254 95 254 130 280C165 306 205 306 240 280C275 254 315 254 350 280L372 280"/>
+                                </circle>
+                                <circle r="3" fill="#eaf6ff">
+                                    <animateMotion dur="3.8s" begin="1.4s" repeatCount="indefinite" path="M20 280C55 254 95 254 130 280C165 306 205 306 240 280C275 254 315 254 350 280L372 280"/>
+                                </circle>
+                            </g>
+                            <!-- fiber ports -->
+                            <g stroke="rgba(148,163,216,0.35)" stroke-width="1.5">
+                                <path d="M12 102v16M388 187v16M12 272v16M388 272v16"/>
+                            </g>
+                            <circle class="node-pulse" cx="372" cy="110" r="4" fill="#4cc9f0"/>
+                            <circle class="node-pulse" cx="372" cy="195" r="4" fill="#4cc9f0" style="animation-delay:.6s"/>
+                            <circle class="node-pulse" cx="372" cy="280" r="4" fill="#4cc9f0" style="animation-delay:1.2s"/>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============ CORE CONCEPTS ============ -->
+        <section id="concepts">
+            <div class="wrap">
+                <div class="section-head reveal">
+                    <span class="kicker center">What We Build</span>
+                    <h2>Core <span class="grad-text">Concepts</span></h2>
+                    <p>Eight principles that shape every system we create. Tap a card to reveal the detail.</p>
+                </div>
+
+                <div class="concepts-grid">
+                    <!-- 01 -->
+                    <div class="concept-card reveal" tabindex="0" role="button" aria-pressed="false" style="--d:0s">
+                        <div class="card-inner">
+                            <div class="card-face card-front">
+                                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                    <circle cx="12" cy="12" r="3"/>
+                                    <ellipse cx="12" cy="12" rx="9.5" ry="4" transform="rotate(-22 12 12)"/>
+                                    <circle cx="19.5" cy="7.5" r="1.1" fill="currentColor" stroke="none"/>
+                                </svg>
+                                <div class="num">01</div>
+                                <h3>Dynamic Thinking Systems</h3>
+                                <span class="hint">Tap to reveal</span>
+                            </div>
+                            <div class="card-face card-back">
+                                <h4>Dynamic Thinking Systems</h4>
+                                <p>Instantly deployable, dynamic AI that adapts to hardware boundaries and scales natively through experience — shifting beyond static models.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- 02 -->
+                    <div class="concept-card reveal" tabindex="0" role="button" aria-pressed="false" style="--d:.06s">
+                        <div class="card-inner">
+                            <div class="card-face card-front">
+                                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                    <path d="M20 12a8 8 0 1 1-2.34-5.66"/>
+                                    <path d="M20 4v4.5h-4.5"/>
+                                </svg>
+                                <div class="num">02</div>
+                                <h3>Continuous Learning</h3>
+                                <span class="hint">Tap to reveal</span>
+                            </div>
+                            <div class="card-face card-back">
+                                <h4>Continuous Learning</h4>
+                                <p>Real-time, continuous learning algorithms powered by evolutionary mechanics and adaptive reinforcement systems, moving beyond standard backpropagation.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- 03 -->
+                    <div class="concept-card reveal" tabindex="0" role="button" aria-pressed="false" style="--d:.12s">
+                        <div class="card-inner">
+                            <div class="card-face card-front">
+                                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                    <path d="M9 18h6M10 21h4"/>
+                                    <path d="M12 3a6 6 0 0 0-4 10.5c.8.8 1.3 1.5 1.5 2.5h5c.2-1 .7-1.7 1.5-2.5A6 6 0 0 0 12 3Z"/>
+                                </svg>
+                                <div class="num">03</div>
+                                <h3>Invention First</h3>
+                                <span class="hint">Tap to reveal</span>
+                            </div>
+                            <div class="card-face card-back">
+                                <h4>Invention First</h4>
+                                <ul>
+                                    <li>Radical structural hypotheses</li>
+                                    <li>Organic tech design</li>
+                                    <li>Scalable adaptive units</li>
+                                    <li>High-velocity iteration loops</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- 04 -->
+                    <div class="concept-card reveal" tabindex="0" role="button" aria-pressed="false" style="--d:.18s">
+                        <div class="card-inner">
+                            <div class="card-face card-front">
+                                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                    <path d="m12 3 9 5-9 5-9-5 9-5Z"/>
+                                    <path d="m4.6 12.6 7.4 4.1 7.4-4.1"/>
+                                    <path d="m4.6 16.6 7.4 4.1 7.4-4.1"/>
+                                </svg>
+                                <div class="num">04</div>
+                                <h3>Scalable Architecture</h3>
+                                <span class="hint">Tap to reveal</span>
+                            </div>
+                            <div class="card-face card-back">
+                                <h4>Scalable Architecture</h4>
+                                <ul>
+                                    <li>Write once, deploy everywhere</li>
+                                    <li>AI-driven efficiency</li>
+                                    <li>Platform-agnostic deployment</li>
+                                    <li>System emulation capabilities</li>
+                                    <li>Frictionless global reach</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- 05 -->
+                    <div class="concept-card reveal" tabindex="0" role="button" aria-pressed="false" style="--d:.24s">
+                        <div class="card-inner">
+                            <div class="card-face card-front">
+                                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                    <path d="m3 17 6-6 4 4 8-9"/>
+                                    <path d="M17 6h4v4"/>
+                                </svg>
+                                <div class="num">05</div>
+                                <h3>Pure Adaptation</h3>
+                                <span class="hint">Tap to reveal</span>
+                            </div>
+                            <div class="card-face card-back">
+                                <h4>Pure Adaptation</h4>
+                                <ul>
+                                    <li>Elastic architectural scaling</li>
+                                    <li>Structural fault tolerance</li>
+                                    <li>Self-organizing behaviors</li>
+                                    <li>Sub-millisecond adaptation</li>
+                                    <li>Zero dependency on massive GPUs</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- 06 -->
+                    <div class="concept-card reveal" tabindex="0" role="button" aria-pressed="false" style="--d:.3s">
+                        <div class="card-inner">
+                            <div class="card-face card-front">
+                                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                    <path d="M4 4.5c4.5 0 6.5 2.8 7.5 4.9s3.2 4.6 8.5 4.6"/>
+                                    <path d="m15.6 11.2 4.4 2.8-4.7 2.4"/>
+                                </svg>
+                                <div class="num">06</div>
+                                <h3>DWT&trade;</h3>
+                                <span class="hint">Tap to reveal</span>
+                            </div>
+                            <div class="card-face card-back">
+                                <h4>Dragon's Whip Tech</h4>
+                                <p>A lightweight, biologically-inspired replacement for traditional AutoML, stochastic gradient descent, and backpropagation — enabling continuous, real-time learning.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- 07 -->
+                    <div class="concept-card reveal" tabindex="0" role="button" aria-pressed="false" style="--d:.36s">
+                        <div class="card-inner">
+                            <div class="card-face card-front">
+                                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                    <rect x="7" y="7" width="10" height="10" rx="2"/>
+                                    <rect x="10.3" y="10.3" width="3.4" height="3.4"/>
+                                    <path d="M9 2.8V5M15 2.8V5M9 19v2.2M15 19v2.2M2.8 9H5M2.8 15H5M19 9h2.2M19 15h2.2"/>
+                                </svg>
+                                <div class="num">07</div>
+                                <h3>AIM&trade;</h3>
+                                <span class="hint">Tap to reveal</span>
+                            </div>
+                            <div class="card-face card-back">
+                                <h4>Adaptive Intelligence Module</h4>
+                                <p>AIM&trade; is our flagship AI control framework. It deploys dynamic, adaptive modules for software and hardware integration, modeling life-like network responses.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- 08 -->
+                    <div class="concept-card reveal" tabindex="0" role="button" aria-pressed="false" style="--d:.42s">
+                        <div class="card-inner">
+                            <div class="card-face card-front">
+                                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                    <circle cx="9" cy="8.5" r="3.2"/>
+                                    <path d="M3.5 19.5c.6-3 2.8-4.8 5.5-4.8s4.9 1.8 5.5 4.8"/>
+                                    <path d="M15.5 5.8a3.2 3.2 0 1 1 1.7 5.9M17.3 14.9c1.9.5 3.3 2 3.8 4.1"/>
+                                </svg>
+                                <div class="num">08</div>
+                                <h3>Isang Tao</h3>
+                                <span class="hint">Tap to reveal</span>
+                            </div>
+                            <div class="card-face card-back">
+                                <h4>Isang Tao — One Way</h4>
+                                <p>Led by a professional with over 30 years of development experience, our operational team consists of <a href="https://agilabs.ca/cv.html" target="_blank" rel="noopener">one human engineer</a> and a <a href="https://agilabs.ca/staff.html" target="_blank" rel="noopener">dedicated staff</a> of specialized AIs.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============ TEAM ============ -->
+        <section id="team">
+            <div class="wrap">
+                <div class="section-head reveal">
+                    <span class="kicker center">The Team &middot; Isang Tao</span>
+                    <h2>One Human. <span class="grad-text">Many Minds.</span></h2>
+                    <p>Led by a professional with over 30 years of development experience, our operational team consists of one human engineer and a dedicated staff of specialized AIs — completely local and private, with a low-latency voice interface.</p>
+                </div>
+
+                <div class="team-grid">
+                    <div class="team-card reveal" style="--d:0s">
+                        <div class="avatar" aria-hidden="true">Sh</div>
+                        <h3>Sharon</h3>
+                        <p>Office Administrator / Executive Assistant</p>
+                    </div>
+                    <div class="team-card reveal" style="--d:.05s">
+                        <div class="avatar" aria-hidden="true">Be</div>
+                        <h3>Becky</h3>
+                        <p>DWT &amp; GPAC Research Specialist</p>
+                    </div>
+                    <div class="team-card reveal" style="--d:.1s">
+                        <div class="avatar" aria-hidden="true">Ma</div>
+                        <h3>Margo</h3>
+                        <p>Analog Photonics Specialist</p>
+                    </div>
+                    <div class="team-card reveal" style="--d:.15s">
+                        <div class="avatar" aria-hidden="true">Ro</div>
+                        <h3>Roland</h3>
+                        <p>Software Architect</p>
+                    </div>
+                    <div class="team-card reveal" style="--d:.2s">
+                        <div class="avatar" aria-hidden="true">An</div>
+                        <h3>Andrea</h3>
+                        <p>Director of Product Management</p>
+                    </div>
+                    <div class="team-card reveal" style="--d:.25s">
+                        <div class="avatar" aria-hidden="true">Al</div>
+                        <h3>Alexis</h3>
+                        <p>Director of Business Development</p>
+                    </div>
+                    <div class="team-card lead reveal" style="--d:.3s">
+                        <div class="avatar" aria-hidden="true">
+                            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#0b1020" stroke-width="1.8" stroke-linecap="round" aria-hidden="true">
+                                <circle cx="12" cy="8" r="3.4"/>
+                                <path d="M5.5 20c.7-3.4 3.2-5.4 6.5-5.4s5.8 2 6.5 5.4"/>
+                            </svg>
+                        </div>
+                        <h3>The Engineer</h3>
+                        <p>30+ years of development experience</p>
+                        <a class="cv-link" href="https://agilabs.ca/cv.html" target="_blank" rel="noopener">Read the CV &rarr;</a>
+                    </div>
+                </div>
+
+                <p class="team-note reveal" style="--d:.4s">
+                    Powered by a modular waterfall architecture — <span class="mono">Whisper (STT) &rarr; Ollama (LLM) &rarr; PocketTTS (TTS)</span> — with per-persona persistent memory and tool use, all running on an air-gapped machine.
+                    <a href="https://agilabs.ca/staff.html" target="_blank" rel="noopener">Meet the full staff &rarr;</a>
+                </p>
+            </div>
+        </section>
+    </main>
+
+    <!-- ============ FOOTER ============ -->
+    <footer>
+        <div class="wrap">
+            <svg class="foot-mark" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <defs>
+                    <linearGradient id="MG-foot" x1="4" y1="4" x2="28" y2="28" gradientUnits="userSpaceOnUse">
+                        <stop stop-color="#7c8cff"/><stop offset="1" stop-color="#4cc9f0"/>
+                    </linearGradient>
+                </defs>
+                <path d="M16 2.8 27.2 9.4v13.2L16 29.2 4.8 22.6V9.4L16 2.8Z" stroke="url(#MG-foot)" stroke-width="1.1"/>
+                <path d="M16 16V2.8M16 16l11.2-6.6M16 16l11.2 6.6M16 16 4.8 9.4M16 16 4.8 22.6M16 16v13.2" stroke="url(#MG-foot)" stroke-width="0.55" opacity="0.5"/>
+                <circle cx="16" cy="16" r="2.7" fill="url(#MG-foot)"/>
+            </svg>
+            <div class="foot-brand">AGI <em>Labs</em></div>
+            <div class="foot-links">
+                <a href="https://agilabs.ca/" target="_blank" rel="noopener">Home</a>
+                <a href="https://agilabs.ca/cv.html" target="_blank" rel="noopener">The Engineer</a>
+                <a href="https://agilabs.ca/staff.html" target="_blank" rel="noopener">AI Staff</a>
+            </div>
+            <p class="foot-legal">&copy; 2026 AGI Labs Inc. &mdash; Redefining Intelligence</p>
+        </div>
+    </footer>
+
+    <script>
+    'use strict';
+
+    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const finePointer = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+
+    /* ---------- Scroll progress + nav state ---------- */
+    (function initChrome() {
+        const progress = document.getElementById('progress');
+        const nav = document.getElementById('nav');
+
+        function onScroll() {
+            const doc = document.documentElement;
+            const max = doc.scrollHeight - window.innerHeight;
+            const y = window.scrollY || doc.scrollTop;
+            progress.style.width = (max > 0 ? (y / max) * 100 : 0) + '%';
+            nav.classList.toggle('scrolled', y > 40);
+        }
+
+        window.addEventListener('scroll', onScroll, { passive: true });
+        onScroll();
+    })();
+
+    /* ---------- Reveal on scroll ---------- */
+    (function initReveal() {
+        const targets = document.querySelectorAll('.reveal');
+
+        if (prefersReduced || !('IntersectionObserver' in window)) {
+            targets.forEach(function (el) {
+                el.classList.add('in');
+            });
+            return;
+        }
+
+        const io = new IntersectionObserver(function (entries) {
+            entries.forEach(function (entry) {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('in');
+                    io.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.12, rootMargin: '0px 0px -6% 0px' });
+
+        targets.forEach(function (el) {
+            io.observe(el);
+        });
+    })();
+
+    /* ---------- Stat count-up ---------- */
+    (function initCounters() {
+        const counters = document.querySelectorAll('[data-count]');
+        const DURATION = 1400;
+
+        function animate(el) {
+            const end = parseInt(el.getAttribute('data-count'), 10) || 0;
+            if (end === 0) {
+                el.textContent = '0';
+                return;
+            }
+            if (prefersReduced) {
+                el.textContent = String(end);
+                return;
+            }
+            const start = performance.now();
+
+            function frame(now) {
+                const t = Math.min(1, (now - start) / DURATION);
+                const eased = 1 - Math.pow(1 - t, 3);
+                el.textContent = String(Math.round(end * eased));
+                if (t < 1) {
+                    requestAnimationFrame(frame);
+                }
+            }
+            requestAnimationFrame(frame);
+        }
+
+        if (!('IntersectionObserver' in window)) {
+            counters.forEach(animate);
+            return;
+        }
+
+        const io = new IntersectionObserver(function (entries) {
+            entries.forEach(function (entry) {
+                if (entry.isIntersecting) {
+                    animate(entry.target);
+                    io.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.6 });
+
+        counters.forEach(function (el) {
+            io.observe(el);
+        });
+    })();
+
+    /* ---------- Concept cards: tilt + flip ---------- */
+    (function initCards() {
+        const cards = document.querySelectorAll('.concept-card');
+        const MAX_TILT = 7;
+
+        cards.forEach(function (card) {
+            function flip() {
+                const flipped = card.classList.toggle('flipped');
+                card.setAttribute('aria-pressed', flipped ? 'true' : 'false');
+            }
+
+            card.addEventListener('click', flip);
+
+            card.addEventListener('keydown', function (e) {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    flip();
+                }
+            });
+
+            if (finePointer && !prefersReduced) {
+                card.addEventListener('mousemove', function (e) {
+                    if (card.classList.contains('flipped')) {
+                        return;
+                    }
+                    const rect = card.getBoundingClientRect();
+                    const px = (e.clientX - rect.left) / rect.width - 0.5;
+                    const py = (e.clientY - rect.top) / rect.height - 0.5;
+                    card.style.setProperty('--ry', (px * MAX_TILT * 2).toFixed(2) + 'deg');
+                    card.style.setProperty('--rx', (py * -MAX_TILT * 2).toFixed(2) + 'deg');
+                });
+
+                card.addEventListener('mouseleave', function () {
+                    card.style.setProperty('--rx', '0deg');
+                    card.style.setProperty('--ry', '0deg');
+                });
+            }
+        });
+    })();
+
+    /* ---------- Neural constellation background ---------- */
+    (function initNeural() {
+        const canvas = document.getElementById('neural');
+        if (!canvas || !canvas.getContext) {
+            return;
+        }
+        const ctx = canvas.getContext('2d');
+        const LINK_DIST = 132;
+        const MOUSE_DIST = 195;
+        const mouse = { x: -9999, y: -9999 };
+
+        let width = 0;
+        let height = 0;
+        let nodes = [];
+        let running = true;
+
+        function resize() {
+            const dpr = Math.min(window.devicePixelRatio || 1, 2);
+            width = window.innerWidth;
+            height = window.innerHeight;
+            canvas.width = Math.floor(width * dpr);
+            canvas.height = Math.floor(height * dpr);
+            canvas.style.width = width + 'px';
+            canvas.style.height = height + 'px';
+            ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+            build();
+            if (prefersReduced) {
+                drawFrame();
+            }
+        }
+
+        function build() {
+            const count = Math.min(120, Math.floor((width * height) / 15000));
+            nodes = [];
+            for (let i = 0; i < count; i++) {
+                nodes.push({
+                    x: Math.random() * width,
+                    y: Math.random() * height,
+                    vx: (Math.random() - 0.5) * 0.42,
+                    vy: (Math.random() - 0.5) * 0.42,
+                    r: 0.8 + Math.random() * 1.4,
+                    hub: Math.random() < 0.07
+                });
+            }
+        }
+
+        function step() {
+            for (let i = 0; i < nodes.length; i++) {
+                const n = nodes[i];
+                n.x += n.vx;
+                n.y += n.vy;
+                if (n.x < -12) { n.x = width + 12; }
+                else if (n.x > width + 12) { n.x = -12; }
+                if (n.y < -12) { n.y = height + 12; }
+                else if (n.y > height + 12) { n.y = -12; }
+            }
+        }
+
+        function drawFrame() {
+            ctx.clearRect(0, 0, width, height);
+
+            for (let i = 0; i < nodes.length; i++) {
+                const a = nodes[i];
+
+                for (let j = i + 1; j < nodes.length; j++) {
+                    const b = nodes[j];
+                    const dx = a.x - b.x;
+                    const dy = a.y - b.y;
+                    const dist = Math.sqrt(dx * dx + dy * dy);
+                    if (dist < LINK_DIST) {
+                        const alpha = (1 - dist / LINK_DIST) * 0.16;
+                        ctx.strokeStyle = 'rgba(76, 201, 240, ' + alpha.toFixed(3) + ')';
+                        ctx.lineWidth = 1;
+                        ctx.beginPath();
+                        ctx.moveTo(a.x, a.y);
+                        ctx.lineTo(b.x, b.y);
+                        ctx.stroke();
+                    }
+                }
+
+                const mdx = a.x - mouse.x;
+                const mdy = a.y - mouse.y;
+                const mDist = Math.sqrt(mdx * mdx + mdy * mdy);
+                if (mDist < MOUSE_DIST) {
+                    const alpha = (1 - mDist / MOUSE_DIST) * 0.3;
+                    ctx.strokeStyle = 'rgba(124, 140, 255, ' + alpha.toFixed(3) + ')';
+                    ctx.lineWidth = 1;
+                    ctx.beginPath();
+                    ctx.moveTo(a.x, a.y);
+                    ctx.lineTo(mouse.x, mouse.y);
+                    ctx.stroke();
+                }
+
+                if (a.hub) {
+                    ctx.beginPath();
+                    ctx.arc(a.x, a.y, a.r + 3.5, 0, Math.PI * 2);
+                    ctx.fillStyle = 'rgba(124, 140, 255, 0.10)';
+                    ctx.fill();
+                }
+                ctx.beginPath();
+                ctx.arc(a.x, a.y, a.r, 0, Math.PI * 2);
+                ctx.fillStyle = a.hub ? 'rgba(212, 180, 131, 0.65)' : 'rgba(124, 140, 255, 0.45)';
+                ctx.fill();
+            }
+        }
+
+        function loop() {
+            if (running) {
+                step();
+                drawFrame();
+            }
+            requestAnimationFrame(loop);
+        }
+
+        window.addEventListener('resize', resize);
+
+        if (!prefersReduced) {
+            window.addEventListener('mousemove', function (e) {
+                mouse.x = e.clientX;
+                mouse.y = e.clientY;
+            }, { passive: true });
+
+            document.documentElement.addEventListener('mouseleave', function () {
+                mouse.x = -9999;
+                mouse.y = -9999;
+            });
+
+            document.addEventListener('visibilitychange', function () {
+                running = !document.hidden;
+            });
+
+            resize();
+            loop();
+        } else {
+            resize();
+        }
+    })();
+    </script>
+</body>
+</html>
