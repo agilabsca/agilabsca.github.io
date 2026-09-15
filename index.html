@@ -63,6 +63,20 @@
             cursor: default;
         }
 
+        /* Subtle styling for the PDF document link */
+        .pdf-link {
+            color: var(--text-main);
+            text-decoration: underline;
+            text-underline-offset: 4px;
+            text-decoration-color: var(--accent);
+            transition: color 0.2s ease, text-decoration-color 0.2s ease;
+        }
+
+        .pdf-link:hover {
+            color: #ffffff;
+            text-decoration-color: var(--text-main);
+        }
+
         @keyframes fadeIn {
             0% {
                 opacity: 0;
@@ -90,6 +104,9 @@
         <p>After careful introspection regarding the nature and trajectory of this work, I have decided to shut this site down.</p>
         <p style="color: var(--text-muted); font-size: 0.95rem; margin-top: 40px;">
             Thank you to those who engaged with the research<a href="agi" class="invisible-link">.</a>
+        </p>
+        <p style="color: var(--text-muted); font-size: 0.95rem; margin-top: 15px;">
+            Please see the following <a href="sovai.pdf" class="pdf-link">PDF</a> regarding the next phase.
         </p>
     </div>
 
